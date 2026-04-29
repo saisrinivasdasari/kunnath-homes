@@ -116,6 +116,8 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
   'https://kunnath-homes-cbjg.vercel.app', // <-- ADD YOUR VERCEL URL HERE
+  'https://kunnathhouse.in',                 // without www
+  'https://www.kunnathhouse.in',
   process.env.FRONTEND_URL // <-- Keep this for flexibility
 ].filter(Boolean);
 

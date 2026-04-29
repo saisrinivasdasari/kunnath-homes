@@ -35,7 +35,7 @@ export const Footer = () => {
                 href="tel:+919876543210"
                 className="text-primary hover:text-primary-hover font-medium transition-colors"
               >
-                +91 98765 43210
+                +91 7702402505
               </a>
             </div>
           </div>

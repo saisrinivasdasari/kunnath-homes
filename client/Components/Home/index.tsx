@@ -167,10 +167,25 @@ export default function Home() {
                                 <br />
                                 Create unforgettable memories at Kunnath House.
                             </p>
-                            <Link href="/events">
+                            {/* <Link href="/events">
                                 <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100 font-semibold border-0">
                                     Inquire Now
                                 </Button>
+                            </Link> */}
+                            <Link
+                                href="/events"
+                                style={{
+                                    display: "inline-block",
+                                    padding: "12px 24px",
+                                    backgroundColor: "#ffffff",
+                                    color: "#111827",
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                    borderRadius: "6px",
+                                    border: "none"
+                                }}
+                            >
+                                Inquire Now
                             </Link>
                         </div>
                     </div>

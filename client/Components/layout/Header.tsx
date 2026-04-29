@@ -244,11 +244,11 @@ export function Header() {
           {/* Right Section: Phone + Auth */}
           <div className="hidden md:flex items-center space-x-6">
             <a
-              href="tel:+911234567890"
+              href="tel:+917702402505"
               className="flex items-center text-sm font-medium text-text-primary hover:text-primary transition-colors"
             >
               <Phone size={16} className="mr-2" />
-              +91 12345 67890
+              +91 7702402505
             </a>
 
             {user ? (
