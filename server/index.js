@@ -126,6 +126,13 @@ app.use('/api/sport-bookings', sportBookingRoutes);
 const contactRoutes = require('./routes/contactRoutes');
 app.use('/api/contact', contactRoutes);
 
+
+
+console.log('stayRoutes object:', stayRoutes);
+console.log('stayRoutes.stack:', stayRoutes?.stack);
+app.use('/api/stays', (req, res, next) => { console.log('Hit /api/stays middleware'); next(); }, stayRoutes);
+app.get('/api/stays-direct', (req, res) => res.json([{ test: 'works' }]));
+
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the backend API!' });
