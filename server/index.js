@@ -39,23 +39,23 @@ connectDB().then(async () => {
           description: 'Mint House. Our most premium offering. Huge lawns and massive capacity.',
         },
         {
-          name: 'Lemon A',
+          name: 'Lemon',
           price: 16000,
-          beds: 3,
-          capacity: 16,
+          beds: 5,
+          capacity: 25,
           images: ['https://images.unsplash.com/photo-1505843513577-22bb7abd5017?q=80&w=800&auto=format&fit=crop'],
           amenities: ['Fast Wifi', 'Kitchen', 'Free Parking'],
           description: 'A beautiful Lemon themed farm stay. Cozy, aesthetic, and completely peaceful.',
         },
-        {
-          name: 'Lemon B',
-          price: 20000,
-          beds: 5,
-          capacity: 25,
-          images: ['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=800&auto=format&fit=crop'],
-          amenities: ['Fast Wifi', 'Private Pool', 'Kitchen', 'Air Conditioning'],
-          description: 'The largest Lemon farm stay. Designed for big celebrations and unforgettable nights.',
-        }
+        // {
+        //   name: 'Lemon B',
+        //   price: 20000,
+        //   beds: 5,
+        //   capacity: 25,
+        //   images: ['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=800&auto=format&fit=crop'],
+        //   amenities: ['Fast Wifi', 'Private Pool', 'Kitchen', 'Air Conditioning'],
+        //   description: 'The largest Lemon farm stay. Designed for big celebrations and unforgettable nights.',
+        // }
       ];
       await FarmStay.insertMany(dummyStays);
       console.log('Dummy stays injected successfully!');
@@ -151,13 +151,6 @@ const sportBookingRoutes = require('./routes/sportBookingRoutes');
 app.use('/api/sport-bookings', sportBookingRoutes);
 const contactRoutes = require('./routes/contactRoutes');
 app.use('/api/contact', contactRoutes);
-
-
-
-console.log('stayRoutes object:', stayRoutes);
-console.log('stayRoutes.stack:', stayRoutes?.stack);
-app.use('/api/stays', (req, res, next) => { console.log('Hit /api/stays middleware'); next(); }, stayRoutes);
-app.get('/api/stays-direct', (req, res) => res.json([{ test: 'works' }]));
 
 // Basic route
 app.get('/', (req, res) => {

@@ -24,7 +24,7 @@ export default function Home() {
     return (
         <div className="pb-16">
             {/* 1. HERO SECTION */}
-            <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center">
+            {/* <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
                     style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000&auto=format&fit=crop)' }}
@@ -40,8 +40,8 @@ export default function Home() {
                         Experience the ultimate luxury farm stay. Disconnect from the city and immerse yourself in nature.
                     </p>
 
-                    {/* Airbnb-style Search Bar */}
-                    {/* <div className="bg-white rounded-full p-2 w-full max-w-4xl shadow-xl flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                   
+                    <div className="bg-white rounded-full p-2 w-full max-w-4xl shadow-xl flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
                         <div className="flex-1 w-full px-6 py-3 hover:bg-gray-50 rounded-full cursor-pointer transition-colors">
                             <div className="text-xs font-bold text-gray-800">Location</div>
                             <div className="text-sm text-gray-500">Kunnath House</div>
@@ -63,9 +63,9 @@ export default function Home() {
                                 <Search size={20} />
                             </button>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* 2. FARM STAYS PREVIEW */}
             <section id="stays" className="pt-20 pb-10">
@@ -76,12 +76,12 @@ export default function Home() {
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Luxury Stays</h2>
                             <p className="text-gray-500">Discover your perfect escape</p>
                         </div>
-                        <Link href="/stays" className="text-primary font-medium hover:underline flex items-center">
+                        {/* <Link href="/stays" className="text-primary font-medium hover:underline flex items-center">
                             View all <ArrowRight size={16} className="ml-1" />
-                        </Link>
+                        </Link> */}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {isLoading ? (
                             <div className="col-span-4 text-center py-10">Loading luxury stays...</div>
                         ) : stays?.map((stay) => (

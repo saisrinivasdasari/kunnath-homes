@@ -662,7 +662,7 @@ export default function StayDetailsPage() {
         </div>
 
         {/* Photo Gallery */}
-        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[320px] md:h-[480px]">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[320px] md:h-[380px]">
           <div className="md:col-span-2 md:row-span-2 relative cursor-pointer" onClick={() => openGallery(0)}>
             <img src={galleryImages[0]} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
@@ -747,7 +747,7 @@ export default function StayDetailsPage() {
             </div>
 
             {/* Reviews */}
-            {reviews > 0 && (
+            {/* {reviews > 0 && (
               <div className="border-t border-gray-200 pt-8">
                 <div className="flex items-center gap-2 mb-6">
                   <Star size={20} className="fill-current text-gray-900" />
@@ -777,7 +777,7 @@ export default function StayDetailsPage() {
                   <button className="mt-4 underline font-medium text-gray-700">Show all {reviews} reviews</button>
                 )}
               </div>
-            )}
+            )} */}
 
             {/* Double Month Availability Calendar */}
             <div className="border-t border-gray-200 pt-8">
