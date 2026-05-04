@@ -9,22 +9,27 @@ const getStays = async (req, res) => {
   try {
     const stays = await FarmStay.find({ isDeleted: { $ne: true } });
     
-    // Dynamically inject the first image from folder if it exists
+    // In serverless environments (Vercel), runtime filesystem access is restricted.
+    // We try to inject images from the folder, but fallback gracefully to the database.
     const staysWithImages = stays.map(stay => {
       const stayObj = stay.toObject();
-      if (stayObj.slug) {
-        const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
-        if (fs.existsSync(galleryPath)) {
-          const files = fs.readdirSync(galleryPath);
-          const images = files
-            .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
-            .sort(); // Ensure consistent order
-            
-          if (images.length > 0) {
-            // Prepend folder images to stay.images
-            const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
-            stayObj.images = [...folderImages, ...stayObj.images];
+      if (stayObj.slug && process.env.NODE_ENV !== 'production') {
+        try {
+          const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+          if (fs.existsSync(galleryPath)) {
+            const files = fs.readdirSync(galleryPath);
+            const images = files
+              .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
+              .sort();
+              
+            if (images.length > 0) {
+              const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
+              // Merge folder images with existing images, prioritizing folder images
+              stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+            }
           }
+        } catch (fsError) {
+          console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
         }
       }
       return stayObj;
@@ -45,18 +50,22 @@ const getStayById = async (req, res) => {
     
     if (stay) {
       const stayObj = stay.toObject();
-      if (stayObj.slug) {
-        const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
-        if (fs.existsSync(galleryPath)) {
-          const files = fs.readdirSync(galleryPath);
-          const images = files
-            .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
-            .sort();
-            
-          if (images.length > 0) {
-            const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
-            stayObj.images = [...folderImages, ...stayObj.images];
+      if (stayObj.slug && process.env.NODE_ENV !== 'production') {
+        try {
+          const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+          if (fs.existsSync(galleryPath)) {
+            const files = fs.readdirSync(galleryPath);
+            const images = files
+              .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
+              .sort();
+              
+            if (images.length > 0) {
+              const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
+              stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+            }
           }
+        } catch (fsError) {
+          console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
         }
       }
       res.json(stayObj);
