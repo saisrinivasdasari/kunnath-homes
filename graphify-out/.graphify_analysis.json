@@ -1,0 +1,540 @@
+{
+  "communities": {
+    "0": [
+      "admin_sportmodal_handleback",
+      "admin_sportmodal_handlenext",
+      "admin_sportmodal_handlesubmit",
+      "client_components_admin_sportmodal_tsx",
+      "controllers_admincontroller_createsport",
+      "controllers_admincontroller_createstay",
+      "controllers_admincontroller_deletesport",
+      "controllers_admincontroller_deletesportbooking",
+      "controllers_admincontroller_deletestaybooking",
+      "controllers_admincontroller_getsportbookings",
+      "controllers_admincontroller_getstaybookings",
+      "controllers_admincontroller_getunreadsportbookingcount",
+      "controllers_admincontroller_getunreadstaybookingcount",
+      "controllers_admincontroller_marksportbookingsread",
+      "controllers_admincontroller_markstaybookingsread",
+      "controllers_admincontroller_updatemembership",
+      "controllers_admincontroller_updatesport",
+      "controllers_admincontroller_updatesportbooking",
+      "controllers_admincontroller_updatestay",
+      "controllers_admincontroller_updatestaybooking",
+      "server_controllers_admincontroller_js"
+    ],
+    "1": [
+      "client_app_stays_id_page_tsx",
+      "id_page_calculatenightslocal",
+      "id_page_formatcurrency",
+      "id_page_formatlocalymd",
+      "id_page_getmonthdays",
+      "id_page_gettodaylocal",
+      "id_page_gonextmonth",
+      "id_page_goprevmonth",
+      "id_page_handledateclick",
+      "id_page_isbooked",
+      "id_page_isdatebooked",
+      "id_page_isend",
+      "id_page_isinrange",
+      "id_page_ispast",
+      "id_page_isselected",
+      "id_page_isstart",
+      "id_page_localdatefromstring",
+      "id_page_rendermonth"
+    ],
+    "2": [
+      "client_app_admin_contact_page_tsx",
+      "contact_page_formatdate",
+      "contact_page_handledelete",
+      "controllers_contactcontroller_deletecontact",
+      "controllers_contactcontroller_getallcontacts",
+      "controllers_contactcontroller_getunreadcount",
+      "controllers_contactcontroller_markallread",
+      "controllers_contactcontroller_submitcontactmessage",
+      "server_controllers_contactcontroller_js"
+    ],
+    "3": [
+      "client_app_login_page_tsx",
+      "client_app_signup_page_tsx",
+      "controllers_authcontroller_getme",
+      "controllers_authcontroller_login",
+      "controllers_authcontroller_logout",
+      "controllers_authcontroller_signup",
+      "login_page_handlesubmit",
+      "server_controllers_authcontroller_js",
+      "signup_page_handlesubmit"
+    ],
+    "4": [
+      "client_hooks_usebookings_ts",
+      "hooks_usebookings_useadminbookings",
+      "hooks_usebookings_usecreatebooking",
+      "hooks_usebookings_usedeleteadminbooking",
+      "hooks_usebookings_usemarkstaybookingsread",
+      "hooks_usebookings_usemybookings",
+      "hooks_usebookings_useunreadstaybookingcount",
+      "hooks_usebookings_useupdateadminbooking"
+    ],
+    "5": [
+      "admin_staymodal_staymodal",
+      "client_components_admin_staymodal_tsx",
+      "client_hooks_usestays_ts",
+      "hooks_usestays_usecreatestay",
+      "hooks_usestays_usedeletestay",
+      "hooks_usestays_usestaydetails",
+      "hooks_usestays_usestays",
+      "hooks_usestays_useupdatestay"
+    ],
+    "6": [
+      "client_components_sports_bookingmodal_tsx",
+      "controllers_bookingcontroller_createbooking",
+      "controllers_bookingcontroller_getmybookings",
+      "server_controllers_bookingcontroller_js",
+      "sports_bookingmodal_handlebooking",
+      "sports_bookingmodal_isslotdisabled"
+    ],
+    "7": [
+      "client_hooks_usesportbookings_ts",
+      "hooks_usesportbookings_usecreatesportbooking",
+      "hooks_usesportbookings_usemarksportbookingsread",
+      "hooks_usesportbookings_usemysportbookings",
+      "hooks_usesportbookings_usesportavailability",
+      "hooks_usesportbookings_useunreadsportbookingcount"
+    ],
+    "8": [
+      "bookings_page_formatdate",
+      "bookings_page_getstatusbadge",
+      "bookings_page_handledelete",
+      "bookings_page_handleupdatestatus",
+      "client_app_admin_bookings_page_tsx"
+    ],
+    "9": [
+      "client_app_admin_stays_page_tsx",
+      "controllers_admincontroller_deletestay",
+      "stays_page_handledelete",
+      "stays_page_openaddmodal",
+      "stays_page_openeditmodal"
+    ],
+    "10": [
+      "client_hooks_usecontact_ts",
+      "hooks_usecontact_useadmincontacts",
+      "hooks_usecontact_usedeletecontact",
+      "hooks_usecontact_usemarkallread",
+      "hooks_usecontact_useunreadcontactcount"
+    ],
+    "11": [
+      "client_hooks_usesports_ts",
+      "hooks_usesports_usecreatesport",
+      "hooks_usesports_usesportbyid",
+      "hooks_usesports_usesports",
+      "hooks_usesports_useupdatesport"
+    ],
+    "12": [
+      "client_app_admin_sports_page_tsx",
+      "sports_page_handleadd",
+      "sports_page_handledelete",
+      "sports_page_handleedit"
+    ],
+    "13": [
+      "config_db_connectdb",
+      "server_config_db_js",
+      "server_seeder_importdata",
+      "server_seeder_js"
+    ],
+    "14": [
+      "controllers_sportbookingcontroller_createsportbooking",
+      "controllers_sportbookingcontroller_getavailability",
+      "controllers_sportbookingcontroller_getmysportbookings",
+      "server_controllers_sportbookingcontroller_js"
+    ],
+    "15": [
+      "client_components_faq_index_tsx",
+      "faq_index_faqitem",
+      "faq_index_toggleitem"
+    ],
+    "16": [
+      "controllers_sportcontroller_getsportbyid",
+      "controllers_sportcontroller_getsports",
+      "server_controllers_sportcontroller_js"
+    ],
+    "17": [
+      "controllers_staycontroller_getstaybyid",
+      "controllers_staycontroller_getstays",
+      "server_controllers_staycontroller_js"
+    ],
+    "18": [
+      "middleware_authmiddleware_admin",
+      "middleware_authmiddleware_protect",
+      "server_middleware_authmiddleware_js"
+    ],
+    "19": [
+      "api_gallery_route",
+      "booking_flow",
+      "stays_details_page"
+    ],
+    "20": [
+      "app_layout_rootlayout",
+      "client_app_layout_tsx"
+    ],
+    "21": [
+      "app_providers_providers",
+      "client_app_providers_tsx"
+    ],
+    "22": [
+      "5bslug_5d_route_get",
+      "client_app_api_gallery_5bslug_5d_route_ts"
+    ],
+    "23": [
+      "client_app_faq_page_tsx",
+      "faq_page_faqpage"
+    ],
+    "24": [
+      "client_app_sports_page_tsx",
+      "sports_page_handlebooknow"
+    ],
+    "25": [
+      "client_components_contact_index_tsx",
+      "contact_index_handlesubmit"
+    ],
+    "26": [
+      "client_components_layout_floatingbuttons_tsx",
+      "layout_floatingbuttons_floatingbuttons"
+    ],
+    "27": [
+      "client_components_layout_footer_tsx",
+      "layout_footer_footer"
+    ],
+    "28": [
+      "client_components_layout_header_tsx",
+      "layout_header_handlestayclick"
+    ],
+    "29": [
+      "client_components_ui_button_tsx",
+      "ui_button_button"
+    ],
+    "30": [
+      "client_components_ui_card_tsx",
+      "ui_card_card"
+    ],
+    "31": [
+      "client_components_ui_container_tsx",
+      "ui_container_container"
+    ],
+    "32": [
+      "client_hooks_usehashscroll_ts",
+      "hooks_usehashscroll_usehashscroll"
+    ],
+    "33": [
+      "client_eslint_config_mjs"
+    ],
+    "34": [
+      "client_next_env_d_ts"
+    ],
+    "35": [
+      "client_next_config_ts"
+    ],
+    "36": [
+      "client_postcss_config_mjs"
+    ],
+    "37": [
+      "client_app_page_tsx"
+    ],
+    "38": [
+      "client_app_admin_layout_tsx"
+    ],
+    "39": [
+      "client_app_admin_page_tsx"
+    ],
+    "40": [
+      "client_app_admin_sport_bookings_page_tsx"
+    ],
+    "41": [
+      "client_app_contact_page_tsx"
+    ],
+    "42": [
+      "client_app_dashboard_page_tsx"
+    ],
+    "43": [
+      "client_app_events_page_tsx"
+    ],
+    "44": [
+      "client_app_home_page_tsx"
+    ],
+    "45": [
+      "client_app_membership_page_tsx"
+    ],
+    "46": [
+      "client_components_home_index_tsx"
+    ],
+    "47": [
+      "client_components_services_index_tsx"
+    ],
+    "48": [
+      "client_lib_axios_ts"
+    ],
+    "49": [
+      "client_store_authstore_ts"
+    ],
+    "50": [
+      "server_index_js"
+    ],
+    "51": [
+      "server_models_booking_js"
+    ],
+    "52": [
+      "server_models_contactmessage_js"
+    ],
+    "53": [
+      "server_models_farmstay_js"
+    ],
+    "54": [
+      "server_models_sport_js"
+    ],
+    "55": [
+      "server_models_sportbooking_js"
+    ],
+    "56": [
+      "server_models_user_js"
+    ],
+    "57": [
+      "server_routes_adminroutes_js"
+    ],
+    "58": [
+      "server_routes_authroutes_js"
+    ],
+    "59": [
+      "server_routes_bookingroutes_js"
+    ],
+    "60": [
+      "server_routes_contactroutes_js"
+    ],
+    "61": [
+      "server_routes_sportbookingroutes_js"
+    ],
+    "62": [
+      "server_routes_sportroutes_js"
+    ],
+    "63": [
+      "server_routes_stayroutes_js"
+    ],
+    "64": [
+      "layout_rootlayout"
+    ],
+    "65": [
+      "admin_layout_adminlayout"
+    ],
+    "66": [
+      "farmstay_model"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1,
+    "1": 0.14,
+    "2": 0.22,
+    "3": 0.22,
+    "4": 0.25,
+    "5": 0.29,
+    "6": 0.33,
+    "7": 0.33,
+    "8": 0.4,
+    "9": 0.4,
+    "10": 0.4,
+    "11": 0.4,
+    "12": 0.5,
+    "13": 0.5,
+    "14": 0.5,
+    "15": 0.67,
+    "16": 0.67,
+    "17": 0.67,
+    "18": 0.67,
+    "19": 0.67,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0,
+    "60": 1.0,
+    "61": 1.0,
+    "62": 1.0,
+    "63": 1.0,
+    "64": 1.0,
+    "65": 1.0,
+    "66": 1.0
+  },
+  "gods": [
+    {
+      "id": "id_page_isdatebooked",
+      "label": "isDateBooked()",
+      "degree": 3
+    },
+    {
+      "id": "admin_sportmodal_handlesubmit",
+      "label": "handleSubmit()",
+      "degree": 3
+    },
+    {
+      "id": "admin_staymodal_staymodal",
+      "label": "StayModal()",
+      "degree": 3
+    },
+    {
+      "id": "contact_page_handledelete",
+      "label": "handleDelete()",
+      "degree": 2
+    },
+    {
+      "id": "stays_page_handledelete",
+      "label": "handleDelete()",
+      "degree": 2
+    },
+    {
+      "id": "login_page_handlesubmit",
+      "label": "handleSubmit()",
+      "degree": 2
+    },
+    {
+      "id": "signup_page_handlesubmit",
+      "label": "handleSubmit()",
+      "degree": 2
+    },
+    {
+      "id": "id_page_localdatefromstring",
+      "label": "localDateFromString()",
+      "degree": 2
+    },
+    {
+      "id": "id_page_formatlocalymd",
+      "label": "formatLocalYMD()",
+      "degree": 2
+    },
+    {
+      "id": "id_page_calculatenightslocal",
+      "label": "calculateNightsLocal()",
+      "degree": 2
+    }
+  ],
+  "surprises": [
+    {
+      "source": "handleDelete()",
+      "target": "deleteContact()",
+      "source_files": [
+        "client\\app\\admin\\contact\\page.tsx",
+        "server\\controllers\\contactController.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "handleDelete()",
+      "target": "deleteStay()",
+      "source_files": [
+        "client\\app\\admin\\stays\\page.tsx",
+        "server\\controllers\\adminController.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "handleSubmit()",
+      "target": "login()",
+      "source_files": [
+        "client\\app\\login\\page.tsx",
+        "server\\controllers\\authController.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "handleSubmit()",
+      "target": "signup()",
+      "source_files": [
+        "client\\app\\signup\\page.tsx",
+        "server\\controllers\\authController.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "handleSubmit()",
+      "target": "updateSport()",
+      "source_files": [
+        "client\\Components\\admin\\SportModal.tsx",
+        "server\\controllers\\adminController.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `deleteStay()` connect `Community 9` to `Community 0`?",
+      "why": "High betweenness centrality (0.005) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 2 inferred relationships involving `handleSubmit()` (e.g. with `updateSport()` and `createSport()`) actually correct?",
+      "why": "`handleSubmit()` has 2 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 2 inferred relationships involving `StayModal()` (e.g. with `useCreateStay()` and `useUpdateStay()`) actually correct?",
+      "why": "`StayModal()` has 2 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Root Layout`, `Admin Layout`, `Gallery API` to the rest of the system?",
+      "why": "5 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.14 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

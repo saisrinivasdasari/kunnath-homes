@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "id": "layout_rootlayout",
+      "label": "Root Layout",
+      "file_type": "code",
+      "source_file": "client/app/layout.tsx"
+    },
+    {
+      "id": "admin_layout_adminlayout",
+      "label": "Admin Layout",
+      "file_type": "code",
+      "source_file": "client/app/admin/layout.tsx"
+    },
+    {
+      "id": "stays_details_page",
+      "label": "Stay Details Page",
+      "file_type": "code",
+      "source_file": "client/app/stays/[id]/page.tsx"
+    },
+    {
+      "id": "api_gallery_route",
+      "label": "Gallery API",
+      "file_type": "code",
+      "source_file": "client/app/api/gallery/[slug]/route.ts"
+    },
+    {
+      "id": "farmstay_model",
+      "label": "FarmStay Model",
+      "file_type": "code",
+      "source_file": "server/models/FarmStay.js"
+    },
+    {
+      "id": "booking_flow",
+      "label": "Stay Booking Flow",
+      "file_type": "document",
+      "source_file": "client/app/stays/[id]/page.tsx"
+    }
+  ],
+  "edges": [
+    {
+      "source": "stays_details_page",
+      "target": "api_gallery_route",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "admin_layout_adminlayout",
+      "target": "auth_store",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "stays_details_page",
+      "target": "booking_flow",
+      "relation": "participates_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

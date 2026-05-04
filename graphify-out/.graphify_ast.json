@@ -1,0 +1,3948 @@
+{
+  "nodes": [
+    {
+      "id": "client_eslint_config_mjs",
+      "label": "eslint.config.mjs",
+      "file_type": "code",
+      "source_file": "client\\eslint.config.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_next_env_d_ts",
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "client\\next-env.d.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_next_config_ts",
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "client\\next.config.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_postcss_config_mjs",
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "client\\postcss.config.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_layout_tsx",
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_layout_rootlayout",
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L15"
+    },
+    {
+      "id": "client_app_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_providers_tsx",
+      "label": "providers.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_providers_providers",
+      "label": "Providers()",
+      "file_type": "code",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L7"
+    },
+    {
+      "id": "client_app_admin_layout_tsx",
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_admin_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_admin_bookings_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "bookings_page_handleupdatestatus",
+      "label": "handleUpdateStatus()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "bookings_page_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L24"
+    },
+    {
+      "id": "bookings_page_getstatusbadge",
+      "label": "getStatusBadge()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L38"
+    },
+    {
+      "id": "bookings_page_formatdate",
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L49"
+    },
+    {
+      "id": "client_app_admin_contact_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "contact_page_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L23"
+    },
+    {
+      "id": "contact_page_formatdate",
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L43"
+    },
+    {
+      "id": "client_app_admin_sport_bookings_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_admin_sports_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sports_page_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L138"
+    },
+    {
+      "id": "sports_page_handleedit",
+      "label": "handleEdit()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L152"
+    },
+    {
+      "id": "sports_page_handleadd",
+      "label": "handleAdd()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L157"
+    },
+    {
+      "id": "client_app_admin_stays_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "stays_page_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L18"
+    },
+    {
+      "id": "stays_page_openaddmodal",
+      "label": "openAddModal()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L27"
+    },
+    {
+      "id": "stays_page_openeditmodal",
+      "label": "openEditModal()",
+      "file_type": "code",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "client_app_api_gallery_5bslug_5d_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "5bslug_5d_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "client_app_contact_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\contact\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_dashboard_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_events_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\events\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_faq_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\faq\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "faq_page_faqpage",
+      "label": "FAQPage()",
+      "file_type": "code",
+      "source_file": "client\\app\\faq\\page.tsx",
+      "source_location": "L3"
+    },
+    {
+      "id": "client_app_home_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\Home\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_login_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "login_page_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "client_app_membership_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_app_signup_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "signup_page_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L15"
+    },
+    {
+      "id": "client_app_sports_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sports_page_handlebooknow",
+      "label": "handleBookNow()",
+      "file_type": "code",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "client_app_stays_id_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "id_page_gettodaylocal",
+      "label": "getTodayLocal()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L285"
+    },
+    {
+      "id": "id_page_localdatefromstring",
+      "label": "localDateFromString()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L290"
+    },
+    {
+      "id": "id_page_formatlocalymd",
+      "label": "formatLocalYMD()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L295"
+    },
+    {
+      "id": "id_page_calculatenightslocal",
+      "label": "calculateNightsLocal()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L299"
+    },
+    {
+      "id": "id_page_isdatebooked",
+      "label": "isDateBooked()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L308"
+    },
+    {
+      "id": "id_page_goprevmonth",
+      "label": "goPrevMonth()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L329"
+    },
+    {
+      "id": "id_page_gonextmonth",
+      "label": "goNextMonth()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L332"
+    },
+    {
+      "id": "id_page_getmonthdays",
+      "label": "getMonthDays()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L337"
+    },
+    {
+      "id": "id_page_handledateclick",
+      "label": "handleDateClick()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L356"
+    },
+    {
+      "id": "id_page_isselected",
+      "label": "isSelected()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L372"
+    },
+    {
+      "id": "id_page_isinrange",
+      "label": "isInRange()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L373"
+    },
+    {
+      "id": "id_page_isstart",
+      "label": "isStart()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L377"
+    },
+    {
+      "id": "id_page_isend",
+      "label": "isEnd()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L378"
+    },
+    {
+      "id": "id_page_ispast",
+      "label": "isPast()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L379"
+    },
+    {
+      "id": "id_page_isbooked",
+      "label": "isBooked()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L380"
+    },
+    {
+      "id": "id_page_rendermonth",
+      "label": "renderMonth()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L382"
+    },
+    {
+      "id": "id_page_formatcurrency",
+      "label": "formatCurrency()",
+      "file_type": "code",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L1065"
+    },
+    {
+      "id": "client_components_admin_sportmodal_tsx",
+      "label": "SportModal.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "admin_sportmodal_handlenext",
+      "label": "handleNext()",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L55"
+    },
+    {
+      "id": "admin_sportmodal_handleback",
+      "label": "handleBack()",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L56"
+    },
+    {
+      "id": "admin_sportmodal_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L62"
+    },
+    {
+      "id": "client_components_admin_staymodal_tsx",
+      "label": "StayModal.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "admin_staymodal_staymodal",
+      "label": "StayModal()",
+      "file_type": "code",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "client_components_contact_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "contact_index_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L21"
+    },
+    {
+      "id": "client_components_faq_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "faq_index_faqitem",
+      "label": "FAQItem()",
+      "file_type": "code",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L43"
+    },
+    {
+      "id": "faq_index_toggleitem",
+      "label": "toggleItem()",
+      "file_type": "code",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L72"
+    },
+    {
+      "id": "client_components_home_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_components_layout_floatingbuttons_tsx",
+      "label": "FloatingButtons.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\FloatingButtons.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "layout_floatingbuttons_floatingbuttons",
+      "label": "FloatingButtons()",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\FloatingButtons.tsx",
+      "source_location": "L3"
+    },
+    {
+      "id": "client_components_layout_footer_tsx",
+      "label": "Footer.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\Footer.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "layout_footer_footer",
+      "label": "Footer()",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\Footer.tsx",
+      "source_location": "L17"
+    },
+    {
+      "id": "client_components_layout_header_tsx",
+      "label": "Header.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "layout_header_handlestayclick",
+      "label": "handleStayClick()",
+      "file_type": "code",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L192"
+    },
+    {
+      "id": "client_components_services_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\services\\index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_components_sports_bookingmodal_tsx",
+      "label": "BookingModal.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sports_bookingmodal_isslotdisabled",
+      "label": "isSlotDisabled()",
+      "file_type": "code",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L61"
+    },
+    {
+      "id": "sports_bookingmodal_handlebooking",
+      "label": "handleBooking()",
+      "file_type": "code",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L74"
+    },
+    {
+      "id": "client_components_ui_button_tsx",
+      "label": "Button.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Button.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ui_button_button",
+      "label": "Button()",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Button.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "client_components_ui_card_tsx",
+      "label": "Card.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Card.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ui_card_card",
+      "label": "Card()",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Card.tsx",
+      "source_location": "L7"
+    },
+    {
+      "id": "client_components_ui_container_tsx",
+      "label": "Container.tsx",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Container.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ui_container_container",
+      "label": "Container()",
+      "file_type": "code",
+      "source_file": "client\\Components\\ui\\Container.tsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "client_hooks_usebookings_ts",
+      "label": "useBookings.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usebookings_usecreatebooking",
+      "label": "useCreateBooking()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "hooks_usebookings_usemybookings",
+      "label": "useMyBookings()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "hooks_usebookings_useadminbookings",
+      "label": "useAdminBookings()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L51"
+    },
+    {
+      "id": "hooks_usebookings_useupdateadminbooking",
+      "label": "useUpdateAdminBooking()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L61"
+    },
+    {
+      "id": "hooks_usebookings_usedeleteadminbooking",
+      "label": "useDeleteAdminBooking()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L74"
+    },
+    {
+      "id": "hooks_usebookings_useunreadstaybookingcount",
+      "label": "useUnreadStayBookingCount()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L88"
+    },
+    {
+      "id": "hooks_usebookings_usemarkstaybookingsread",
+      "label": "useMarkStayBookingsRead()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L100"
+    },
+    {
+      "id": "client_hooks_usecontact_ts",
+      "label": "useContact.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usecontact_useadmincontacts",
+      "label": "useAdminContacts()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "hooks_usecontact_useunreadcontactcount",
+      "label": "useUnreadContactCount()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "hooks_usecontact_usemarkallread",
+      "label": "useMarkAllRead()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "hooks_usecontact_usedeletecontact",
+      "label": "useDeleteContact()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "client_hooks_usehashscroll_ts",
+      "label": "useHashScroll.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useHashScroll.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usehashscroll_usehashscroll",
+      "label": "useHashScroll()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useHashScroll.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "client_hooks_usesportbookings_ts",
+      "label": "useSportBookings.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usesportbookings_usesportavailability",
+      "label": "useSportAvailability()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "hooks_usesportbookings_usecreatesportbooking",
+      "label": "useCreateSportBooking()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L33"
+    },
+    {
+      "id": "hooks_usesportbookings_usemysportbookings",
+      "label": "useMySportBookings()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L48"
+    },
+    {
+      "id": "hooks_usesportbookings_useunreadsportbookingcount",
+      "label": "useUnreadSportBookingCount()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "hooks_usesportbookings_usemarksportbookingsread",
+      "label": "useMarkSportBookingsRead()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L71"
+    },
+    {
+      "id": "client_hooks_usesports_ts",
+      "label": "useSports.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usesports_usesports",
+      "label": "useSports()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "hooks_usesports_usecreatesport",
+      "label": "useCreateSport()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "hooks_usesports_useupdatesport",
+      "label": "useUpdateSport()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "hooks_usesports_usesportbyid",
+      "label": "useSportById()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L50"
+    },
+    {
+      "id": "client_hooks_usestays_ts",
+      "label": "useStays.ts",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "hooks_usestays_usestays",
+      "label": "useStays()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "hooks_usestays_usestaydetails",
+      "label": "useStayDetails()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "hooks_usestays_usecreatestay",
+      "label": "useCreateStay()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L46"
+    },
+    {
+      "id": "hooks_usestays_useupdatestay",
+      "label": "useUpdateStay()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "hooks_usestays_usedeletestay",
+      "label": "useDeleteStay()",
+      "file_type": "code",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L72"
+    },
+    {
+      "id": "client_lib_axios_ts",
+      "label": "axios.ts",
+      "file_type": "code",
+      "source_file": "client\\lib\\axios.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_store_authstore_ts",
+      "label": "authStore.ts",
+      "file_type": "code",
+      "source_file": "client\\store\\authStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_index_js",
+      "label": "index.js",
+      "file_type": "code",
+      "source_file": "server\\index.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_seeder_js",
+      "label": "seeder.js",
+      "file_type": "code",
+      "source_file": "server\\seeder.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_seeder_importdata",
+      "label": "importData()",
+      "file_type": "code",
+      "source_file": "server\\seeder.js",
+      "source_location": "L68"
+    },
+    {
+      "id": "server_config_db_js",
+      "label": "db.js",
+      "file_type": "code",
+      "source_file": "server\\config\\db.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "config_db_connectdb",
+      "label": "connectDB()",
+      "file_type": "code",
+      "source_file": "server\\config\\db.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "server_controllers_admincontroller_js",
+      "label": "adminController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_admincontroller_createstay",
+      "label": "createStay()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L10"
+    },
+    {
+      "id": "controllers_admincontroller_updatestay",
+      "label": "updateStay()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L48"
+    },
+    {
+      "id": "controllers_admincontroller_deletestay",
+      "label": "deleteStay()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L86"
+    },
+    {
+      "id": "controllers_admincontroller_createsport",
+      "label": "createSport()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L105"
+    },
+    {
+      "id": "controllers_admincontroller_updatesport",
+      "label": "updateSport()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L128"
+    },
+    {
+      "id": "controllers_admincontroller_deletesport",
+      "label": "deleteSport()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L153"
+    },
+    {
+      "id": "controllers_admincontroller_getsportbookings",
+      "label": "getSportBookings()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L170"
+    },
+    {
+      "id": "controllers_admincontroller_updatesportbooking",
+      "label": "updateSportBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L185"
+    },
+    {
+      "id": "controllers_admincontroller_deletesportbooking",
+      "label": "deleteSportBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L204"
+    },
+    {
+      "id": "controllers_admincontroller_updatemembership",
+      "label": "updateMembership()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L221"
+    },
+    {
+      "id": "controllers_admincontroller_getstaybookings",
+      "label": "getStayBookings()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L249"
+    },
+    {
+      "id": "controllers_admincontroller_updatestaybooking",
+      "label": "updateStayBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L264"
+    },
+    {
+      "id": "controllers_admincontroller_deletestaybooking",
+      "label": "deleteStayBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L283"
+    },
+    {
+      "id": "controllers_admincontroller_getunreadstaybookingcount",
+      "label": "getUnreadStayBookingCount()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L300"
+    },
+    {
+      "id": "controllers_admincontroller_markstaybookingsread",
+      "label": "markStayBookingsRead()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L312"
+    },
+    {
+      "id": "controllers_admincontroller_getunreadsportbookingcount",
+      "label": "getUnreadSportBookingCount()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L324"
+    },
+    {
+      "id": "controllers_admincontroller_marksportbookingsread",
+      "label": "markSportBookingsRead()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L336"
+    },
+    {
+      "id": "server_controllers_authcontroller_js",
+      "label": "authController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_authcontroller_signup",
+      "label": "signup()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "controllers_authcontroller_login",
+      "label": "login()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L44"
+    },
+    {
+      "id": "controllers_authcontroller_logout",
+      "label": "logout()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L71"
+    },
+    {
+      "id": "controllers_authcontroller_getme",
+      "label": "getMe()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L82"
+    },
+    {
+      "id": "server_controllers_bookingcontroller_js",
+      "label": "bookingController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\bookingController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_bookingcontroller_createbooking",
+      "label": "createBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\bookingController.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "controllers_bookingcontroller_getmybookings",
+      "label": "getMyBookings()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\bookingController.js",
+      "source_location": "L84"
+    },
+    {
+      "id": "server_controllers_contactcontroller_js",
+      "label": "contactController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_contactcontroller_submitcontactmessage",
+      "label": "submitContactMessage()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "controllers_contactcontroller_getallcontacts",
+      "label": "getAllContacts()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L32"
+    },
+    {
+      "id": "controllers_contactcontroller_getunreadcount",
+      "label": "getUnreadCount()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L44"
+    },
+    {
+      "id": "controllers_contactcontroller_markallread",
+      "label": "markAllRead()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L56"
+    },
+    {
+      "id": "controllers_contactcontroller_deletecontact",
+      "label": "deleteContact()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L68"
+    },
+    {
+      "id": "server_controllers_sportbookingcontroller_js",
+      "label": "sportBookingController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_sportbookingcontroller_getavailability",
+      "label": "getAvailability()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "controllers_sportbookingcontroller_createsportbooking",
+      "label": "createSportBooking()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L28"
+    },
+    {
+      "id": "controllers_sportbookingcontroller_getmysportbookings",
+      "label": "getMySportBookings()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L63"
+    },
+    {
+      "id": "server_controllers_sportcontroller_js",
+      "label": "sportController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_sportcontroller_getsports",
+      "label": "getSports()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportController.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "controllers_sportcontroller_getsportbyid",
+      "label": "getSportById()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\sportController.js",
+      "source_location": "L18"
+    },
+    {
+      "id": "server_controllers_staycontroller_js",
+      "label": "stayController.js",
+      "file_type": "code",
+      "source_file": "server\\controllers\\stayController.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "controllers_staycontroller_getstays",
+      "label": "getStays()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\stayController.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "controllers_staycontroller_getstaybyid",
+      "label": "getStayById()",
+      "file_type": "code",
+      "source_file": "server\\controllers\\stayController.js",
+      "source_location": "L18"
+    },
+    {
+      "id": "server_middleware_authmiddleware_js",
+      "label": "authMiddleware.js",
+      "file_type": "code",
+      "source_file": "server\\middleware\\authMiddleware.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "middleware_authmiddleware_protect",
+      "label": "protect()",
+      "file_type": "code",
+      "source_file": "server\\middleware\\authMiddleware.js",
+      "source_location": "L4"
+    },
+    {
+      "id": "middleware_authmiddleware_admin",
+      "label": "admin()",
+      "file_type": "code",
+      "source_file": "server\\middleware\\authMiddleware.js",
+      "source_location": "L22"
+    },
+    {
+      "id": "server_models_booking_js",
+      "label": "Booking.js",
+      "file_type": "code",
+      "source_file": "server\\models\\Booking.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_contactmessage_js",
+      "label": "ContactMessage.js",
+      "file_type": "code",
+      "source_file": "server\\models\\ContactMessage.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_farmstay_js",
+      "label": "FarmStay.js",
+      "file_type": "code",
+      "source_file": "server\\models\\FarmStay.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_sport_js",
+      "label": "Sport.js",
+      "file_type": "code",
+      "source_file": "server\\models\\Sport.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_sportbooking_js",
+      "label": "SportBooking.js",
+      "file_type": "code",
+      "source_file": "server\\models\\SportBooking.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_user_js",
+      "label": "User.js",
+      "file_type": "code",
+      "source_file": "server\\models\\User.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_adminroutes_js",
+      "label": "adminRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\adminRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_authroutes_js",
+      "label": "authRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\authRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_bookingroutes_js",
+      "label": "bookingRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\bookingRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_contactroutes_js",
+      "label": "contactRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\contactRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_sportbookingroutes_js",
+      "label": "sportBookingRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\sportBookingRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_sportroutes_js",
+      "label": "sportRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\sportRoutes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_routes_stayroutes_js",
+      "label": "stayRoutes.js",
+      "file_type": "code",
+      "source_file": "server\\routes\\stayRoutes.js",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "client_eslint_config_mjs",
+      "target": "config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\eslint.config.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_eslint_config_mjs",
+      "target": "core_web_vitals",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\eslint.config.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_eslint_config_mjs",
+      "target": "typescript",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\eslint.config.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_next_env_d_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_next_dev_types_routes_d_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\next-env.d.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_layout_header",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_layout_footer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_app_globals_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_app_providers",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_layout_tsx",
+      "target": "app_layout_rootlayout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\layout.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_home",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_providers_tsx",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_providers_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_providers_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_providers_tsx",
+      "target": "app_providers_providers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\providers.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usecontact",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usebookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_layout_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesportbookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\layout.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usebookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "bookings_page_handleupdatestatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "bookings_page_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "bookings_page_getstatusbadge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_bookings_page_tsx",
+      "target": "bookings_page_formatdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\bookings\\page.tsx",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usecontact",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "contact_page_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_contact_page_tsx",
+      "target": "contact_page_formatdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sport_bookings_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesportbookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sport-bookings\\page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesports",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_admin_sportmodal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "sports_page_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "sports_page_handleedit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_sports_page_tsx",
+      "target": "sports_page_handleadd",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\sports\\page.tsx",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usestays",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_admin_staymodal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "stays_page_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "stays_page_openaddmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_admin_stays_page_tsx",
+      "target": "stays_page_openeditmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_api_gallery_5bslug_5d_route_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_api_gallery_5bslug_5d_route_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_api_gallery_5bslug_5d_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_api_gallery_5bslug_5d_route_ts",
+      "target": "5bslug_5d_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\api\\gallery\\%5Bslug%5D\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_contact_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\contact\\page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_contact_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_contact",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\contact\\page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usebookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesportbookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_dashboard_page_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\dashboard\\page.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_events_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\events\\page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_events_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\events\\page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_events_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\events\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_faq_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_faq",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\faq\\page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_faq_page_tsx",
+      "target": "faq_page_faqpage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\faq\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_home_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\Home\\page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_home_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_home",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\Home\\page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_login_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_login_page_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_login_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_login_page_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_login_page_tsx",
+      "target": "login_page_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_membership_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_membership_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_membership_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_membership_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_membership_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\membership\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_signup_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_signup_page_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_signup_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_signup_page_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_signup_page_tsx",
+      "target": "signup_page_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesports",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_sports_bookingmodal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_sports_page_tsx",
+      "target": "sports_page_handlebooknow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\sports\\page.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L271",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L273",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L279",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usestays",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L280",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usebookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_gettodaylocal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_localdatefromstring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L290",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_formatlocalymd",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L295",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_calculatenightslocal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isdatebooked",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_goprevmonth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_gonextmonth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_getmonthdays",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_handledateclick",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L356",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isselected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isinrange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L373",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isstart",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_ispast",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_isbooked",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L380",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_rendermonth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L382",
+      "weight": 1.0
+    },
+    {
+      "source": "client_app_stays_id_page_tsx",
+      "target": "id_page_formatcurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L1065",
+      "weight": 1.0
+    },
+    {
+      "source": "id_page_calculatenightslocal",
+      "target": "id_page_localdatefromstring",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "id_page_getmonthdays",
+      "target": "id_page_formatlocalymd",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L346",
+      "weight": 1.0
+    },
+    {
+      "source": "id_page_handledateclick",
+      "target": "id_page_isdatebooked",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L358",
+      "weight": 1.0
+    },
+    {
+      "source": "id_page_isbooked",
+      "target": "id_page_isdatebooked",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\app\\stays\\[id]\\page.tsx",
+      "source_location": "L380",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesports",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "admin_sportmodal_handlenext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "admin_sportmodal_handleback",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_sportmodal_tsx",
+      "target": "admin_sportmodal_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_staymodal_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_staymodal_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_staymodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usestays",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_staymodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_admin_staymodal_tsx",
+      "target": "admin_staymodal_staymodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_contact_index_tsx",
+      "target": "contact_index_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\contact\\index.tsx",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_faq_index_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_faq_index_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_faq_index_tsx",
+      "target": "faq_index_faqitem",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_faq_index_tsx",
+      "target": "faq_index_toggleitem",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\faq\\index.tsx",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usestays",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_home_index_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usehashscroll",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\Home\\index.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_floatingbuttons_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\FloatingButtons.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_floatingbuttons_tsx",
+      "target": "layout_floatingbuttons_floatingbuttons",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\FloatingButtons.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_footer_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Footer.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_footer_tsx",
+      "target": "layout_footer_footer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Footer.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L179",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_container",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_layout_header_tsx",
+      "target": "layout_header_handlestayclick",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\layout\\Header.tsx",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesports",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesportbookings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_store_authstore",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "c_users_saisr_desktop_kunnath_client_components_ui_button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "sports_bookingmodal_isslotdisabled",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_sports_bookingmodal_tsx",
+      "target": "sports_bookingmodal_handlebooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_button_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Button.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_button_tsx",
+      "target": "ui_button_button",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Button.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_card_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Card.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_card_tsx",
+      "target": "ui_card_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Card.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_container_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Container.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_components_ui_container_tsx",
+      "target": "ui_container_container",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\Components\\ui\\Container.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_usecreatebooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_usemybookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_useadminbookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_useupdateadminbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_usedeleteadminbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_useunreadstaybookingcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usebookings_ts",
+      "target": "hooks_usebookings_usemarkstaybookingsread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useBookings.ts",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "hooks_usecontact_useadmincontacts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "hooks_usecontact_useunreadcontactcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "hooks_usecontact_usemarkallread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usecontact_ts",
+      "target": "hooks_usecontact_usedeletecontact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useContact.ts",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usehashscroll_ts",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useHashScroll.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usehashscroll_ts",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useHashScroll.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usehashscroll_ts",
+      "target": "hooks_usehashscroll_usehashscroll",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useHashScroll.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_hooks_usesports",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "hooks_usesportbookings_usesportavailability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "hooks_usesportbookings_usecreatesportbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "hooks_usesportbookings_usemysportbookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "hooks_usesportbookings_useunreadsportbookingcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesportbookings_ts",
+      "target": "hooks_usesportbookings_usemarksportbookingsread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSportBookings.ts",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "hooks_usesports_usesports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "hooks_usesports_usecreatesport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "hooks_usesports_useupdatesport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usesports_ts",
+      "target": "hooks_usesports_usesportbyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useSports.ts",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "hooks_usestays_usestays",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "hooks_usestays_usestaydetails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "hooks_usestays_usecreatestay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "hooks_usestays_useupdatestay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "client_hooks_usestays_ts",
+      "target": "hooks_usestays_usedeletestay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\hooks\\useStays.ts",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "client_lib_axios_ts",
+      "target": "axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\lib\\axios.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "client_store_authstore_ts",
+      "target": "zustand",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\store\\authStore.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "client_store_authstore_ts",
+      "target": "c_users_saisr_desktop_kunnath_client_lib_axios",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "client\\store\\authStore.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_seeder_js",
+      "target": "server_seeder_importdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\seeder.js",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "server_config_db_js",
+      "target": "config_db_connectdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\config\\db.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_createstay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_updatestay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_deletestay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_createsport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_updatesport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_deletesport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_getsportbookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_updatesportbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_deletesportbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_updatemembership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_getstaybookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_updatestaybooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_deletestaybooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_getunreadstaybookingcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L300",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_markstaybookingsread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_getunreadsportbookingcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_admincontroller_js",
+      "target": "controllers_admincontroller_marksportbookingsread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\adminController.js",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_authcontroller_js",
+      "target": "controllers_authcontroller_signup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_authcontroller_js",
+      "target": "controllers_authcontroller_login",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_authcontroller_js",
+      "target": "controllers_authcontroller_logout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_authcontroller_js",
+      "target": "controllers_authcontroller_getme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\authController.js",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_bookingcontroller_js",
+      "target": "controllers_bookingcontroller_createbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\bookingController.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_bookingcontroller_js",
+      "target": "controllers_bookingcontroller_getmybookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\bookingController.js",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_contactcontroller_js",
+      "target": "controllers_contactcontroller_submitcontactmessage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_contactcontroller_js",
+      "target": "controllers_contactcontroller_getallcontacts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_contactcontroller_js",
+      "target": "controllers_contactcontroller_getunreadcount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_contactcontroller_js",
+      "target": "controllers_contactcontroller_markallread",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_contactcontroller_js",
+      "target": "controllers_contactcontroller_deletecontact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\contactController.js",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_sportbookingcontroller_js",
+      "target": "controllers_sportbookingcontroller_getavailability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_sportbookingcontroller_js",
+      "target": "controllers_sportbookingcontroller_createsportbooking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_sportbookingcontroller_js",
+      "target": "controllers_sportbookingcontroller_getmysportbookings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\sportBookingController.js",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_sportcontroller_js",
+      "target": "controllers_sportcontroller_getsports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\sportController.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_sportcontroller_js",
+      "target": "controllers_sportcontroller_getsportbyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\sportController.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_staycontroller_js",
+      "target": "controllers_staycontroller_getstays",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\stayController.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_staycontroller_js",
+      "target": "controllers_staycontroller_getstaybyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\controllers\\stayController.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "server_middleware_authmiddleware_js",
+      "target": "middleware_authmiddleware_protect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\middleware\\authMiddleware.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_middleware_authmiddleware_js",
+      "target": "middleware_authmiddleware_admin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server\\middleware\\authMiddleware.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_page_handledelete",
+      "target": "controllers_contactcontroller_deletecontact",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\app\\admin\\contact\\page.tsx",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "stays_page_handledelete",
+      "target": "controllers_admincontroller_deletestay",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\app\\admin\\stays\\page.tsx",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "login_page_handlesubmit",
+      "target": "controllers_authcontroller_login",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\app\\login\\page.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "signup_page_handlesubmit",
+      "target": "controllers_authcontroller_signup",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\app\\signup\\page.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_sportmodal_handlesubmit",
+      "target": "controllers_admincontroller_updatesport",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_sportmodal_handlesubmit",
+      "target": "controllers_admincontroller_createsport",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\Components\\admin\\SportModal.tsx",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_staymodal_staymodal",
+      "target": "hooks_usestays_usecreatestay",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_staymodal_staymodal",
+      "target": "hooks_usestays_useupdatestay",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\Components\\admin\\StayModal.tsx",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "sports_bookingmodal_handlebooking",
+      "target": "controllers_bookingcontroller_createbooking",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "client\\Components\\sports\\BookingModal.tsx",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "server_seeder_importdata",
+      "target": "config_db_connectdb",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "server\\seeder.js",
+      "source_location": "L70",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -4,11 +4,21 @@ import api from '../lib/axios';
 export interface FarmStay {
   _id: string;
   name: string;
+  slug: string;
   price: number;
   beds: number;
   capacity: number;
+  bathrooms: number;
+  bedrooms: number;
+  halls: number;
+  maxGuests: number;
+  extraGuestCharge: number;
+  securityDeposit: number;
+  bookingAdvance: number;
   images: string[];
   amenities: string[];
+  foodOptions: string[];
+  addOns: { name: string; price: number }[];
   description: string;
 }
 

@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const FarmStay = require('../models/FarmStay');
 
 // @desc    Fetch all farm stays
@@ -6,7 +8,29 @@ const FarmStay = require('../models/FarmStay');
 const getStays = async (req, res) => {
   try {
     const stays = await FarmStay.find({ isDeleted: { $ne: true } });
-    res.json(stays);
+    
+    // Dynamically inject the first image from folder if it exists
+    const staysWithImages = stays.map(stay => {
+      const stayObj = stay.toObject();
+      if (stayObj.slug) {
+        const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+        if (fs.existsSync(galleryPath)) {
+          const files = fs.readdirSync(galleryPath);
+          const images = files
+            .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
+            .sort(); // Ensure consistent order
+            
+          if (images.length > 0) {
+            // Prepend folder images to stay.images
+            const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
+            stayObj.images = [...folderImages, ...stayObj.images];
+          }
+        }
+      }
+      return stayObj;
+    });
+
+    res.json(staysWithImages);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -20,12 +44,26 @@ const getStayById = async (req, res) => {
     const stay = await FarmStay.findById(req.params.id);
     
     if (stay) {
-      res.json(stay);
+      const stayObj = stay.toObject();
+      if (stayObj.slug) {
+        const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+        if (fs.existsSync(galleryPath)) {
+          const files = fs.readdirSync(galleryPath);
+          const images = files
+            .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
+            .sort();
+            
+          if (images.length > 0) {
+            const folderImages = images.map(file => `/stays/${stayObj.slug}/${file}`);
+            stayObj.images = [...folderImages, ...stayObj.images];
+          }
+        }
+      }
+      res.json(stayObj);
     } else {
       res.status(404).json({ message: 'Farm stay not found' });
     }
   } catch (error) {
-    // If the ID is not a valid ObjectId, it will throw an error
     res.status(404).json({ message: 'Farm stay not found' });
   }
 };

@@ -8,18 +8,13 @@ import { Card } from '../ui/Card';
 import { Search, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useStays } from '@/hooks/useStays';
+import { useSports } from '@/hooks/useSports';
 import { useHashScroll } from '@/hooks/useHashScroll';
 
 export default function Home() {
-    const { data: stays, isLoading } = useStays();
+    const { data: stays, isLoading: isLoadingStays } = useStays();
+    const { data: sports, isLoading: isLoadingSports } = useSports();
     useHashScroll();
-
-    const dummyActivities = [
-        { name: 'Box Cricket', price: '₹1000/hr', icon: '🏏', image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=800&auto=format&fit=crop' },
-        { name: 'Beach Volleyball', price: '₹400/hr', icon: '🏐', image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?q=80&w=800&auto=format&fit=crop' },
-        { name: 'ATV Ride', price: '₹300/lap', icon: '🏎️', image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800&auto=format&fit=crop' },
-        { name: 'Cricket Net', price: '₹100/session', icon: '🏏', image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=800&auto=format&fit=crop' },
-    ];
 
     return (
         <div className="pb-16">
@@ -82,7 +77,7 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {isLoading ? (
+                        {isLoadingStays ? (
                             <div className="col-span-4 text-center py-10">Loading luxury stays...</div>
                         ) : stays?.map((stay) => (
                             <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
@@ -102,7 +97,7 @@ export default function Home() {
                                             </div>
                                         </div>
                                         <p className="text-gray-500 text-sm mb-4">
-                                            {stay.beds} beds • Up to {stay.capacity} guests
+                                            {stay.bedrooms} BHK • Up to {stay.capacity} guests
                                         </p>
                                         <div className="flex items-center">
                                             <span className="font-semibold text-lg text-gray-900">₹{stay.price.toLocaleString()}</span>
@@ -125,7 +120,9 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {dummyActivities.map((activity, idx) => (
+                        {isLoadingSports ? (
+                            <div className="col-span-4 text-center py-10">Loading activities...</div>
+                        ) : sports?.map((activity, idx) => (
                             <Link href="/sports" key={idx} className="block group">
                                 <div className="bg-white rounded-2xl shadow-soft overflow-hidden hover:shadow-hover transition-all cursor-pointer border border-gray-100">
                                     <div className="aspect-video overflow-hidden">
@@ -138,7 +135,7 @@ export default function Home() {
                                     <div className="p-5 text-center">
                                         <div className="text-3xl mb-2">{activity.icon}</div>
                                         <h3 className="font-bold text-lg text-gray-900 mb-1">{activity.name}</h3>
-                                        <p className="text-primary font-medium">{activity.price}</p>
+                                        <p className="text-primary font-medium">₹{activity.price}/{activity.duration}</p>
                                     </div>
                                 </div>
                             </Link>

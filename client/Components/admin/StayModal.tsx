@@ -13,12 +13,22 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
+    slug: '',
     description: '',
     images: [''],
     price: 0,
     capacity: 2,
     beds: 1,
+    bathrooms: 1,
+    bedrooms: 1,
+    halls: 0,
+    maxGuests: 2,
+    extraGuestCharge: 0,
+    securityDeposit: 0,
+    bookingAdvance: 0,
     amenities: [''],
+    foodOptions: [''],
+    addOns: [{ name: '', price: 0 }],
   });
 
   const { mutate: createStay, isPending: isCreating } = useCreateStay();
@@ -31,22 +41,42 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
       if (stayToEdit) {
         setFormData({
           name: stayToEdit.name,
+          slug: stayToEdit.slug || '',
           description: stayToEdit.description,
           images: stayToEdit.images?.length ? stayToEdit.images : [''],
           price: stayToEdit.price,
           capacity: stayToEdit.capacity,
           beds: stayToEdit.beds,
+          bathrooms: stayToEdit.bathrooms || 1,
+          bedrooms: stayToEdit.bedrooms || 1,
+          halls: stayToEdit.halls || 0,
+          maxGuests: stayToEdit.maxGuests || stayToEdit.capacity,
+          extraGuestCharge: stayToEdit.extraGuestCharge || 0,
+          securityDeposit: stayToEdit.securityDeposit || 0,
+          bookingAdvance: stayToEdit.bookingAdvance || 0,
           amenities: stayToEdit.amenities?.length ? stayToEdit.amenities : [''],
+          foodOptions: stayToEdit.foodOptions?.length ? stayToEdit.foodOptions : [''],
+          addOns: stayToEdit.addOns?.length ? stayToEdit.addOns : [{ name: '', price: 0 }],
         });
       } else {
         setFormData({
           name: '',
+          slug: '',
           description: '',
           images: [''],
           price: 0,
           capacity: 2,
           beds: 1,
+          bathrooms: 1,
+          bedrooms: 1,
+          halls: 0,
+          maxGuests: 2,
+          extraGuestCharge: 0,
+          securityDeposit: 0,
+          bookingAdvance: 0,
           amenities: [''],
+          foodOptions: [''],
+          addOns: [{ name: '', price: 0 }],
         });
       }
       setStep(1);
@@ -83,6 +113,8 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
       ...formData,
       images: formData.images.filter((img) => img.trim() !== ''),
       amenities: formData.amenities.filter((a) => a.trim() !== ''),
+      foodOptions: formData.foodOptions.filter((f) => f.trim() !== ''),
+      addOns: formData.addOns.filter((a) => a.name.trim() !== ''),
     };
 
     const onSuccess = () => onClose();
@@ -150,6 +182,16 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
                   className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Slug (URL identifier) *</label>
+                <input 
+                  type="text"
+                  placeholder="e.g. luxury-pool-villa"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                  value={formData.slug}
+                  onChange={(e) => setFormData({...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-')})}
                 />
               </div>
               <div>
@@ -250,6 +292,83 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
+                  <input 
+                    type="number"
+                    min="1"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.bathrooms}
+                    onChange={(e) => setFormData({...formData, bathrooms: Number(e.target.value)})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
+                  <input 
+                    type="number"
+                    min="1"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.bedrooms}
+                    onChange={(e) => setFormData({...formData, bedrooms: Number(e.target.value)})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Living Rooms/Halls</label>
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.halls}
+                    onChange={(e) => setFormData({...formData, halls: Number(e.target.value)})}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Max Guests</label>
+                  <input 
+                    type="number"
+                    min="1"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.maxGuests}
+                    onChange={(e) => setFormData({...formData, maxGuests: Number(e.target.value)})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Extra Guest Charge (₹)</label>
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.extraGuestCharge}
+                    onChange={(e) => setFormData({...formData, extraGuestCharge: Number(e.target.value)})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Security Deposit (₹)</label>
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    value={formData.securityDeposit}
+                    onChange={(e) => setFormData({...formData, securityDeposit: Number(e.target.value)})}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Booking Advance Payment (₹)</label>
+                <input 
+                  type="number"
+                  min="0"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                  value={formData.bookingAdvance}
+                  onChange={(e) => setFormData({...formData, bookingAdvance: Number(e.target.value)})}
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Amenities</label>
                 <p className="text-xs text-gray-500 mb-3">e.g. WiFi, Pool, Air Conditioning</p>
@@ -276,6 +395,92 @@ export default function StayModal({ isOpen, onClose, stayToEdit }: StayModalProp
                     className="text-sm font-medium text-primary hover:underline"
                   >
                     + Add amenity
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Food Options</label>
+                <p className="text-xs text-gray-500 mb-3">e.g. Swiggy Available, Chef on Request</p>
+                <div className="space-y-3">
+                  {formData.foodOptions.map((option, idx) => (
+                    <div key={idx} className="flex gap-2">
+                      <input 
+                        type="text"
+                        placeholder="e.g. Swiggy & Zomato Available"
+                        className="flex-1 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                        value={option}
+                        onChange={(e) => {
+                          const newOptions = [...formData.foodOptions];
+                          newOptions[idx] = e.target.value;
+                          setFormData({ ...formData, foodOptions: newOptions });
+                        }}
+                      />
+                      <button 
+                        onClick={() => {
+                          const newOptions = formData.foodOptions.filter((_, i) => i !== idx);
+                          if (newOptions.length === 0) newOptions.push('');
+                          setFormData({ ...formData, foodOptions: newOptions });
+                        }}
+                        className="p-3 text-red-500 hover:bg-red-50 rounded-lg border border-red-100"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  ))}
+                  <button 
+                    onClick={() => setFormData({ ...formData, foodOptions: [...formData.foodOptions, ''] })}
+                    className="text-sm font-medium text-primary hover:underline"
+                  >
+                    + Add food option
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Add-ons (e.g. Campfire, Kitchen)</label>
+                <div className="space-y-3">
+                  {formData.addOns.map((addon, idx) => (
+                    <div key={idx} className="flex gap-2">
+                      <input 
+                        type="text"
+                        placeholder="Name (e.g. Campfire)"
+                        className="flex-[2] p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                        value={addon.name}
+                        onChange={(e) => {
+                          const newAddOns = [...formData.addOns];
+                          newAddOns[idx] = { ...newAddOns[idx], name: e.target.value };
+                          setFormData({ ...formData, addOns: newAddOns });
+                        }}
+                      />
+                      <input 
+                        type="number"
+                        placeholder="Price"
+                        className="flex-1 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                        value={addon.price}
+                        onChange={(e) => {
+                          const newAddOns = [...formData.addOns];
+                          newAddOns[idx] = { ...newAddOns[idx], price: Number(e.target.value) };
+                          setFormData({ ...formData, addOns: newAddOns });
+                        }}
+                      />
+                      <button 
+                        onClick={() => {
+                          const newAddOns = formData.addOns.filter((_, i) => i !== idx);
+                          if (newAddOns.length === 0) newAddOns.push({ name: '', price: 0 });
+                          setFormData({ ...formData, addOns: newAddOns });
+                        }}
+                        className="p-3 text-red-500 hover:bg-red-50 rounded-lg border border-red-100"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  ))}
+                  <button 
+                    onClick={() => setFormData({ ...formData, addOns: [...formData.addOns, { name: '', price: 0 }] })}
+                    className="text-sm font-medium text-primary hover:underline"
+                  >
+                    + Add add-on
                   </button>
                 </div>
               </div>

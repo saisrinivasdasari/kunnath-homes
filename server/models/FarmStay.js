@@ -5,6 +5,11 @@ const farmStaySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  slug: {
+    type: String,
+    required: true,
+    unique: true
+  },
   price: {
     type: Number,
     required: true
@@ -17,8 +22,43 @@ const farmStaySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  bathrooms: {
+    type: Number,
+    default: 1
+  },
+  bedrooms: {
+    type: Number,
+    default: 1
+  },
+  halls: {
+    type: Number,
+    default: 0
+  },
+  maxGuests: {
+    type: Number,
+    default: 2
+  },
+  extraGuestCharge: {
+    type: Number,
+    default: 0
+  },
+  securityDeposit: {
+    type: Number,
+    default: 0
+  },
+  bookingAdvance: {
+    type: Number,
+    default: 0
+  },
+  foodOptions: [{
+    type: String
+  }],
+  addOns: [{
+    name: String,
+    price: Number
+  }],
   images: [{
-    type: String // Cloudinary URLs
+    type: String // Cloudinary or Local URLs
   }],
   amenities: [{
     type: String

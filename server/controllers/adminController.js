@@ -9,16 +9,30 @@ const Booking = require('../models/Booking');
 // @access  Private/Admin
 const createStay = async (req, res) => {
   try {
-    const { name, price, capacity, beds, description, amenities, images } = req.body;
+    const { 
+      name, slug, price, capacity, beds, bathrooms, bedrooms, halls, 
+      maxGuests, extraGuestCharge, securityDeposit, bookingAdvance, 
+      description, amenities, images, foodOptions, addOns 
+    } = req.body;
 
     const stay = new FarmStay({
       name,
+      slug,
       price,
       capacity,
       beds,
+      bathrooms,
+      bedrooms,
+      halls,
+      maxGuests,
+      extraGuestCharge,
+      securityDeposit,
+      bookingAdvance,
       description,
       amenities,
-      images
+      images,
+      foodOptions,
+      addOns
     });
 
     const createdStay = await stay.save();
@@ -38,13 +52,23 @@ const updateStay = async (req, res) => {
     const stay = await FarmStay.findById(req.params.id);
 
     if (stay) {
-      stay.name = name || stay.name;
-      stay.price = price || stay.price;
-      stay.capacity = capacity || stay.capacity;
-      stay.beds = beds || stay.beds;
-      stay.description = description || stay.description;
-      stay.amenities = amenities || stay.amenities;
-      stay.images = images || stay.images;
+      stay.name = req.body.name || stay.name;
+      stay.slug = req.body.slug || stay.slug;
+      stay.price = req.body.price !== undefined ? req.body.price : stay.price;
+      stay.capacity = req.body.capacity !== undefined ? req.body.capacity : stay.capacity;
+      stay.beds = req.body.beds !== undefined ? req.body.beds : stay.beds;
+      stay.bathrooms = req.body.bathrooms !== undefined ? req.body.bathrooms : stay.bathrooms;
+      stay.bedrooms = req.body.bedrooms !== undefined ? req.body.bedrooms : stay.bedrooms;
+      stay.halls = req.body.halls !== undefined ? req.body.halls : stay.halls;
+      stay.maxGuests = req.body.maxGuests !== undefined ? req.body.maxGuests : stay.maxGuests;
+      stay.extraGuestCharge = req.body.extraGuestCharge !== undefined ? req.body.extraGuestCharge : stay.extraGuestCharge;
+      stay.securityDeposit = req.body.securityDeposit !== undefined ? req.body.securityDeposit : stay.securityDeposit;
+      stay.bookingAdvance = req.body.bookingAdvance !== undefined ? req.body.bookingAdvance : stay.bookingAdvance;
+      stay.description = req.body.description || stay.description;
+      stay.amenities = req.body.amenities || stay.amenities;
+      stay.images = req.body.images || stay.images;
+      stay.foodOptions = req.body.foodOptions || stay.foodOptions;
+      stay.addOns = req.body.addOns || stay.addOns;
 
       const updatedStay = await stay.save();
       res.json(updatedStay);

@@ -44,6 +44,9 @@ const bookingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  selectedAddOns: [{
+    type: String
+  }],
   isRead: {
     type: Boolean,
     default: false

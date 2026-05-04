@@ -510,6 +510,21 @@ export default function StayDetailsPage() {
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
   const [galleryStartIndex, setGalleryStartIndex] = useState(0);
   const [showReviewText, setShowReviewText] = useState<boolean[]>([]);
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
+  const [dynamicImages, setDynamicImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (stayData?.slug) {
+      fetch(`/api/gallery/${stayData.slug}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setDynamicImages(data);
+          }
+        })
+        .catch(err => console.error('Failed to fetch gallery images:', err));
+    }
+  }, [stayData?.slug]);
 
   // Progressive booking flow state
   const [step, setStep] = useState(1);
@@ -544,7 +559,10 @@ export default function StayDetailsPage() {
     images = [],
     price = 5000,
     capacity = 4,
+    maxGuests = 4,
     beds = 2,
+    bedrooms = 1,
+    halls = 0,
     bathrooms = 2,
     description = "Beautiful farm stay with modern amenities.",
     host = {
@@ -555,10 +573,13 @@ export default function StayDetailsPage() {
       joinedDate: "March 2018",
       avatar: null,
     },
-    amenitiesList = [
-      "Wifi", "Pool", "Kitchen", "Free parking", "Air conditioning", "Heating", "TV", "Washer", "Dryer", "Dedicated workspace",
-      "Hair dryer", "Iron", "Hot water", "Indoor fireplace", "Private entrance", "Garden", "Patio", "BBQ grill", "Beach access"
-    ],
+    amenitiesList = [],
+    amenities = [],
+    foodOptions = [],
+    addOns = [],
+    securityDeposit = 5000,
+    bookingAdvance = 5000,
+    extraGuestCharge = 500,
     reviewList = [
       { author: "Priya", date: "March 2025", rating: 5, text: "Amazing place! Beautiful surroundings and the host was very helpful." },
       { author: "Rahul", date: "February 2025", rating: 5, text: "Absolutely loved the stay. Clean, peaceful, and exactly as described." },
@@ -573,16 +594,28 @@ export default function StayDetailsPage() {
 
   // const bookedDates = unavailableDates.length > 0 ? unavailableDates : generateMockBookedDates();
   const bookedDates = unavailableDates || [];
-  const allAmenities = amenitiesList.length ? amenitiesList : dummyAmenities.map(a => a.name);
+  const allAmenities = (amenitiesList?.length ? amenitiesList : amenities) || dummyAmenities.map(a => a.name);
   const displayedAmenities = showAllAmenities ? allAmenities : allAmenities.slice(0, 6);
   const hasMoreAmenities = allAmenities.length > 6;
 
-  const galleryImages = images.length >= 5 ? images : [...images, ...Array(5 - images.length).fill(images[0] || '/placeholder.jpg')];
+  const imagesToDisplay = dynamicImages.length > 0 ? dynamicImages : (images.length > 0 ? images : ['/placeholder.jpg']);
+  const galleryImages = imagesToDisplay.length >= 5 ? imagesToDisplay : [...imagesToDisplay, ...Array(5 - imagesToDisplay.length).fill(imagesToDisplay[0] || '/placeholder.jpg')];
 
   const nights = calculateNightsLocal(checkIn, checkOut);
   const basePrice = price * nights;
-  const cleaningFee = 2000;
-  const serviceFee = 1500;
+  
+  // Extra guests calculation
+  const extraGuests = guests > capacity ? guests - capacity : 0;
+  const extraGuestTotal = extraGuests * extraGuestCharge * nights;
+
+  // Add-ons calculation
+  const addOnsTotal = addOns
+    .filter(a => selectedAddOns.includes(a.name))
+    .reduce((sum, a) => sum + a.price, 0);
+
+  const cleaningFee = 0; // Removing dummy fees for now or keeping them 0 as requested
+  const serviceFee = 0;
+  
   let discountPercent = 0;
   if (user?.isMember) {
     if (user.membershipType === 'silver') discountPercent = 10;
@@ -590,7 +623,7 @@ export default function StayDetailsPage() {
     else if (user.membershipType === 'premium') discountPercent = 30;
   }
   const discountAmount = (basePrice * discountPercent) / 100;
-  const subtotal = basePrice - discountAmount;
+  const subtotal = basePrice - discountAmount + extraGuestTotal + addOnsTotal;
   const totalPrice = subtotal + cleaningFee + serviceFee;
 
   const handleReserve = () => {
@@ -602,7 +635,7 @@ export default function StayDetailsPage() {
       alert('Please fill out all guest details.');
       return;
     }
-    createBooking({ stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, totalPrice }, {
+    createBooking({ stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, totalPrice, selectedAddOns }, {
       onSuccess: () => {
         setStep(4); // Success step
       },
@@ -695,7 +728,7 @@ export default function StayDetailsPage() {
               <div>
                 <h2 className="text-2xl font-semibold">Entire farm stay hosted by {host.name}</h2>
                 <div className="flex flex-wrap gap-2 mt-2 text-gray-600">
-                  <span>{capacity} guests</span>
+                  <span>{bedrooms} BHK</span>
                   <span>·</span>
                   <span>{beds} beds</span>
                   <span>·</span>
@@ -745,6 +778,21 @@ export default function StayDetailsPage() {
                 </button>
               )}
             </div>
+
+            {/* Food Options */}
+            {foodOptions && foodOptions.length > 0 && (
+              <div className="border-t border-gray-200 pt-8">
+                <h2 className="text-xl font-semibold mb-5">Food</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {foodOptions.map((option, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                      <Utensils size={20} className="text-gray-700 mt-0.5" />
+                      <span className="text-gray-700">{option}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Reviews */}
             {/* {reviews > 0 && (
@@ -821,6 +869,29 @@ export default function StayDetailsPage() {
                 <p className="text-sm text-gray-600">{cancellationPolicy}</p>
               </div>
             </div>
+
+            {/* Guest Policy & Charges */}
+            <div className="border-t border-gray-200 pt-8">
+              <h2 className="text-xl font-semibold mb-4">Pricing & Policies</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="p-4 border border-gray-100 rounded-xl">
+                  <h4 className="font-semibold mb-2">Guest Capacity</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>Included guests: Up to {capacity} members</li>
+                    <li>Extra charge: ₹{extraGuestCharge} per additional member</li>
+                    <li>Maximum limit: {maxGuests} members</li>
+                  </ul>
+                </div>
+                <div className="p-4 border border-gray-100 rounded-xl">
+                  <h4 className="font-semibold mb-2">Payment & Security</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>Security Deposit: ₹{securityDeposit.toLocaleString()} (Refundable)</li>
+                    <li>Booking Advance: ₹{bookingAdvance.toLocaleString()}</li>
+                    <li>Remaining payment at check-in</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* RIGHT COLUMN - Booking card */}
@@ -865,14 +936,48 @@ export default function StayDetailsPage() {
                             value={guests}
                             onChange={(e) => setGuests(Number(e.target.value))}
                           >
-                            {[...Array(capacity || 8)].map((_, i) => (
+                            {[...Array(maxGuests || 8)].map((_, i) => (
                               <option key={i + 1} value={i + 1}>{i + 1} {i === 0 ? 'guest' : 'guests'}</option>
                             ))}
                           </select>
+                          {guests > capacity && (
+                            <div className="text-[10px] text-orange-600 mt-1 font-medium">
+                              ₹{extraGuestCharge} extra per guest over {capacity}
+                            </div>
+                          )}
                         </div>
                         <ChevronDown size={20} className="text-gray-600 pointer-events-none" />
                       </div>
                     </div>
+
+                    {/* Add-ons selection in booking card */}
+                    {addOns && addOns.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-xs font-bold uppercase text-gray-800 mb-2">Optional Add-ons</div>
+                        <div className="space-y-2">
+                          {addOns.map((addon) => (
+                            <label key={addon.name} className="flex items-center justify-between p-2 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="checkbox"
+                                  className="w-4 h-4 rounded text-gray-900 focus:ring-gray-900 border-gray-300"
+                                  checked={selectedAddOns.includes(addon.name)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setSelectedAddOns([...selectedAddOns, addon.name]);
+                                    } else {
+                                      setSelectedAddOns(selectedAddOns.filter(a => a !== addon.name));
+                                    }
+                                  }}
+                                />
+                                <span className="text-sm font-medium">{addon.name}</span>
+                              </div>
+                              <span className="text-sm text-gray-600">₹{addon.price}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <Button
                       size="lg"
@@ -958,20 +1063,36 @@ export default function StayDetailsPage() {
                         <span>{formatCurrency(price)} × {nights} {nights === 1 ? 'night' : 'nights'}</span>
                         <span>{formatCurrency(basePrice)}</span>
                       </div>
+                      {extraGuestTotal > 0 && (
+                        <div className="flex justify-between text-gray-600">
+                          <span>Extra guest charge ({extraGuests} guests)</span>
+                          <span>{formatCurrency(extraGuestTotal)}</span>
+                        </div>
+                      )}
+                      {selectedAddOns.length > 0 && addOns.filter(a => selectedAddOns.includes(a.name)).map(addon => (
+                        <div key={addon.name} className="flex justify-between text-gray-600">
+                          <span>{addon.name}</span>
+                          <span>{formatCurrency(addon.price)}</span>
+                        </div>
+                      ))}
                       {user?.isMember && discountAmount > 0 && (
                         <div className="flex justify-between text-green-700 font-medium">
                           <span>{user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1)} discount ({discountPercent}%)</span>
                           <span>-{formatCurrency(discountAmount)}</span>
                         </div>
                       )}
-                      <div className="flex justify-between text-gray-600">
-                        <span>Cleaning fee</span>
-                        <span>{formatCurrency(cleaningFee)}</span>
-                      </div>
-                      <div className="flex justify-between text-gray-600">
-                        <span>Service fee</span>
-                        <span>{formatCurrency(serviceFee)}</span>
-                      </div>
+                      {cleaningFee > 0 && (
+                        <div className="flex justify-between text-gray-600">
+                          <span>Cleaning fee</span>
+                          <span>{formatCurrency(cleaningFee)}</span>
+                        </div>
+                      )}
+                      {serviceFee > 0 && (
+                        <div className="flex justify-between text-gray-600">
+                          <span>Service fee</span>
+                          <span>{formatCurrency(serviceFee)}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex justify-between pt-4 pb-6 font-bold text-gray-900 text-lg">
                       <span>Total (INR)</span>

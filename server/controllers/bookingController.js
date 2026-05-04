@@ -5,7 +5,7 @@ const FarmStay = require('../models/FarmStay');
 // @route   POST /api/bookings
 // @access  Private
 const createBooking = async (req, res) => {
-  const { stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone } = req.body;
+  const { stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, selectedAddOns } = req.body;
 
   if (!stayId || !checkIn || !checkOut || !guests || !guestName || !guestEmail || !guestPhone) {
     return res.status(400).json({ message: 'Please provide all required fields' });
@@ -20,7 +20,6 @@ const createBooking = async (req, res) => {
     }
 
     // Check for overlapping bookings for this stay
-    // Overlap condition: Existing booking check-in < New check-out AND Existing booking check-out > New check-in
     const overlappingBookings = await Booking.find({
       stayId,
       status: { $ne: 'cancelled' },
@@ -45,21 +44,32 @@ const createBooking = async (req, res) => {
     const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     let basePrice = stay.price * nights;
-    let finalPrice = basePrice;
 
-    // Apply Membership Discount
+    // Extra guest charges
+    const extraGuests = guests > stay.capacity ? guests - stay.capacity : 0;
+    const extraGuestTotal = extraGuests * (stay.extraGuestCharge || 0) * nights;
+
+    // Add-on charges
+    let addOnsTotal = 0;
+    if (selectedAddOns && selectedAddOns.length > 0 && stay.addOns) {
+      addOnsTotal = stay.addOns
+        .filter(a => selectedAddOns.includes(a.name))
+        .reduce((sum, a) => sum + a.price, 0);
+    }
+
+    let finalPrice = basePrice + extraGuestTotal + addOnsTotal;
+
+    // Apply Membership Discount (on base price only)
     if (req.user.isMember) {
-      if (req.user.membershipType === 'silver') {
-        finalPrice = basePrice * 0.90; // 10% off
-      } else if (req.user.membershipType === 'gold') {
-        finalPrice = basePrice * 0.80; // 20% off
-      } else if (req.user.membershipType === 'premium') {
-        finalPrice = basePrice * 0.70; // 30% off
-      }
+      let discountPercent = 0;
+      if (req.user.membershipType === 'silver') discountPercent = 10;
+      else if (req.user.membershipType === 'gold') discountPercent = 20;
+      else if (req.user.membershipType === 'premium') discountPercent = 30;
+      finalPrice -= (basePrice * discountPercent) / 100;
     }
 
     const booking = new Booking({
-      userId: req.user._id, // From protect middleware
+      userId: req.user._id,
       stayId,
       checkIn: checkInDate,
       checkOut: checkOutDate,
@@ -67,7 +77,8 @@ const createBooking = async (req, res) => {
       totalPrice: finalPrice,
       guestName,
       guestEmail,
-      guestPhone
+      guestPhone,
+      selectedAddOns: selectedAddOns || []
     });
 
     const createdBooking = await booking.save();
