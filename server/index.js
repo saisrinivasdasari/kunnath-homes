@@ -34,7 +34,14 @@ connectDB().then(async () => {
           extraGuestCharge: 500,
           securityDeposit: 5000,
           bookingAdvance: 5000,
-          images: ['/stays/orange/profile.jpg'],
+          images: [
+            '/stays/orange/Mainview.JPG',
+            '/stays/orange/Pool.jpeg',
+            '/stays/orange/Living Room.jpeg',
+            '/stays/orange/1- Bedrrom.jpeg',
+            '/stays/orange/2-Bedroom.jpeg',
+            '/stays/orange/Others.jpeg'
+          ],
           amenities: ['Private Swimming Pool', 'Lawn', 'Bonfires', 'Outdoor Projector', '55inch Smart TV', 'Party speaker', 'RO Water', 'Refrigerator', 'Barbeque', 'Microwave', 'Kitchen', 'WIFI', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
           foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
           addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
@@ -54,7 +61,14 @@ connectDB().then(async () => {
           extraGuestCharge: 500,
           securityDeposit: 5000,
           bookingAdvance: 5000,
-          images: ['/stays/lemon/profile.jpg'],
+          images: [
+            '/stays/lemon/Mainview.JPG',
+            '/stays/lemon/Kitchen.JPG',
+            '/stays/lemon/Bedrrom 1.jpg',
+            '/stays/lemon/Living room.jpg',
+            '/stays/lemon/Bedroom4.JPG',
+            '/stays/lemon/Bedrrom3.JPG'
+          ],
           amenities: ['Swimming Pool', 'Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
           foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
           addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
@@ -74,7 +88,14 @@ connectDB().then(async () => {
           extraGuestCharge: 500,
           securityDeposit: 5000,
           bookingAdvance: 5000,
-          images: ['/stays/mint/profile.jpg'],
+          images: [
+            '/stays/mint/1-Living room.jpg',
+            '/stays/mint/main View.jpg',
+            '/stays/mint/Pool.jpg',
+            '/stays/mint/Bedroom 2.jpg',
+            '/stays/mint/Mint bedroom 3.jpeg',
+            '/stays/mint/others3.JPG'
+          ],
           amenities: ['Huge Swimming Pool', 'Party Lawn', 'Projector', '65” Smart TV', 'Powerful Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Kitchen', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
           foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
           addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
@@ -83,6 +104,48 @@ connectDB().then(async () => {
       ];
       await FarmStay.insertMany(dummyStays);
       console.log('Dummy stays injected successfully!');
+      // One-time fix for existing stays with wrong profile image path or empty gallery
+      const allStays = await FarmStay.find({});
+      for (const s of allStays) {
+        let updated = false;
+        if (s.slug === 'orange' && (s.images.length < 5 || s.images.includes('/stays/orange/profile.jpg'))) {
+          s.images = [
+            '/stays/orange/Mainview.JPG',
+            '/stays/orange/Pool.jpeg',
+            '/stays/orange/Living Room.jpeg',
+            '/stays/orange/1- Bedrrom.jpeg',
+            '/stays/orange/2-Bedroom.jpeg',
+            '/stays/orange/Others.jpeg'
+          ];
+          updated = true;
+        }
+        if (s.slug === 'lemon' && (s.images.length < 5 || s.images.includes('/stays/lemon/profile.jpg'))) {
+          s.images = [
+            '/stays/lemon/Mainview.JPG',
+            '/stays/lemon/Kitchen.JPG',
+            '/stays/lemon/Bedrrom 1.jpg',
+            '/stays/lemon/Living room.jpg',
+            '/stays/lemon/Bedroom4.JPG',
+            '/stays/lemon/Bedrrom3.JPG'
+          ];
+          updated = true;
+        }
+        if (s.slug === 'mint' && (s.images.length < 5 || s.images.includes('/stays/mint/profile.jpg') || s.images[0] !== '/stays/mint/1-Living room.jpg')) {
+          s.images = [
+            '/stays/mint/1-Living room.jpg',
+            '/stays/mint/main View.jpg',
+            '/stays/mint/Pool.jpg',
+            '/stays/mint/Bedroom 2.jpg',
+            '/stays/mint/Mint bedroom 3.jpeg',
+            '/stays/mint/others3.JPG'
+          ];
+          updated = true;
+        }
+        if (updated) {
+          await s.save();
+          console.log(`Updated gallery for ${s.name}`);
+        }
+      }
     }
 
     const sportCount = await Sport.countDocuments();
