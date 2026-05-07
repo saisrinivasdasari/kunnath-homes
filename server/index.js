@@ -104,11 +104,11 @@ connectDB().then(async () => {
       ];
       await FarmStay.insertMany(dummyStays);
       console.log('Dummy stays injected successfully!');
-      // One-time fix for existing stays with wrong profile image path or empty gallery
+      // Force update for all stays to ensure latest gallery and profile images
       const allStays = await FarmStay.find({});
       for (const s of allStays) {
         let updated = false;
-        if (s.slug === 'orange' && (s.images.length < 5 || s.images.includes('/stays/orange/profile.jpg'))) {
+        if (s.slug === 'orange') {
           s.images = [
             '/stays/orange/Mainview.JPG',
             '/stays/orange/Pool.jpeg',
@@ -119,7 +119,7 @@ connectDB().then(async () => {
           ];
           updated = true;
         }
-        if (s.slug === 'lemon' && (s.images.length < 5 || s.images.includes('/stays/lemon/profile.jpg'))) {
+        if (s.slug === 'lemon') {
           s.images = [
             '/stays/lemon/Mainview.JPG',
             '/stays/lemon/Kitchen.JPG',
@@ -130,7 +130,7 @@ connectDB().then(async () => {
           ];
           updated = true;
         }
-        if (s.slug === 'mint' && (s.images.length < 5 || s.images.includes('/stays/mint/profile.jpg') || s.images[0] !== '/stays/mint/1-Living room.jpg')) {
+        if (s.slug === 'mint') {
           s.images = [
             '/stays/mint/1-Living room.jpg',
             '/stays/mint/main View.jpg',
@@ -142,8 +142,9 @@ connectDB().then(async () => {
           updated = true;
         }
         if (updated) {
+          s.markModified('images');
           await s.save();
-          console.log(`Updated gallery for ${s.name}`);
+          console.log(`Forced gallery update for ${s.name}`);
         }
       }
     }
