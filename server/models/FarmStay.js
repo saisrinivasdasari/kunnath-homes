@@ -14,6 +14,10 @@ const farmStaySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  weekendPrice: {
+    type: Number,
+    required: true
+  },
   beds: {
     type: Number,
     required: true

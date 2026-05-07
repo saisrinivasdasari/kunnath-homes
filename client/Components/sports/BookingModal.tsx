@@ -83,7 +83,10 @@ export default function BookingModal({ sport, isOpen, onClose }: BookingModalPro
         userDetails: formData
       },
       {
-        onSuccess: () => setStep(4) // Success step
+        onSuccess: () => setStep(4),
+        onError: (error: any) => {
+          alert(error.response?.data?.message || 'Failed to complete booking. Please try again.');
+        }
       }
     );
   };

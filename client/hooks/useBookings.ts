@@ -55,6 +55,7 @@ export const useAdminBookings = () => {
       const { data } = await api.get<AdminStayBooking[]>('/admin/bookings');
       return data;
     },
+    refetchInterval: 15000,
   });
 };
 
@@ -67,6 +68,7 @@ export const useUpdateAdminBooking = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['unreadStayBookingCount'] });
     },
   });
 };
@@ -80,6 +82,7 @@ export const useDeleteAdminBooking = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['unreadStayBookingCount'] });
     },
   });
 };
@@ -92,7 +95,7 @@ export const useUnreadStayBookingCount = () => {
       const { data } = await api.get<{ count: number }>('/admin/bookings/unread-count');
       return data.count;
     },
-    refetchInterval: 30000,
+    refetchInterval: 10000,
   });
 };
 

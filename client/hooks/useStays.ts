@@ -6,6 +6,7 @@ export interface FarmStay {
   name: string;
   slug: string;
   price: number;
+  weekendPrice: number;
   beds: number;
   capacity: number;
   bathrooms: number;

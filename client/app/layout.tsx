@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import { Header } from '../Components/layout/Header'
 import { Footer } from '../Components/layout/Footer'
-// import FloatingButtons from '../Components/layout/FloatingButtons';
+import FloatingButtons from '../Components/layout/FloatingButtons';
 import './globals.css'
 
 import Providers from './providers'
@@ -29,7 +29,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          {/* <FloatingButtons /> */}
+          <FloatingButtons />
         </Providers>
       </body>
     </html>

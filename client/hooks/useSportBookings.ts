@@ -55,6 +55,18 @@ export function useMySportBookings() {
   });
 }
 
+// Admin: fetch all sport bookings with polling
+export const useAdminSportBookings = () => {
+  return useQuery({
+    queryKey: ['adminSportBookings'],
+    queryFn: async () => {
+      const { data } = await api.get<SportBooking[]>('/admin/sport-bookings');
+      return data;
+    },
+    refetchInterval: 15000,
+  });
+};
+
 // Admin: unread sport bookings count for notification badge
 export const useUnreadSportBookingCount = () => {
   return useQuery({
@@ -63,7 +75,7 @@ export const useUnreadSportBookingCount = () => {
       const { data } = await api.get<{ count: number }>('/admin/sport-bookings/unread-count');
       return data.count;
     },
-    refetchInterval: 30000,
+    refetchInterval: 10000,
   });
 };
 

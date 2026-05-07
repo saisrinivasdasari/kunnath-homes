@@ -41,7 +41,15 @@ const sportBookingSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Prevent double booking for the same sport, date, and timeSlot
-sportBookingSchema.index({ sport: 1, date: 1, timeSlot: 1 }, { unique: true });
+// Use a partial index so that multiple cancelled bookings can exist for the same slot,
+// but only one active (pending/confirmed) booking can exist.
+sportBookingSchema.index(
+  { sport: 1, date: 1, timeSlot: 1 }, 
+  { 
+    unique: true, 
+    partialFilterExpression: { status: { $in: ['pending', 'confirmed'] } } 
+  }
+);
 
 const SportBooking = mongoose.model('SportBooking', sportBookingSchema);
 module.exports = SportBooking;

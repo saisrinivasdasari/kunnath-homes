@@ -199,7 +199,7 @@ export function Header() {
   };
 
   const navLinks = [
-    { name: 'Farm Stays', href: '/#stays', isHashLink: true },
+    { name: 'Farm Stays', href: '/stays' },
     { name: 'Sports', href: '/sports' },
     { name: 'Events', href: '/events' },
     { name: 'Membership', href: '/membership' },
@@ -219,26 +219,16 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) =>
-              link.isHashLink ? (
-                <button
-                  key={link.name}
-                  onClick={handleStayClick}
-                  className="text-sm font-medium transition-colors hover:text-primary text-text-primary"
-                >
-                  {link.name}
-                </button>
-              ) : (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? 'text-primary font-semibold' : 'text-text-primary'
-                    }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? 'text-primary font-semibold' : 'text-text-primary'
+                  }`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Right Section: Phone + Auth */}
@@ -316,29 +306,16 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-gray-200 absolute w-full">
           <div className="px-4 pt-2 pb-6 space-y-1 sm:px-6">
-            {navLinks.map((link) =>
-              link.isHashLink ? (
-                <button
-                  key={link.name}
-                  onClick={(e) => {
-                    handleStayClick(e);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-primary"
-                >
-                  {link.name}
-                </button>
-              ) : (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-primary"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-primary"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
             <a
               href="tel:+911234567890"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-primary"

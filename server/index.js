@@ -21,10 +21,31 @@ connectDB().then(async () => {
       console.log('No stays found. Injecting dummy data into the database...');
       const dummyStays = [
         {
+          name: 'Orange',
+          slug: 'orange',
+          price: 10000,
+          weekendPrice: 12000,
+          beds: 2,
+          bedrooms: 2,
+          bathrooms: 2,
+          halls: 1,
+          capacity: 15,
+          maxGuests: 20,
+          extraGuestCharge: 500,
+          securityDeposit: 5000,
+          bookingAdvance: 5000,
+          images: ['/stays/orange/profile.jpg'],
+          amenities: ['Private Swimming Pool', 'Lawn', 'Bonfires', 'Outdoor Projector', '55inch Smart TV', 'Party speaker', 'RO Water', 'Refrigerator', 'Barbeque', 'Microwave', 'Kitchen', 'WIFI', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
+          foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
+          addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
+          description: 'Orange is a 2BHK peaceful retreat with private swimming pool, designed for comfort, fun, and memorable moments. Ideal for families, friends, and weekend escapes, this beautifully maintained space offers the perfect balance of relaxation and entertainment.',
+        },
+        {
           name: 'Lemon',
           slug: 'lemon',
-          price: 16000,
-          beds: 10,
+          price: 20000,
+          weekendPrice: 25000,
+          beds: 5,
           bedrooms: 5,
           bathrooms: 4,
           halls: 4,
@@ -40,29 +61,11 @@ connectDB().then(async () => {
           description: 'Lemon is Spacious private stay with 2 villas, 5 bedrooms, and 4 large halls, ideal for groups up to 25 guests. Enjoy a swimming pool, music system, WiFi, refrigerator, microwave, and BBQ setup—perfect for family get-togethers, parties, and group stays.',
         },
         {
-          name: 'Orange Farmhouse',
-          slug: 'orange',
-          price: 10000,
-          beds: 4,
-          bedrooms: 2,
-          bathrooms: 2,
-          halls: 1,
-          capacity: 15,
-          maxGuests: 20,
-          extraGuestCharge: 500,
-          securityDeposit: 5000,
-          bookingAdvance: 5000,
-          images: ['/stays/orange/profile.jpg'],
-          amenities: ['Private Swimming Pool', 'Lawn', 'Bonfires', 'Outdoor Projector', '55inch Smart TV', 'Party speaker', 'RO Water', 'Refrigerator', 'Barbeque', 'Microwave', 'Kitchen', 'WIFI', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
-          foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
-          addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
-          description: 'Orange Farmhouse is a 2BHK peaceful retreat with private swimming pool, designed for comfort, fun, and memorable moments. Ideal for families, friends, and weekend escapes, this beautifully maintained space offers the perfect balance of relaxation and entertainment.',
-        },
-        {
-          name: 'Mint Farmhouse',
+          name: 'Mint',
           slug: 'mint',
           price: 20000,
-          beds: 8,
+          weekendPrice: 25000,
+          beds: 4,
           bedrooms: 4,
           bathrooms: 4,
           halls: 1,
@@ -75,7 +78,7 @@ connectDB().then(async () => {
           amenities: ['Huge Swimming Pool', 'Party Lawn', 'Projector', '65” Smart TV', 'Powerful Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Kitchen', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
           foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
           addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
-          description: 'Mint Farmhouse is a spacious 4-bedroom private stay featuring a living room, dining area, and a large party hall. Enjoy a huge swimming pool, party lawn, projector, 65” Smart TV, powerful music system, high-speed WIFI, refrigerator, microwave, and BBQ setup—perfect for celebrations, group stays, and unforgettable get-togethers.',
+          description: 'Mint is a spacious 4-bedroom private stay featuring a living room, dining area, and a large party hall. Enjoy a huge swimming pool, party lawn, projector, 65” Smart TV, powerful music system, high-speed WIFI, refrigerator, microwave, and BBQ setup—perfect for celebrations, group stays, and unforgettable get-togethers.',
         },
       ];
       await FarmStay.insertMany(dummyStays);
@@ -106,7 +109,7 @@ connectDB().then(async () => {
           name: 'Cricket Bowling Machine',
           price: 299,
           duration: '30 mins',
-          image: 'https://images.unsplash.com/photo-hC8gvXips0k?q=80&w=800&auto=format&fit=crop',
+          image: 'https://res.cloudinary.com/dwrxo4hvx/image/upload/v1777899658/2_cwqayd.webp',
           description: 'Practice your batting skills with our automated cricket bowling machine.',
           icon: '🏏'
         },
@@ -114,7 +117,7 @@ connectDB().then(async () => {
           name: 'ATV Bike',
           price: 299,
           duration: '1 lap',
-          image: 'https://images.unsplash.com/photo-1596328221805-47ebec271d54?q=80&w=800&auto=format&fit=crop',
+          image: 'https://res.cloudinary.com/dwrxo4hvx/image/upload/v1777899656/1_pknngl.jpg',
           description: 'Enjoy an adrenaline-filled ride on our off-road ATV track.',
           icon: '🏎️'
         },
@@ -122,7 +125,7 @@ connectDB().then(async () => {
           name: 'RC Car',
           price: 299,
           duration: '15 mins',
-          image: 'https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?q=80&w=800&auto=format&fit=crop',
+          image: 'https://res.cloudinary.com/dwrxo4hvx/image/upload/v1777899657/3_xdxidp.jpg',
           description: 'Have fun racing high-speed remote-controlled cars on our custom track.',
           icon: '🚗'
         }
@@ -178,6 +181,8 @@ const sportRoutes = require('./routes/sportRoutes');
 app.use('/api/sports', sportRoutes);
 const sportBookingRoutes = require('./routes/sportBookingRoutes');
 app.use('/api/sport-bookings', sportBookingRoutes);
+const eventRoutes = require('./routes/eventRoutes');
+app.use('/api/events', eventRoutes);
 const contactRoutes = require('./routes/contactRoutes');
 app.use('/api/contact', contactRoutes);
 

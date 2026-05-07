@@ -6,6 +6,7 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Search, ArrowRight } from 'lucide-react';
+import { formatCurrency } from '@/lib/utils';
 import Link from 'next/link';
 import { useStays } from '@/hooks/useStays';
 import { useSports } from '@/hooks/useSports';
@@ -66,15 +67,15 @@ export default function Home() {
             <section id="stays" className="pt-20 pb-10">
 
                 <Container>
-                    <div className="flex justify-between items-end mb-10">
+                    {/* <div className="flex justify-between items-end mb-10">
                         <div>
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Luxury Stays</h2>
                             <p className="text-gray-500">Discover your perfect escape</p>
                         </div>
-                        {/* <Link href="/stays" className="text-primary font-medium hover:underline flex items-center">
+                        <Link href="/stays" className="text-primary font-medium hover:underline flex items-center">
                             View all <ArrowRight size={16} className="ml-1" />
-                        </Link> */}
-                    </div>
+                        </Link>
+                    </div> */}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {isLoadingStays ? (
@@ -92,16 +93,22 @@ export default function Home() {
                                     <div className="p-5">
                                         <div className="flex justify-between items-start mb-2">
                                             <h3 className="font-bold text-lg text-gray-900">{stay.name}</h3>
-                                            <div className="flex items-center text-sm text-gray-600">
+                                            {/* <div className="flex items-center text-sm text-gray-600">
                                                 <span>★ 4.9</span>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <p className="text-gray-500 text-sm mb-4">
                                             {stay.bedrooms} BHK • Up to {stay.capacity} guests
                                         </p>
-                                        <div className="flex items-center">
-                                            <span className="font-semibold text-lg text-gray-900">₹{stay.price.toLocaleString()}</span>
-                                            <span className="text-gray-500 ml-1">/ night</span>
+                                        <div className="flex flex-col gap-1">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Weekdays</span>
+                                                <span className="font-semibold text-gray-900">{formatCurrency(stay.price)}</span>
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Weekends</span>
+                                                <span className="font-semibold text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </Card>
@@ -111,31 +118,51 @@ export default function Home() {
                 </Container>
             </section>
 
-            {/* 3. SPORTS & ACTIVITIES */}
-            <section className="py-16 bg-gray-50">
+            <section id="activities" className="py-24 bg-white">
                 <Container>
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Sports & Activities</h2>
-                        <p className="text-gray-500 max-w-2xl mx-auto">Elevate your stay with our premium outdoor sports facilities.</p>
+                    <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-6">
+                        <div className="text-center md:text-left">
+                            <span className="text-primary font-bold text-sm uppercase tracking-widest mb-3 block">Experiences</span>
+                            <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">Sports & Activities</h2>
+                        </div>
+                        <Link href="/sports" className="group flex items-center gap-2 text-gray-900 font-bold hover:text-primary transition-colors bg-gray-100 px-6 py-3 rounded-full">
+                            Explore All <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {isLoadingSports ? (
-                            <div className="col-span-4 text-center py-10">Loading activities...</div>
-                        ) : sports?.map((activity, idx) => (
-                            <Link href="/sports" key={idx} className="block group">
-                                <div className="bg-white rounded-2xl shadow-soft overflow-hidden hover:shadow-hover transition-all cursor-pointer border border-gray-100">
-                                    <div className="aspect-video overflow-hidden">
-                                        <img
-                                            src={activity.image}
-                                            alt={activity.name}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
+                            <div className="col-span-4 text-center py-20 bg-gray-50 rounded-3xl text-gray-400">
+                                <div className="animate-pulse flex flex-col items-center">
+                                    <div className="w-12 h-12 bg-gray-200 rounded-full mb-4"></div>
+                                    <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                                </div>
+                            </div>
+                        ) : sports?.slice(0, 4).map((activity, idx) => (
+                            <Link href="/sports" key={idx} className="block group relative h-[420px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                                <img
+                                    src={activity.image}
+                                    alt={activity.name}
+                                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+
+                                <div className="absolute top-6 left-6">
+                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-2xl shadow-inner border border-white/30">
+                                        {activity.icon}
                                     </div>
-                                    <div className="p-5 text-center">
-                                        <div className="text-3xl mb-2">{activity.icon}</div>
-                                        <h3 className="font-bold text-lg text-gray-900 mb-1">{activity.name}</h3>
-                                        <p className="text-primary font-medium">₹{activity.price}/{activity.duration}</p>
+                                </div>
+
+                                <div className="absolute bottom-8 left-8 right-8">
+                                    <h3 className="text-2xl font-bold text-white mb-2">{activity.name}</h3>
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-white/80 font-medium">
+                                            {formatCurrency(activity.price)}
+                                            <span className="text-white/60 text-sm font-normal ml-1">/ {activity.duration}</span>
+                                        </p>
+                                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300">
+                                            <ArrowRight size={18} />
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
@@ -190,7 +217,7 @@ export default function Home() {
             </section>
 
             {/* 5. CTA SECTION */}
-            <section className="py-16 text-center">
+            {/* <section className="py-16 text-center">
                 <Container>
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">Ready to disconnect?</h2>
                     <Link href="/stays">
@@ -198,6 +225,49 @@ export default function Home() {
                             Book Your Stay
                         </Button>
                     </Link>
+                    <Link href="/contact">
+                        <Button size="lg" className="px-10">
+                            Contact Us
+                        </Button>
+                    </Link>
+                </Container>
+            </section> */}
+            <section className="py-20 bg-white">
+                <Container>
+                    <div className="max-w-3xl mx-auto text-center">
+                        <span className="inline-block px-4 py-1 mb-4 text-sm font-medium tracking-wide text-gray-600 uppercase bg-gray-100 rounded-full">
+                            Escape the Noise
+                        </span>
+
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                            Ready to disconnect?
+                        </h2>
+
+                        <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+                            Slow down, breathe deeply, and reconnect with nature in a peaceful stay designed for rest and simplicity.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Link href="/stays">
+                                <Button
+                                    size="lg"
+                                    className="px-10 py-6 text-base font-semibold shadow-md hover:shadow-xl transition-all duration-300"
+                                >
+                                    Book Your Stay
+                                </Button>
+                            </Link>
+
+                            <Link href="/contact">
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    className="px-10 py-6 text-base font-semibold border-gray-300 hover:bg-gray-100 transition-all duration-300"
+                                >
+                                    Contact Us
+                                </Button>
+                            </Link>
+                        </div>
+                    </div>
                 </Container>
             </section>
         </div>

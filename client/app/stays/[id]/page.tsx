@@ -247,7 +247,7 @@
 
 //                       <div className="flex justify-between pt-4 font-bold text-gray-900 text-lg">
 //                         <span>Total before taxes</span>
-//                         <span>₹{totalPrice.toLocaleString()}</span>
+//                         <span>{formatCurrency(totalPrice)}</span>
 //                       </div>
 //                     </>
 //                   );
@@ -280,6 +280,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useStayDetails } from '@/hooks/useStays';
 import { useCreateBooking } from '@/hooks/useBookings';
 import { useAuthStore } from '@/store/authStore';
+
+import { formatCurrency } from '@/lib/utils';
 
 // ---------- TIMEZONE-SAFE DATE HELPERS ----------
 function getTodayLocal(): string {
@@ -362,6 +364,24 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
       onDateSelect(ymd);
     } else {
       if (ymd > checkIn) {
+        // Check if any date in the range [checkIn, ymd] is booked
+        const start = new Date(checkIn);
+        const end = new Date(ymd);
+        let current = new Date(start);
+        let hasBookedInRange = false;
+        while (current <= end) {
+          const dateStr = formatLocalYMD(current);
+          if (isDateBooked(dateStr, bookedDates)) {
+            hasBookedInRange = true;
+            break;
+          }
+          current.setDate(current.getDate() + 1);
+        }
+        
+        if (hasBookedInRange) {
+          alert("This range includes already booked dates. Please select another range.");
+          return;
+        }
         onDateSelect(ymd);
       } else if (ymd < checkIn) {
         onDateSelect(ymd);
@@ -409,6 +429,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
             bgClass = 'bg-gray-100';
             roundedClass = 'rounded-none';
           }
+
           if (start) roundedClass = 'rounded-l-full';
           if (end) roundedClass = 'rounded-r-full';
 
@@ -452,46 +473,13 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
       <div className="flex justify-between mt-6 text-xs text-gray-500 border-t pt-4">
         <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-gray-100 rounded"></span> Selected range</div>
         <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-gray-900 rounded-full"></span> Check-in/out</div>
-        <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-gray-300 rounded"></span> Booked</div>
+        <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-white border border-gray-300 rounded overflow-hidden relative"><span className="absolute inset-0 flex items-center justify-center text-gray-300 text-[10px] leading-none">/</span></span> Booked/Past</div>
       </div>
     </div>
   );
 };
 
-// ---------- Photo Gallery Modal (unchanged) ----------
-const PhotoGalleryModal = ({ images, initialIndex, onClose }: { images: string[]; initialIndex: number; onClose: () => void }) => {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft') prev();
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [next, prev, onClose]);
-  return (
-    <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center" onClick={onClose}>
-      <div className="relative max-w-6xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70 z-10">
-          <X size={24} />
-        </button>
-        <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 rounded-full p-3 hover:bg-black/70">
-          <ArrowLeft size={28} />
-        </button>
-        <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 rounded-full p-3 hover:bg-black/70">
-          <ArrowRight size={28} />
-        </button>
-        <img src={images[currentIndex]} alt={`Gallery ${currentIndex + 1}`} className="w-full h-auto max-h-[90vh] object-contain" />
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-3 py-1 rounded-full text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
-      </div>
-    </div>
-  );
-};
+
 
 // ---------- Main Component (unchanged except calendar import) ----------
 export default function StayDetailsPage() {
@@ -500,15 +488,13 @@ export default function StayDetailsPage() {
   const router = useRouter();
   const { user } = useAuthStore();
 
-  const { data: stayData, isLoading } = useStayDetails(stayId);
+  const { data: stayData, isLoading, refetch } = useStayDetails(stayId);
   const { mutate: createBooking, isPending } = useCreateBooking();
 
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState(1);
   const [showAllAmenities, setShowAllAmenities] = useState(false);
-  const [galleryModalOpen, setGalleryModalOpen] = useState(false);
-  const [galleryStartIndex, setGalleryStartIndex] = useState(0);
   const [showReviewText, setShowReviewText] = useState<boolean[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [dynamicImages, setDynamicImages] = useState<string[]>([]);
@@ -518,7 +504,12 @@ export default function StayDetailsPage() {
       fetch(`/api/gallery/${stayData.slug}`)
         .then(res => res.json())
         .then(data => {
-          if (Array.isArray(data) && data.length > 0) {
+          // New format: { flat: [...], categorized: {...} }
+          if (data && Array.isArray(data.flat) && data.flat.length > 0) {
+            setDynamicImages(data.flat);
+          }
+          // Backward compat: old format was a plain array
+          else if (Array.isArray(data) && data.length > 0) {
             setDynamicImages(data);
           }
         })
@@ -558,6 +549,7 @@ export default function StayDetailsPage() {
     reviews = 128,
     images = [],
     price = 5000,
+    weekendPrice = 6000,
     capacity = 4,
     maxGuests = 4,
     beds = 2,
@@ -568,9 +560,6 @@ export default function StayDetailsPage() {
     host = {
       name: "Kunnath",
       isSuperhost: true,
-      responseRate: 100,
-      responseTime: "within an hour",
-      joinedDate: "March 2018",
       avatar: null,
     },
     amenitiesList = [],
@@ -580,15 +569,11 @@ export default function StayDetailsPage() {
     securityDeposit = 5000,
     bookingAdvance = 5000,
     extraGuestCharge = 500,
-    reviewList = [
-      { author: "Priya", date: "March 2025", rating: 5, text: "Amazing place! Beautiful surroundings and the host was very helpful." },
-      { author: "Rahul", date: "February 2025", rating: 5, text: "Absolutely loved the stay. Clean, peaceful, and exactly as described." },
-      { author: "Anjali", date: "January 2025", rating: 4, text: "Great experience overall. The pool was a bit cold but everything else perfect." }
-    ],
-    location = { address: "Kunnath House, Wayanad, Kerala", lat: 11.874, lng: 75.567 },
-    houseRules = ["Check-in after 2 PM", "Check-out before 11 AM", "No smoking", "No parties or events", "Pets allowed with prior approval"],
-    safetyItems = ["Smoke alarm", "Carbon monoxide alarm", "First aid kit", "Fire extinguisher"],
-    cancellationPolicy = "Free cancellation for 48 hours. After that, 50% refund up to 7 days before check-in.",
+    reviewList = [],
+    location = { address: "Kunnath House, Kompally-Medchal Highway, Jeedipally", lat: 17.5875, lng: 78.4866 },
+    houseRules = ["Check-in at 12:00 PM", "Check-out at 10:00 AM"],
+    safetyItems = ["Smoke alarm", "First aid kit"],
+    cancellationPolicy = "Free cancellation for 48 hours.",
     unavailableDates = []
   } = stayData;
 
@@ -601,21 +586,47 @@ export default function StayDetailsPage() {
   const imagesToDisplay = dynamicImages.length > 0 ? dynamicImages : (images.length > 0 ? images : ['/placeholder.jpg']);
   const galleryImages = imagesToDisplay.length >= 5 ? imagesToDisplay : [...imagesToDisplay, ...Array(5 - imagesToDisplay.length).fill(imagesToDisplay[0] || '/placeholder.jpg')];
 
-  const nights = calculateNightsLocal(checkIn, checkOut);
-  const basePrice = price * nights;
-  
+  // Calculate pricing breakdown
+  const calculatePricing = () => {
+    if (!checkIn || !checkOut) return { weekdayNights: 0, weekendNights: 0, basePrice: 0 };
+    
+    let weekdayNights = 0;
+    let weekendNights = 0;
+    
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    
+    let current = new Date(start);
+    while (current < end) {
+      const day = current.getDay();
+      // Friday (5) and Saturday (6) are weekends
+      if (day === 5 || day === 6) {
+        weekendNights++;
+      } else {
+        weekdayNights++;
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    
+    const calculatedBasePrice = (weekdayNights * price) + (weekendNights * weekendPrice);
+    return { weekdayNights, weekendNights, basePrice: calculatedBasePrice };
+  };
+
+  const { weekdayNights, weekendNights, basePrice } = calculatePricing();
+  const totalNights = weekdayNights + weekendNights;
+
   // Extra guests calculation
   const extraGuests = guests > capacity ? guests - capacity : 0;
-  const extraGuestTotal = extraGuests * extraGuestCharge * nights;
+  const extraGuestTotal = extraGuests * extraGuestCharge * totalNights;
 
   // Add-ons calculation
   const addOnsTotal = addOns
     .filter(a => selectedAddOns.includes(a.name))
     .reduce((sum, a) => sum + a.price, 0);
 
-  const cleaningFee = 0; // Removing dummy fees for now or keeping them 0 as requested
+  const cleaningFee = 0;
   const serviceFee = 0;
-  
+
   let discountPercent = 0;
   if (user?.isMember) {
     if (user.membershipType === 'silver') discountPercent = 10;
@@ -631,12 +642,13 @@ export default function StayDetailsPage() {
       alert('Please select check-in and check-out dates.');
       return;
     }
-    if (!guestName || !guestEmail || !guestPhone) {
+    if (!guestName || !guestPhone) {
       alert('Please fill out all guest details.');
       return;
     }
-    createBooking({ stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, totalPrice, selectedAddOns }, {
+    createBooking({ stayId, checkIn, checkOut, guests, guestName, guestEmail: guestEmail || 'no-email@kunnath.com', guestPhone, totalPrice, selectedAddOns }, {
       onSuccess: () => {
+        refetch(); // Automatically update calendar with new booking
         setStep(4); // Success step
       },
       onError: (error: any) => {
@@ -646,8 +658,7 @@ export default function StayDetailsPage() {
   };
 
   const openGallery = (index: number) => {
-    setGalleryStartIndex(index);
-    setGalleryModalOpen(true);
+    router.push(`/stays/${stayId}/photos`);
   };
 
   const handleDateSelect = (dateStr: string) => {
@@ -671,7 +682,7 @@ export default function StayDetailsPage() {
         <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">{name}</h1>
-            <div className="flex flex-wrap items-center text-sm text-gray-600 gap-2">
+            {/* <div className="flex flex-wrap items-center text-sm text-gray-600 gap-2">
               <div className="flex items-center">
                 <Star size={16} className="fill-current text-gray-900 mr-1" />
                 <span className="font-medium text-gray-900">{rating}</span>
@@ -682,7 +693,7 @@ export default function StayDetailsPage() {
               <span className="underline cursor-pointer hover:text-gray-900">{host.isSuperhost && 'Superhost · '}{host.name}</span>
               <span>·</span>
               <span className="underline cursor-pointer hover:text-gray-900">{location.address}</span>
-            </div>
+            </div> */}
           </div>
           <div className="flex gap-3">
             <button className="flex items-center gap-2 text-sm font-medium underline hover:text-gray-700">
@@ -695,7 +706,7 @@ export default function StayDetailsPage() {
         </div>
 
         {/* Photo Gallery */}
-        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[320px] md:h-[380px]">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[320px] md:h-[430px]">
           <div className="md:col-span-2 md:row-span-2 relative cursor-pointer" onClick={() => openGallery(0)}>
             <img src={galleryImages[0]} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
@@ -734,13 +745,13 @@ export default function StayDetailsPage() {
                   <span>·</span>
                   <span>{bathrooms} baths</span>
                 </div>
-                {host.isSuperhost && (
+                {/* {host.isSuperhost && (
                   <div className="flex items-center gap-1 mt-3 text-sm text-gray-700">
                     <CheckCircle size={16} className="text-teal-600" />
                     <span className="font-medium">Superhost</span>
                     <span className="text-gray-500">· {host.responseRate}% response rate · {host.responseTime}</span>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="w-14 h-14 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
                 {host.avatar ? (
@@ -828,7 +839,7 @@ export default function StayDetailsPage() {
             )} */}
 
             {/* Double Month Availability Calendar */}
-            <div className="border-t border-gray-200 pt-8">
+            <div id="availability" className="border-t border-gray-200 pt-8">
               <div className="flex items-center gap-2 mb-4">
                 <CalendarIcon size={22} className="text-gray-700" />
                 <h2 className="text-xl font-semibold">Availability</h2>
@@ -878,15 +889,15 @@ export default function StayDetailsPage() {
                   <h4 className="font-semibold mb-2">Guest Capacity</h4>
                   <ul className="text-sm text-gray-600 space-y-1">
                     <li>Included guests: Up to {capacity} members</li>
-                    <li>Extra charge: ₹{extraGuestCharge} per additional member</li>
+                    <li>Extra charge: {formatCurrency(extraGuestCharge)} per additional member</li>
                     <li>Maximum limit: {maxGuests} members</li>
                   </ul>
                 </div>
                 <div className="p-4 border border-gray-100 rounded-xl">
                   <h4 className="font-semibold mb-2">Payment & Security</h4>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li>Security Deposit: ₹{securityDeposit.toLocaleString()} (Refundable)</li>
-                    <li>Booking Advance: ₹{bookingAdvance.toLocaleString()}</li>
+                    <li>Security Deposit: {formatCurrency(securityDeposit)} (Refundable)</li>
+                    <li>Booking Advance: {formatCurrency(bookingAdvance)}</li>
                     <li>Remaining payment at check-in</li>
                   </ul>
                 </div>
@@ -900,32 +911,43 @@ export default function StayDetailsPage() {
               <Card className="p-6 shadow-xl rounded-2xl border border-gray-200">
                 {step === 1 && (
                   <div className="animate-in fade-in slide-in-from-bottom-2">
-                    <div className="mb-5">
-                      <span className="text-2xl font-bold">{formatCurrency(price)}</span>
-                      <span className="text-gray-500"> / night</span>
+                    <div className="mb-5 space-y-1">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-sm font-medium text-gray-500 w-20">Weekday:</span>
+                        <span className="text-xl font-bold">{formatCurrency(price)}</span>
+                        <span className="text-gray-500 text-xs">/ night</span>
+                      </div>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-sm font-medium text-gray-500 w-20">Weekend:</span>
+                        <span className="text-xl font-bold">{formatCurrency(weekendPrice)}</span>
+                        <span className="text-gray-500 text-xs">/ night</span>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center mb-4 px-1 text-[11px] font-semibold text-gray-400 uppercase tracking-tighter">
+                      <span className="bg-gray-100 px-2 py-0.5 rounded">In: 12:00 PM</span>
+                      <span className="bg-gray-100 px-2 py-0.5 rounded">Out: 10:00 AM</span>
                     </div>
 
                     <div className="border border-gray-300 rounded-xl mb-4 overflow-hidden">
                       <div className="flex border-b border-gray-300">
-                        <div className="flex-1 p-3 border-r border-gray-300">
+                        <div 
+                          className="flex-1 p-3 border-r border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors"
+                          onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                        >
                           <div className="text-xs font-bold uppercase text-gray-800">Check-in</div>
-                          <input
-                            type="date"
-                            className="w-full text-sm text-gray-700 bg-transparent outline-none mt-1 cursor-pointer"
-                            value={checkIn}
-                            onChange={(e) => setCheckIn(e.target.value)}
-                            min={getTodayLocal()}
-                          />
+                          <div className="text-sm text-gray-700 mt-1">
+                            {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Select date'}
+                          </div>
                         </div>
-                        <div className="flex-1 p-3">
+                        <div 
+                          className="flex-1 p-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                          onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                        >
                           <div className="text-xs font-bold uppercase text-gray-800">Check-out</div>
-                          <input
-                            type="date"
-                            className="w-full text-sm text-gray-700 bg-transparent outline-none mt-1 cursor-pointer"
-                            value={checkOut}
-                            onChange={(e) => setCheckOut(e.target.value)}
-                            min={checkIn || getTodayLocal()}
-                          />
+                          <div className="text-sm text-gray-700 mt-1">
+                            {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Select date'}
+                          </div>
                         </div>
                       </div>
                       <div className="p-3 w-full flex justify-between items-center hover:bg-gray-50 transition-colors">
@@ -949,6 +971,37 @@ export default function StayDetailsPage() {
                         <ChevronDown size={20} className="text-gray-600 pointer-events-none" />
                       </div>
                     </div>
+
+                    {checkIn && checkOut && (
+                      <div className="mt-4 mb-6 space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="flex justify-between text-gray-600 text-sm">
+                          <span>{formatCurrency(price)} × {weekdayNights} weekday {weekdayNights === 1 ? 'night' : 'nights'}</span>
+                          <span>{formatCurrency(price * weekdayNights)}</span>
+                        </div>
+                        {weekendNights > 0 && (
+                          <div className="flex justify-between text-gray-600 text-sm">
+                            <span>{formatCurrency(weekendPrice)} × {weekendNights} weekend {weekendNights === 1 ? 'night' : 'nights'}</span>
+                            <span>{formatCurrency(weekendPrice * weekendNights)}</span>
+                          </div>
+                        )}
+                        {extraGuestTotal > 0 && (
+                          <div className="flex justify-between text-gray-600 text-sm">
+                            <span>Extra guest charge ({extraGuests} guests)</span>
+                            <span>{formatCurrency(extraGuestTotal)}</span>
+                          </div>
+                        )}
+                        {selectedAddOns.length > 0 && addOns.filter(a => selectedAddOns.includes(a.name)).map(addon => (
+                          <div key={addon.name} className="flex justify-between text-gray-600 text-sm">
+                            <span>{addon.name}</span>
+                            <span>{formatCurrency(addon.price)}</span>
+                          </div>
+                        ))}
+                        <div className="flex justify-between pt-3 border-t border-gray-200 font-bold text-gray-900 text-base">
+                          <span>Total</span>
+                          <span>{formatCurrency(totalPrice)}</span>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Add-ons selection in booking card */}
                     {addOns && addOns.length > 0 && (
@@ -1011,16 +1064,7 @@ export default function StayDetailsPage() {
                           placeholder="John Doe"
                         />
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input
-                          type="email"
-                          value={guestEmail}
-                          onChange={(e) => setGuestEmail(e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none"
-                          placeholder="john@example.com"
-                        />
-                      </div>
+                      {/* Email field removed per user request */}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                         <input
@@ -1059,10 +1103,18 @@ export default function StayDetailsPage() {
                     </div>
 
                     <div className="space-y-3 pb-4 border-b border-gray-200 text-sm">
-                      <div className="flex justify-between text-gray-600">
-                        <span>{formatCurrency(price)} × {nights} {nights === 1 ? 'night' : 'nights'}</span>
-                        <span>{formatCurrency(basePrice)}</span>
-                      </div>
+                      {weekdayNights > 0 && (
+                        <div className="flex justify-between text-gray-600">
+                          <span>{formatCurrency(price)} × {weekdayNights} weekday {weekdayNights === 1 ? 'night' : 'nights'}</span>
+                          <span>{formatCurrency(price * weekdayNights)}</span>
+                        </div>
+                      )}
+                      {weekendNights > 0 && (
+                        <div className="flex justify-between text-gray-600">
+                          <span>{formatCurrency(weekendPrice)} × {weekendNights} weekend {weekendNights === 1 ? 'night' : 'nights'}</span>
+                          <span>{formatCurrency(weekendPrice * weekendNights)}</span>
+                        </div>
+                      )}
                       {extraGuestTotal > 0 && (
                         <div className="flex justify-between text-gray-600">
                           <span>Extra guest charge ({extraGuests} guests)</span>
@@ -1123,9 +1175,7 @@ export default function StayDetailsPage() {
         </div>
       </Container>
 
-      {galleryModalOpen && (
-        <PhotoGalleryModal images={galleryImages} initialIndex={galleryStartIndex} onClose={() => setGalleryModalOpen(false)} />
-      )}
+
     </div>
   );
 }
@@ -1168,8 +1218,4 @@ function generateMockBookedDates(): string[] {
     }
   }
   return booked;
-}
-
-function formatCurrency(amount: number): string {
-  return `₹${amount.toLocaleString('en-IN')}`;
 }

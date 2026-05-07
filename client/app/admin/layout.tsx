@@ -4,10 +4,11 @@ import React, { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
-import { LayoutDashboard, Home, Activity, Users, Calendar, Bell } from 'lucide-react';
+import { LayoutDashboard, Home, Activity, Users, Calendar, Bell, PartyPopper } from 'lucide-react';
 import { useUnreadContactCount } from '@/hooks/useContact';
 import { useUnreadStayBookingCount } from '@/hooks/useBookings';
 import { useUnreadSportBookingCount } from '@/hooks/useSportBookings';
+import { useUnreadEventBookingCount } from '@/hooks/useEventBookings';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuthStore();
@@ -16,6 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { data: unreadContactCount } = useUnreadContactCount();
   const { data: unreadStayCount } = useUnreadStayBookingCount();
   const { data: unreadSportCount } = useUnreadSportBookingCount();
+  const { data: unreadEventCount } = useUnreadEventBookingCount();
 
   useEffect(() => {
     // Protect admin routes: only redirect if loading has finished
@@ -40,6 +42,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={20} /> },
     { name: 'Manage Stays', href: '/admin/stays', icon: <Home size={20} /> },
     { name: 'Stay Bookings', href: '/admin/bookings', icon: <Calendar size={20} />, badge: unreadStayCount },
+    { name: 'Events', href: '/admin/events', icon: <PartyPopper size={20} /> },
+    { name: 'Event Bookings', href: '/admin/event-bookings', icon: <Calendar size={20} />, badge: unreadEventCount },
     { name: 'Sports', href: '/admin/sports', icon: <Activity size={20} /> },
     { name: 'Sport Bookings', href: '/admin/sport-bookings', icon: <Calendar size={20} />, badge: unreadSportCount },
     { name: 'Enquiries', href: '/admin/contact', icon: <Bell size={20} />, badge: unreadContactCount },

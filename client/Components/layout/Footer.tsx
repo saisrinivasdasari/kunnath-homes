@@ -46,7 +46,7 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/farm-stays"
+                  href="/stays"
                   className="text-[#666666] hover:text-primary transition-colors"
                 >
                   Farm Stays
@@ -152,7 +152,7 @@ export const Footer = () => {
             </div>
             <div className="mt-4">
               <p className="text-[#666666] text-sm">
-                <span className="font-medium">Address:</span> Kunnath House Farms, Wayanad, Kerala - 673121
+                <span className="font-medium">Address:</span> Kunnath House, Kompally-Medchal Highway, Jeedipally
               </p>
             </div>
           </div>

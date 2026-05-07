@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 
+const KNOWN_CATEGORIES = ['exterior', 'living', 'bedroom', 'bathroom', 'kitchen', 'amenities'];
+const IMAGE_RE = /\.(jpg|jpeg|png|gif|webp)$/i;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> | { slug: string } }
@@ -12,17 +15,40 @@ export async function GET(
 
   try {
     if (!fs.existsSync(galleryPath)) {
-      return NextResponse.json([]);
+      return NextResponse.json({ flat: [], categorized: {} });
     }
 
-    const files = fs.readdirSync(galleryPath);
-    const images = files
-      .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file))
-      .map(file => `/stays/${slug}/${file}`);
+    const entries = fs.readdirSync(galleryPath, { withFileTypes: true });
 
-    return NextResponse.json(images);
+    // ── Flat list: root-level images (backward compat for landing/detail pages) ──
+    const rootImages = entries
+      .filter(e => e.isFile() && IMAGE_RE.test(e.name))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(e => `/stays/${slug}/${e.name}`);
+
+    // ── Categorized: scan known subdirectories ──
+    const categorized: Record<string, string[]> = {};
+    for (const cat of KNOWN_CATEGORIES) {
+      const catDir = path.join(galleryPath, cat);
+      if (fs.existsSync(catDir) && fs.statSync(catDir).isDirectory()) {
+        const catFiles = fs.readdirSync(catDir)
+          .filter(f => IMAGE_RE.test(f))
+          .sort((a, b) => a.localeCompare(b));
+        if (catFiles.length > 0) {
+          categorized[cat] = catFiles.map(f => `/stays/${slug}/${cat}/${f}`);
+        }
+      }
+    }
+
+    // Build a combined flat list: categorized images + root images (deduplicated)
+    const allCategorized = Object.values(categorized).flat();
+    const flat = allCategorized.length > 0
+      ? [...allCategorized, ...rootImages.filter(img => !allCategorized.includes(img))]
+      : rootImages;
+
+    return NextResponse.json({ flat, categorized });
   } catch (error) {
     console.error('Error reading gallery folder:', error);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json({ flat: [], categorized: {} }, { status: 500 });
   }
 }
