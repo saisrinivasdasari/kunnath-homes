@@ -92,7 +92,7 @@ export default function Home() {
                                     </div>
                                     <div className="p-5">
                                         <div className="flex justify-between items-start mb-2">
-                                            <h3 className="font-bold text-lg text-gray-900">{stay.name}</h3>
+                                            <h3 className="font-bold text-lg text-gray-900">{stay.name} Farm stay</h3>
                                             {/* <div className="flex items-center text-sm text-gray-600">
                                                 <span>★ 4.9</span>
                                             </div> */}

@@ -4,7 +4,7 @@
 // import { Container } from '@/Components/ui/Container';
 // import { Button } from '@/Components/ui/Button';
 // import { Card } from '@/Components/ui/Card';
-// import { Star, Wifi, Droplet, Coffee, Car, Wind, ChevronDown } from 'lucide-react';
+// import { Menu, X, User, Phone, LogOut, Instagram, Star, Share, Heart, Plus, Minus, ChevronDown, ChevronUp, Clock, MapPin, Shield, Home, Utensils, Maximize2, Calendar as CalendarIcon, CheckCircle, ChevronLeft, ChevronRight, Wifi, Droplet, Coffee, Car, Wind } from 'lucide-react';
 // import { useParams, useRouter } from 'next/navigation';
 // import { useStayDetails } from '@/hooks/useStays';
 // import { useState } from 'react';
@@ -274,14 +274,15 @@ import {
   Star, Wifi, Droplet, Coffee, Car, Wind, Tv, Snowflake, Utensils,
   Waves, Dumbbell, Flame, Briefcase, Shield, Calendar as CalendarIcon,
   MapPin, ChevronDown, ChevronUp, Heart, Share, Home, Clock,
-  CheckCircle, X, Maximize2, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight
+  CheckCircle, X, Maximize2, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight,
+  Plus, Minus
 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useStayDetails } from '@/hooks/useStays';
 import { useCreateBooking } from '@/hooks/useBookings';
 import { useAuthStore } from '@/store/authStore';
 
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, cn } from '@/lib/utils';
 
 // ---------- TIMEZONE-SAFE DATE HELPERS ----------
 function getTodayLocal(): string {
@@ -377,7 +378,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
           }
           current.setDate(current.getDate() + 1);
         }
-        
+
         if (hasBookedInRange) {
           alert("This range includes already booked dates. Please select another range.");
           return;
@@ -493,11 +494,16 @@ export default function StayDetailsPage() {
 
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState(1);
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [pets, setPets] = useState(0);
+  const guests = adults + children;
   const [showAllAmenities, setShowAllAmenities] = useState(false);
   const [showReviewText, setShowReviewText] = useState<boolean[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [dynamicImages, setDynamicImages] = useState<string[]>([]);
+  const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
 
   useEffect(() => {
     if (stayData?.slug) {
@@ -589,13 +595,13 @@ export default function StayDetailsPage() {
   // Calculate pricing breakdown
   const calculatePricing = () => {
     if (!checkIn || !checkOut) return { weekdayNights: 0, weekendNights: 0, basePrice: 0 };
-    
+
     let weekdayNights = 0;
     let weekendNights = 0;
-    
+
     const start = new Date(checkIn);
     const end = new Date(checkOut);
-    
+
     let current = new Date(start);
     while (current < end) {
       const day = current.getDay();
@@ -607,7 +613,7 @@ export default function StayDetailsPage() {
       }
       current.setDate(current.getDate() + 1);
     }
-    
+
     const calculatedBasePrice = (weekdayNights * price) + (weekendNights * weekendPrice);
     return { weekdayNights, weekendNights, basePrice: calculatedBasePrice };
   };
@@ -676,33 +682,31 @@ export default function StayDetailsPage() {
   };
 
   return (
-    <div className="py-8 pb-24 bg-white">
+    <div className="py-6 pb-20 bg-white min-h-screen">
       <Container>
         {/* Title & action row */}
         <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">{name}</h1>
-            {/* <div className="flex flex-wrap items-center text-sm text-gray-600 gap-2">
+            <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">{name}</h1>
+            {/* <div className="flex items-center text-sm text-gray-500 space-x-3 mt-2">
               <div className="flex items-center">
-                <Star size={16} className="fill-current text-gray-900 mr-1" />
-                <span className="font-medium text-gray-900">{rating}</span>
-                <span className="mx-1">·</span>
-                <span className="underline cursor-pointer hover:text-gray-900">{reviews} reviews</span>
+                <Star size={14} className="fill-primary text-primary mr-1" />
+                <span className="font-bold text-gray-900">{rating}</span>
               </div>
               <span>·</span>
-              <span className="underline cursor-pointer hover:text-gray-900">{host.isSuperhost && 'Superhost · '}{host.name}</span>
+              <span className="underline font-medium hover:text-gray-900 transition-colors cursor-pointer">{reviews} reviews</span>
               <span>·</span>
-              <span className="underline cursor-pointer hover:text-gray-900">{location.address}</span>
+              <span className="underline font-medium hover:text-gray-900 transition-colors cursor-pointer">{location.address.split(',')[0]}</span>
             </div> */}
           </div>
-          <div className="flex gap-3">
-            <button className="flex items-center gap-2 text-sm font-medium underline hover:text-gray-700">
-              <Share size={18} /> Share
+          {/* <div className="flex items-center gap-4">
+            <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-900 transition-colors">
+              <Share size={14} /> Share
             </button>
-            <button className="flex items-center gap-2 text-sm font-medium underline hover:text-gray-700">
-              <Heart size={18} /> Save
+            <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-900 transition-colors">
+              <Heart size={14} /> Save
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Photo Gallery */}
@@ -734,32 +738,9 @@ export default function StayDetailsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
           {/* LEFT COLUMN */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Host card */}
-            <div className="flex justify-between items-start pb-6 border-b border-gray-200">
-              <div>
-                <h2 className="text-2xl font-semibold">Entire farm stay hosted by {host.name}</h2>
-                <div className="flex flex-wrap gap-2 mt-2 text-gray-600">
-                  <span>{bedrooms} BHK</span>
-                  <span>·</span>
-                  <span>{beds} beds</span>
-                  <span>·</span>
-                  <span>{bathrooms} baths</span>
-                </div>
-                {/* {host.isSuperhost && (
-                  <div className="flex items-center gap-1 mt-3 text-sm text-gray-700">
-                    <CheckCircle size={16} className="text-teal-600" />
-                    <span className="font-medium">Superhost</span>
-                    <span className="text-gray-500">· {host.responseRate}% response rate · {host.responseTime}</span>
-                  </div>
-                )} */}
-              </div>
-              <div className="w-14 h-14 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                {host.avatar ? (
-                  <img src={host.avatar} alt={host.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="font-bold text-gray-600 text-xl">{host.name.charAt(0)}</span>
-                )}
-              </div>
+            <div className="pb-6 border-b border-gray-100">
+              <h2 className="text-xl font-bold text-gray-900">About this space</h2>
+              <p className="text-gray-600 mt-4 leading-relaxed text-sm">{description}</p>
             </div>
 
             {/* Description */}
@@ -852,32 +833,45 @@ export default function StayDetailsPage() {
               />
             </div>
 
-            {/* Location */}
-            <div className="border-t border-gray-200 pt-8">
-              <h2 className="text-xl font-semibold mb-4">Where you'll be</h2>
-              <p className="text-gray-700 mb-4">{location.address}</p>
-              <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center text-gray-400">
-                <MapPin size={36} /> Map view
+            <div className="border-t border-gray-100 pt-8">
+              <h2 className="text-xl font-bold text-gray-900 mb-2">Where you'll be</h2>
+              <p className="text-sm text-gray-500 mb-6">{location.address}</p>
+              <div className="relative aspect-[21/9] bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 group">
+                <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/78.4866,17.5875,12,0/800x400?access_token=pk.eyJ1Ijoic2Fpc3JhIiwiYSI6ImNsdHljNmh0bzBiazMya21oZnpndW5nYnoifQ.x-x')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-700"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-white p-4 rounded-full shadow-2xl animate-bounce">
+                    <MapPin size={32} className="text-primary" />
+                  </div>
+                </div>
+                <div className="absolute bottom-6 left-6">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white px-6 py-3 rounded-2xl text-sm font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 border border-gray-100"
+                  >
+                    Get Directions <ArrowRight size={16} />
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Things to know */}
-            <div className="border-t border-gray-200 pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="border-t border-gray-100 pt-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
               <div>
-                <h3 className="font-semibold mb-3 flex items-center gap-2"><Home size={18} /> House rules</h3>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  {houseRules.map((rule, i) => <li key={i}>{rule}</li>)}
+                <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Home size={16} /> House rules</h3>
+                <ul className="text-xs text-gray-500 space-y-2">
+                  {houseRules.map((rule, i) => <li key={i} className="flex items-start gap-2"><span>•</span> {rule}</li>)}
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 flex items-center gap-2"><Shield size={18} /> Health & safety</h3>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  {safetyItems.map((item, i) => <li key={i}>{item}</li>)}
+                <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Shield size={16} /> Health & safety</h3>
+                <ul className="text-xs text-gray-500 space-y-2">
+                  {safetyItems.map((item, i) => <li key={i} className="flex items-start gap-2"><span>•</span> {item}</li>)}
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 flex items-center gap-2"><Clock size={18} /> Cancellation policy</h3>
-                <p className="text-sm text-gray-600">{cancellationPolicy}</p>
+                <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Clock size={16} /> Policy</h3>
+                <p className="text-xs text-gray-500 leading-relaxed">{cancellationPolicy}</p>
               </div>
             </div>
 
@@ -908,7 +902,7 @@ export default function StayDetailsPage() {
           {/* RIGHT COLUMN - Booking card */}
           <div className="lg:col-span-1">
             <div className="sticky top-28">
-              <Card className="p-6 shadow-xl rounded-2xl border border-gray-200">
+              <Card className="p-6 shadow-xl rounded-2xl border border-gray-200 overflow-visible">
                 {step === 1 && (
                   <div className="animate-in fade-in slide-in-from-bottom-2">
                     <div className="mb-5 space-y-1">
@@ -929,47 +923,182 @@ export default function StayDetailsPage() {
                       <span className="bg-gray-100 px-2 py-0.5 rounded">Out: 10:00 AM</span>
                     </div>
 
-                    <div className="border border-gray-300 rounded-xl mb-4 overflow-hidden">
+                    <div className="relative border border-gray-300 rounded-xl mb-4">
                       <div className="flex border-b border-gray-300">
-                        <div 
+                        <div
                           className="flex-1 p-3 border-r border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors"
                           onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
                         >
-                          <div className="text-xs font-bold uppercase text-gray-800">Check-in</div>
+                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Check-in</div>
                           <div className="text-sm text-gray-700 mt-1">
-                            {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Select date'}
+                            {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Add date'}
                           </div>
                         </div>
-                        <div 
+                        <div
                           className="flex-1 p-3 cursor-pointer hover:bg-gray-50 transition-colors"
                           onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
                         >
-                          <div className="text-xs font-bold uppercase text-gray-800">Check-out</div>
+                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Check-out</div>
                           <div className="text-sm text-gray-700 mt-1">
-                            {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Select date'}
+                            {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Add date'}
                           </div>
                         </div>
                       </div>
-                      <div className="p-3 w-full flex justify-between items-center hover:bg-gray-50 transition-colors">
+
+                      {/* Guest Picker Trigger */}
+                      <div
+                        className="p-3 w-full flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors rounded-b-xl"
+                        onClick={() => setIsGuestPickerOpen(!isGuestPickerOpen)}
+                      >
                         <div className="w-full">
-                          <div className="text-xs font-bold uppercase text-gray-800">Guests</div>
-                          <select
-                            className="w-full text-sm text-gray-700 bg-transparent outline-none mt-1 appearance-none cursor-pointer"
-                            value={guests}
-                            onChange={(e) => setGuests(Number(e.target.value))}
-                          >
-                            {[...Array(maxGuests || 8)].map((_, i) => (
-                              <option key={i + 1} value={i + 1}>{i + 1} {i === 0 ? 'guest' : 'guests'}</option>
-                            ))}
-                          </select>
-                          {guests > capacity && (
-                            <div className="text-[10px] text-orange-600 mt-1 font-medium">
-                              ₹{extraGuestCharge} extra per guest over {capacity}
-                            </div>
-                          )}
+                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Guests</div>
+                          <div className="text-sm text-gray-700 mt-1">
+                            {guests} guest{guests > 1 ? 's' : ''}{infants > 0 ? `, ${infants} infant${infants > 1 ? 's' : ''}` : ''}{pets > 0 ? `, ${pets} pet${pets > 1 ? 's' : ''}` : ''}
+                          </div>
                         </div>
-                        <ChevronDown size={20} className="text-gray-600 pointer-events-none" />
+                        <ChevronDown size={18} className={cn("text-gray-400 transition-transform", isGuestPickerOpen && "rotate-180")} />
                       </div>
+
+                      {/* Guest Picker Popover */}
+                      {isGuestPickerOpen && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-gray-50 rounded-2xl shadow-2xl border border-gray-100 p-6 z-50 space-y-6 animate-in fade-in zoom-in-95 duration-200">
+                          {/* Adults */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-bold text-gray-900">Adults</div>
+                              <div className="text-xs text-gray-400">Age 13+</div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <button
+                                onClick={() => setAdults(Math.max(1, adults - 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <input 
+                                type="number" 
+                                value={adults}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value);
+                                  if (!isNaN(val)) setAdults(Math.min(maxGuests - children, Math.max(1, val)));
+                                }}
+                                className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              />
+                              <button
+                                onClick={() => setAdults(Math.min(maxGuests - children, adults + 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Children */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-bold text-gray-900">Children</div>
+                              <div className="text-xs text-gray-400">Ages 2–12</div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <button
+                                onClick={() => setChildren(Math.max(0, children - 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <input 
+                                type="number" 
+                                value={children}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value);
+                                  if (!isNaN(val)) setChildren(Math.min(maxGuests - adults, Math.max(0, val)));
+                                }}
+                                className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              />
+                              <button
+                                onClick={() => setChildren(Math.min(maxGuests - adults, children + 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Infants */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-bold text-gray-900">Infants</div>
+                              <div className="text-xs text-gray-400">Under 2</div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <button
+                                onClick={() => setInfants(Math.max(0, infants - 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <input 
+                                type="number" 
+                                value={infants}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value);
+                                  if (!isNaN(val)) setInfants(Math.max(0, val));
+                                }}
+                                className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              />
+                              <button
+                                onClick={() => setInfants(infants + 1)}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Pets */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-bold text-gray-900">Pets</div>
+                              <div className="text-xs text-gray-400 underline cursor-pointer">Bringing a service animal?</div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <button
+                                onClick={() => setPets(Math.max(0, pets - 1))}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <input 
+                                type="number" 
+                                value={pets}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value);
+                                  if (!isNaN(val)) setPets(Math.max(0, val));
+                                }}
+                                className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              />
+                              <button
+                                onClick={() => setPets(pets + 1)}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="pt-4 border-t border-gray-100 flex justify-end items-center">
+                            {/* <span className="text-[10px] text-gray-400 font-medium max-w-[140px]">
+                              This place has a maximum of {maxGuests} guests, not including infants.
+                            </span> */}
+                            <button
+                              onClick={() => setIsGuestPickerOpen(false)}
+                              className="text-sm font-bold text-gray-900 hover:underline"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {checkIn && checkOut && (

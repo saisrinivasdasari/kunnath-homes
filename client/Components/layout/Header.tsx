@@ -178,7 +178,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
-import { Menu, X, User, Phone, LogOut } from 'lucide-react';
+import { Menu, X, User, Phone, LogOut, Instagram } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { useRouter } from 'next/navigation';
 
@@ -199,7 +199,7 @@ export function Header() {
   };
 
   const navLinks = [
-    { name: 'Farm Stays', href: '/stays' },
+    { name: 'Stays', href: '/stays' },
     { name: 'Sports', href: '/sports' },
     { name: 'Events', href: '/events' },
     { name: 'Membership', href: '/membership' },
@@ -212,8 +212,9 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex flex-col items-start leading-tight">
               <span className="text-2xl font-bold font-display text-primary">Kunnath House</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-gray-400">Escape. Indulge. Reconnect.</span>
             </Link>
           </div>
 
@@ -239,6 +240,15 @@ export function Header() {
             >
               <Phone size={16} className="mr-2" />
               +91 7702402505
+            </a>
+
+            <a
+              href="https://www.instagram.com/kunnath_farmhouse?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-primary transition-colors"
+            >
+              <Instagram size={20} />
             </a>
 
             {user ? (

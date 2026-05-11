@@ -22,7 +22,14 @@ const dummyStays = [
     extraGuestCharge: 500,
     securityDeposit: 5000,
     bookingAdvance: 5000,
-    images: ['/stays/orange/profile.jpg'],
+    images: [
+      '/stays/orange/Mainview.JPG',
+      '/stays/orange/Pool.jpeg',
+      '/stays/orange/Living Room.jpeg',
+      '/stays/orange/1- Bedrrom.jpeg',
+      '/stays/orange/2-Bedroom.jpeg',
+      '/stays/orange/Others.jpeg'
+    ],
     amenities: ['Private Swimming Pool', 'Lawn', 'Bonfires', 'Outdoor Projector', '55inch Smart TV', 'Party speaker', 'RO Water', 'Refrigerator', 'Barbeque', 'Microwave', 'Kitchen', 'WIFI', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
@@ -42,7 +49,14 @@ const dummyStays = [
     extraGuestCharge: 500,
     securityDeposit: 5000,
     bookingAdvance: 5000,
-    images: ['/stays/lemon/profile.jpg'],
+    images: [
+      '/stays/lemon/Mainview.JPG',
+      '/stays/lemon/Kitchen.JPG',
+      '/stays/lemon/Bedrrom 1.jpg',
+      '/stays/lemon/Living room.jpg',
+      '/stays/lemon/Bedroom4.JPG',
+      '/stays/lemon/Bedrrom3.JPG'
+    ],
     amenities: ['Swimming Pool', 'Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],
@@ -62,7 +76,14 @@ const dummyStays = [
     extraGuestCharge: 500,
     securityDeposit: 5000,
     bookingAdvance: 5000,
-    images: ['/stays/mint/profile.jpg'],
+    images: [
+      '/stays/mint/1-Living room.jpg',
+      '/stays/mint/main View.jpg',
+      '/stays/mint/Pool.jpg',
+      '/stays/mint/Bedroom 2.jpg',
+      '/stays/mint/Mint bedroom 3.jpeg',
+      '/stays/mint/others3.JPG'
+    ],
     amenities: ['Huge Swimming Pool', 'Party Lawn', 'Projector', '65” Smart TV', 'Powerful Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Kitchen', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }, { name: 'Kitchen', price: 1000 }],

@@ -13,7 +13,7 @@ export function Card({
   
   return (
     <div 
-      className={`bg-bg-card rounded-2xl border border-border overflow-hidden transition-all duration-200 ${hoverable ? 'hover:shadow-hover hover:-translate-y-1' : 'shadow-soft'} ${className}`}
+      className={`bg-bg-card rounded-2xl border border-border transition-all duration-200 ${!className.includes('overflow-') ? 'overflow-hidden' : ''} ${hoverable ? 'hover:shadow-hover hover:-translate-y-1' : 'shadow-soft'} ${className}`}
       {...props}
     >
       {children}

@@ -104,48 +104,49 @@ connectDB().then(async () => {
       ];
       await FarmStay.insertMany(dummyStays);
       console.log('Dummy stays injected successfully!');
-      // Force update for all stays to ensure latest gallery and profile images
-      const allStays = await FarmStay.find({});
-      for (const s of allStays) {
-        let updated = false;
-        if (s.slug === 'orange') {
-          s.images = [
-            '/stays/orange/Mainview.JPG',
-            '/stays/orange/Pool.jpeg',
-            '/stays/orange/Living Room.jpeg',
-            '/stays/orange/1- Bedrrom.jpeg',
-            '/stays/orange/2-Bedroom.jpeg',
-            '/stays/orange/Others.jpeg'
-          ];
-          updated = true;
-        }
-        if (s.slug === 'lemon') {
-          s.images = [
-            '/stays/lemon/Mainview.JPG',
-            '/stays/lemon/Kitchen.JPG',
-            '/stays/lemon/Bedrrom 1.jpg',
-            '/stays/lemon/Living room.jpg',
-            '/stays/lemon/Bedroom4.JPG',
-            '/stays/lemon/Bedrrom3.JPG'
-          ];
-          updated = true;
-        }
-        if (s.slug === 'mint') {
-          s.images = [
-            '/stays/mint/1-Living room.jpg',
-            '/stays/mint/main View.jpg',
-            '/stays/mint/Pool.jpg',
-            '/stays/mint/Bedroom 2.jpg',
-            '/stays/mint/Mint bedroom 3.jpeg',
-            '/stays/mint/others3.JPG'
-          ];
-          updated = true;
-        }
-        if (updated) {
-          s.markModified('images');
-          await s.save();
-          console.log(`Forced gallery update for ${s.name}`);
-        }
+    }
+
+    // Force update for all stays to ensure latest gallery and profile images on every restart
+    const allStays = await FarmStay.find({});
+    for (const s of allStays) {
+      let updated = false;
+      if (s.slug === 'orange') {
+        s.images = [
+          '/stays/orange/Mainview.JPG',
+          '/stays/orange/Pool.jpeg',
+          '/stays/orange/Living Room.jpeg',
+          '/stays/orange/1- Bedrrom.jpeg',
+          '/stays/orange/2-Bedroom.jpeg',
+          '/stays/orange/Others.jpeg'
+        ];
+        updated = true;
+      }
+      if (s.slug === 'lemon') {
+        s.images = [
+          '/stays/lemon/Mainview.JPG',
+          '/stays/lemon/Kitchen.JPG',
+          '/stays/lemon/Bedrrom 1.jpg',
+          '/stays/lemon/Living room.jpg',
+          '/stays/lemon/Bedroom4.JPG',
+          '/stays/lemon/Bedrrom3.JPG'
+        ];
+        updated = true;
+      }
+      if (s.slug === 'mint') {
+        s.images = [
+          '/stays/mint/1-Living room.jpg',
+          '/stays/mint/main View.jpg',
+          '/stays/mint/Pool.jpg',
+          '/stays/mint/Bedroom 2.jpg',
+          '/stays/mint/Mint bedroom 3.jpeg',
+          '/stays/mint/others3.JPG'
+        ];
+        updated = true;
+      }
+      if (updated) {
+        s.markModified('images');
+        await s.save();
+        console.log(`Forced gallery update for ${s.name}`);
       }
     }
 

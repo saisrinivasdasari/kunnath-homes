@@ -21,56 +21,25 @@ const CATEGORIES: Category[] = [
   { id: 'amenities', label: 'Amenities' },
 ];
 
-// ─── Photo Grid ───────────────────────────────────────────────────────────────
-// Pattern: full-width → 2-col pair → full-width → 2-col pair …
 function PhotoGrid({ images }: { images: string[] }) {
   if (!images.length) return null;
 
-  const rows: { type: 'full' | 'pair'; srcs: string[] }[] = [];
-  let i = 0;
-  while (i < images.length) {
-    rows.push({ type: 'full', srcs: [images[i]] });
-    i++;
-    if (i < images.length) {
-      rows.push({ type: 'pair', srcs: images.slice(i, i + 2) });
-      i += 2;
-    }
-  }
-
   return (
-    <div className="flex flex-col gap-2 sm:gap-3">
-      {rows.map((row, rIdx) =>
-        row.type === 'full' ? (
-          <div
-            key={rIdx}
-            className="w-full overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 group cursor-zoom-in"
-          >
-            <img
-              src={row.srcs[0]}
-              alt=""
-              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-              style={{ minHeight: '280px', maxHeight: '700px' }}
-              loading={rIdx === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ) : (
-          <div key={rIdx} className="grid grid-cols-2 gap-2 sm:gap-3">
-            {row.srcs.map((src, j) => (
-              <div
-                key={j}
-                className="overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 group cursor-zoom-in aspect-[4/3] sm:aspect-auto sm:h-[320px] lg:h-[380px]"
-              >
-                <img
-                  src={src}
-                  alt=""
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-        )
-      )}
+    <div className="flex flex-col gap-6 sm:gap-10">
+      {images.map((src, idx) => (
+        <div
+          key={idx}
+          className="w-full overflow-hidden rounded-2xl bg-gray-50 group cursor-default"
+        >
+          <img
+            src={src}
+            alt=""
+            className="w-full h-auto object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.01]"
+            style={{ maxHeight: '900px' }}
+            loading={idx < 2 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
     </div>
   );
 }
