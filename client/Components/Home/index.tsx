@@ -5,7 +5,7 @@ import React from 'react';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
-import { Search, ArrowRight } from 'lucide-react';
+import { Search, ArrowRight, BedDouble, Users } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import Link from 'next/link';
 import { useStays } from '@/hooks/useStays';
@@ -82,32 +82,46 @@ export default function Home() {
                             <div className="col-span-4 text-center py-10">Loading luxury stays...</div>
                         ) : stays?.map((stay) => (
                             <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
-                                <Card hoverable className="cursor-pointer h-full">
-                                    <div className="aspect-[4/3] overflow-hidden relative">
+                                <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2 rounded-[40px]">
+                                    <div className="aspect-[4/3] relative overflow-hidden rounded-[32px] m-3">
                                         <img
                                             src={stay.images[0]}
                                             alt={stay.name}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
-                                    </div>
-                                    <div className="p-5">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <h3 className="font-bold text-lg text-gray-900">{stay.name} Farm stay</h3>
-                                            {/* <div className="flex items-center text-sm text-gray-600">
-                                                <span>★ 4.9</span>
-                                            </div> */}
+                                        <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[10px] font-black tracking-widest text-gray-900 uppercase shadow-sm">
+                                            Premium
                                         </div>
-                                        <p className="text-gray-500 text-sm mb-4">
-                                            {stay.bedrooms} BHK • Up to {stay.capacity} guests
-                                        </p>
-                                        <div className="flex flex-col gap-1">
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Weekdays</span>
-                                                <span className="font-semibold text-gray-900">{formatCurrency(stay.price)}</span>
+                                    </div>
+                                    <div className="p-8 pt-4 flex flex-col flex-1">
+                                        <div className="flex items-center gap-2 mb-4">
+                                            <span className="h-px w-8 bg-primary/30"></span>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80">Farm Stay</span>
+                                        </div>
+
+                                        <h3 className="text-2xl font-black tracking-tighter text-primary leading-none mb-4 group-hover:text-primary/80 transition-colors duration-500">
+                                            {stay.name}
+                                        </h3>
+
+                                        <div className="flex items-center gap-5 mb-8">
+                                            <div className="flex items-center gap-1.5">
+                                                <BedDouble size={14} className="text-gray-400" />
+                                                <span className="text-xs font-bold text-gray-500">{stay.bedrooms} BHK</span>
                                             </div>
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Weekends</span>
-                                                <span className="font-semibold text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <Users size={14} className="text-gray-400" />
+                                                <span className="text-xs font-bold text-gray-500">Up to {stay.capacity} Guests</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-auto space-y-2.5">
+                                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekdays</span>
+                                                <span className="text-lg font-black text-gray-900">{formatCurrency(stay.price)}</span>
+                                            </div>
+                                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekends</span>
+                                                <span className="text-lg font-black text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
                                             </div>
                                         </div>
                                     </div>

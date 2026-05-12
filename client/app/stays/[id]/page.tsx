@@ -318,6 +318,7 @@ interface AvailabilityCalendarProps {
   checkIn: string;
   checkOut: string;
   onDateSelect: (date: string) => void;
+  isPopover?: boolean;
 }
 
 const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
@@ -325,6 +326,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   checkIn,
   checkOut,
   onDateSelect,
+  isPopover = false,
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const todayLocal = getTodayLocal();
@@ -401,7 +403,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   const isBooked = (ymd: string): boolean => isDateBooked(ymd, bookedDates);
 
   const renderMonth = (monthDate: Date, days: (string | null)[], monthLabel: string) => (
-    <div className="flex-1 min-w-[240px]">
+    <div className={cn("flex-1", isPopover ? "min-w-[200px]" : "min-w-[240px]")}>
       <div className="text-center font-semibold text-gray-800 mb-4">{monthLabel}</div>
       <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-gray-500 mb-2">
         {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => <div key={day}>{day}</div>)}
@@ -439,8 +441,12 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
               key={idx}
               disabled={disabled}
               onClick={() => handleDateClick(ymd)}
-              className={`p-2 text-sm transition-colors hover:bg-gray-200 ${roundedClass} ${bgClass} ${textClass} ${disabled ? 'text-gray-300 line-through cursor-not-allowed' : 'cursor-pointer'
-                }`}
+              className={cn(
+                "text-xs transition-colors hover:bg-gray-100",
+                isPopover ? "p-1.5" : "p-2",
+                roundedClass, bgClass, textClass,
+                disabled ? 'text-gray-300 line-through cursor-not-allowed' : 'cursor-pointer'
+              )}
             >
               {dayNumber}
             </button>
@@ -455,26 +461,29 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   const nextMonthLabel = `${monthNames[nextMonthDate.getMonth()]} ${nextMonthDate.getFullYear()}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold">Select dates</h3>
-        <div className="flex gap-2">
-          <button onClick={goPrevMonth} className="p-2 rounded-full hover:bg-gray-100">
-            <ChevronLeft size={20} />
+    <div className={cn(
+      "bg-white rounded-2xl border border-gray-200 shadow-sm",
+      isPopover ? "p-3" : "p-5"
+    )}>
+      <div className={cn("flex items-center justify-between", isPopover ? "mb-4" : "mb-6")}>
+        <h3 className={cn("font-semibold", isPopover ? "text-sm" : "text-lg")}>Select dates</h3>
+        <div className="flex gap-1">
+          <button onClick={goPrevMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+            <ChevronLeft size={isPopover ? 16 : 20} />
           </button>
-          <button onClick={goNextMonth} className="p-2 rounded-full hover:bg-gray-100">
-            <ChevronRight size={20} />
+          <button onClick={goNextMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+            <ChevronRight size={isPopover ? 16 : 20} />
           </button>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row gap-8 justify-between">
+      <div className={cn("flex flex-col sm:flex-row gap-8 justify-between")}>
         {renderMonth(currentMonth, currentMonthDays, currentMonthLabel)}
-        {renderMonth(nextMonthDate, nextMonthDays, nextMonthLabel)}
+        {!isPopover && renderMonth(nextMonthDate, nextMonthDays, nextMonthLabel)}
       </div>
-      <div className="flex justify-between mt-6 text-xs text-gray-500 border-t pt-4">
-        <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-gray-100 rounded"></span> Selected range</div>
-        <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-gray-900 rounded-full"></span> Check-in/out</div>
-        <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-white border border-gray-300 rounded overflow-hidden relative"><span className="absolute inset-0 flex items-center justify-center text-gray-300 text-[10px] leading-none">/</span></span> Booked/Past</div>
+      <div className={cn("flex justify-between mt-4 text-[10px] text-gray-400 border-t pt-3", isPopover ? "hidden sm:flex" : "flex")}>
+        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-gray-100 rounded"></span> Range</div>
+        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-gray-900 rounded-full"></span> Select</div>
+        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-white border border-gray-200 rounded overflow-hidden relative"><span className="absolute inset-0 flex items-center justify-center text-gray-200 text-[8px] leading-none">/</span></span> Booked</div>
       </div>
     </div>
   );
@@ -504,6 +513,7 @@ export default function StayDetailsPage() {
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [dynamicImages, setDynamicImages] = useState<string[]>([]);
   const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   useEffect(() => {
     if (stayData?.slug) {
@@ -710,7 +720,7 @@ export default function StayDetailsPage() {
         </div>
 
         {/* Photo Gallery */}
-        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[320px] md:h-[430px]">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[260px] md:h-[350px]">
           <div className="md:col-span-2 md:row-span-2 relative cursor-pointer" onClick={() => openGallery(0)}>
             <img src={galleryImages[0]} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
@@ -740,13 +750,7 @@ export default function StayDetailsPage() {
           <div className="lg:col-span-2 space-y-8">
             <div className="pb-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-900">About this space</h2>
-              <p className="text-gray-600 mt-4 leading-relaxed text-sm">{description}</p>
-            </div>
-
-            {/* Description */}
-            <div>
-              <h2 className="text-xl font-semibold mb-4">About this space</h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">{description}</p>
+              <p className="text-gray-600 mt-4 leading-relaxed text-sm whitespace-pre-line">{description}</p>
             </div>
 
             {/* Amenities */}
@@ -829,7 +833,7 @@ export default function StayDetailsPage() {
                 bookedDates={bookedDates}
                 checkIn={checkIn}
                 checkOut={checkOut}
-                onDateSelect={handleDateSelect}
+                onDateSelect={() => {}} // Disconnected as requested
               />
             </div>
 
@@ -905,44 +909,72 @@ export default function StayDetailsPage() {
               <Card className="p-6 shadow-xl rounded-2xl border border-gray-200 overflow-visible">
                 {step === 1 && (
                   <div className="animate-in fade-in slide-in-from-bottom-2">
-                    <div className="mb-5 space-y-1">
+                    <div className="mb-6 flex flex-col items-center text-center">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Price</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-sm font-medium text-gray-500 w-20">Weekday:</span>
-                        <span className="text-xl font-bold">{formatCurrency(price)}</span>
-                        <span className="text-gray-500 text-xs">/ night</span>
+                        <span className="text-4xl font-black text-gray-900 tracking-tighter">
+                          {formatCurrency(totalPrice || price)}
+                        </span>
+                        {!checkIn || !checkOut && <span className="text-gray-400 text-sm font-medium">/ night</span>}
                       </div>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-sm font-medium text-gray-500 w-20">Weekend:</span>
-                        <span className="text-xl font-bold">{formatCurrency(weekendPrice)}</span>
-                        <span className="text-gray-500 text-xs">/ night</span>
-                      </div>
+                      {!checkIn || !checkOut && (
+                        <p className="text-[10px] text-gray-400 font-medium mt-1 italic">Price shown for 1 night</p>
+                      )}
                     </div>
 
-                    <div className="flex justify-between items-center mb-4 px-1 text-[11px] font-semibold text-gray-400 uppercase tracking-tighter">
-                      <span className="bg-gray-100 px-2 py-0.5 rounded">In: 12:00 PM</span>
-                      <span className="bg-gray-100 px-2 py-0.5 rounded">Out: 10:00 AM</span>
-                    </div>
 
                     <div className="relative border border-gray-300 rounded-xl mb-4">
-                      <div className="flex border-b border-gray-300">
+                      <div className="flex border-b border-gray-300 relative">
                         <div
                           className="flex-1 p-3 border-r border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors"
-                          onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
                         >
-                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Check-in</div>
-                          <div className="text-sm text-gray-700 mt-1">
+                          <div className="text-[11px] font-black uppercase text-gray-400 tracking-widest mb-1">Check-in</div>
+                          <div className="text-lg font-black text-gray-900">
                             {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Add date'}
+                          </div>
+                          <div className="mt-2 flex items-center gap-1.5">
+                            <Clock size={10} className="text-primary" />
+                            <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">In: 12:00 PM</span>
                           </div>
                         </div>
                         <div
                           className="flex-1 p-3 cursor-pointer hover:bg-gray-50 transition-colors"
-                          onClick={() => document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
                         >
-                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Check-out</div>
-                          <div className="text-sm text-gray-700 mt-1">
+                          <div className="text-[11px] font-black uppercase text-gray-400 tracking-widest mb-1">Check-out</div>
+                          <div className="text-lg font-black text-gray-900">
                             {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Add date'}
                           </div>
+                          <div className="mt-2 flex items-center gap-1.5">
+                            <Clock size={10} className="text-primary" />
+                            <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">Out: 10:00 AM</span>
+                          </div>
                         </div>
+
+                        {/* Date Picker Popover */}
+                        {isDatePickerOpen && (
+                          <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 p-1 z-50 animate-in fade-in zoom-in-95 duration-200">
+                            <AvailabilityCalendar
+                              isPopover
+                              bookedDates={bookedDates}
+                              checkIn={checkIn}
+                              checkOut={checkOut}
+                              onDateSelect={(date) => {
+                                handleDateSelect(date);
+                                if (checkIn && !checkOut) setIsDatePickerOpen(false);
+                              }}
+                            />
+                            <div className="flex justify-end p-2">
+                              <button 
+                                onClick={() => setIsDatePickerOpen(false)}
+                                className="text-xs font-bold text-gray-900 hover:underline px-3 py-1"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Guest Picker Trigger */}
@@ -951,8 +983,8 @@ export default function StayDetailsPage() {
                         onClick={() => setIsGuestPickerOpen(!isGuestPickerOpen)}
                       >
                         <div className="w-full">
-                          <div className="text-[10px] font-black uppercase text-gray-900 tracking-wider">Guests</div>
-                          <div className="text-sm text-gray-700 mt-1">
+                          <div className="text-[12px] font-black uppercase text-gray-900 tracking-wider">Guests</div>
+                          <div className="text-base font-medium text-gray-700 mt-1">
                             {guests} guest{guests > 1 ? 's' : ''}{infants > 0 ? `, ${infants} infant${infants > 1 ? 's' : ''}` : ''}{pets > 0 ? `, ${pets} pet${pets > 1 ? 's' : ''}` : ''}
                           </div>
                         </div>
@@ -980,12 +1012,12 @@ export default function StayDetailsPage() {
                                 value={adults}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
-                                  if (!isNaN(val)) setAdults(Math.min(maxGuests - children, Math.max(1, val)));
+                                  if (!isNaN(val)) setAdults(Math.max(1, val));
                                 }}
                                 className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                               />
                               <button
-                                onClick={() => setAdults(Math.min(maxGuests - children, adults + 1))}
+                                onClick={() => setAdults(adults + 1)}
                                 className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
                               >
                                 <Plus size={14} />
@@ -1011,12 +1043,12 @@ export default function StayDetailsPage() {
                                 value={children}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
-                                  if (!isNaN(val)) setChildren(Math.min(maxGuests - adults, Math.max(0, val)));
+                                  if (!isNaN(val)) setChildren(Math.max(0, val));
                                 }}
                                 className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                               />
                               <button
-                                onClick={() => setChildren(Math.min(maxGuests - adults, children + 1))}
+                                onClick={() => setChildren(children + 1)}
                                 className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
                               >
                                 <Plus size={14} />
@@ -1024,36 +1056,6 @@ export default function StayDetailsPage() {
                             </div>
                           </div>
 
-                          {/* Infants */}
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-sm font-bold text-gray-900">Infants</div>
-                              <div className="text-xs text-gray-400">Under 2</div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                              <button
-                                onClick={() => setInfants(Math.max(0, infants - 1))}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
-                              >
-                                <Minus size={14} />
-                              </button>
-                              <input 
-                                type="number" 
-                                value={infants}
-                                onChange={(e) => {
-                                  const val = parseInt(e.target.value);
-                                  if (!isNaN(val)) setInfants(Math.max(0, val));
-                                }}
-                                className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                              />
-                              <button
-                                onClick={() => setInfants(infants + 1)}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
-                              >
-                                <Plus size={14} />
-                              </button>
-                            </div>
-                          </div>
 
                           {/* Pets */}
                           <div className="flex items-center justify-between">
@@ -1064,7 +1066,8 @@ export default function StayDetailsPage() {
                             <div className="flex items-center gap-4">
                               <button
                                 onClick={() => setPets(Math.max(0, pets - 1))}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                                disabled={pets <= 0}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Minus size={14} />
                               </button>
@@ -1073,13 +1076,14 @@ export default function StayDetailsPage() {
                                 value={pets}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
-                                  if (!isNaN(val)) setPets(Math.max(0, val));
+                                  if (!isNaN(val)) setPets(Math.min(1, Math.max(0, val)));
                                 }}
                                 className="w-8 text-center font-bold bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                               />
                               <button
-                                onClick={() => setPets(pets + 1)}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                                onClick={() => setPets(Math.min(1, pets + 1))}
+                                disabled={pets >= 1}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Plus size={14} />
                               </button>
@@ -1101,36 +1105,6 @@ export default function StayDetailsPage() {
                       )}
                     </div>
 
-                    {checkIn && checkOut && (
-                      <div className="mt-4 mb-6 space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                        <div className="flex justify-between text-gray-600 text-sm">
-                          <span>{formatCurrency(price)} × {weekdayNights} weekday {weekdayNights === 1 ? 'night' : 'nights'}</span>
-                          <span>{formatCurrency(price * weekdayNights)}</span>
-                        </div>
-                        {weekendNights > 0 && (
-                          <div className="flex justify-between text-gray-600 text-sm">
-                            <span>{formatCurrency(weekendPrice)} × {weekendNights} weekend {weekendNights === 1 ? 'night' : 'nights'}</span>
-                            <span>{formatCurrency(weekendPrice * weekendNights)}</span>
-                          </div>
-                        )}
-                        {extraGuestTotal > 0 && (
-                          <div className="flex justify-between text-gray-600 text-sm">
-                            <span>Extra guest charge ({extraGuests} guests)</span>
-                            <span>{formatCurrency(extraGuestTotal)}</span>
-                          </div>
-                        )}
-                        {selectedAddOns.length > 0 && addOns.filter(a => selectedAddOns.includes(a.name)).map(addon => (
-                          <div key={addon.name} className="flex justify-between text-gray-600 text-sm">
-                            <span>{addon.name}</span>
-                            <span>{formatCurrency(addon.price)}</span>
-                          </div>
-                        ))}
-                        <div className="flex justify-between pt-3 border-t border-gray-200 font-bold text-gray-900 text-base">
-                          <span>Total</span>
-                          <span>{formatCurrency(totalPrice)}</span>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Add-ons selection in booking card */}
                     {addOns && addOns.length > 0 && (

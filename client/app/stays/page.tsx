@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight, BedDouble, Users } from 'lucide-react';
 import { Container } from '@/Components/ui/Container';
 import { Card } from '@/Components/ui/Card';
 import { formatCurrency } from '@/lib/utils';
@@ -15,12 +15,12 @@ export default function FarmStaysPage() {
     return (
         <div className="py-12 bg-white min-h-screen">
             <Container>
-                <SectionHeading
+                {/* <SectionHeading
                     badge="✨ Exclusive Stay"
                     subtitle="Experience the perfect blend of luxury and nature. Choose from our curated collection of premium stays."
                 >
                     Stays
-                </SectionHeading>
+                </SectionHeading> */}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {isLoading ? (
@@ -29,37 +29,46 @@ export default function FarmStaysPage() {
                         ))
                     ) : stays?.map((stay) => (
                         <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
-                            <Card className="overflow-hidden border-none shadow-none hover:shadow-2xl transition-all duration-500 rounded-[32px] bg-white group flex flex-col h-full">
-                                <div className="aspect-[4/3] relative overflow-hidden rounded-[32px]">
+                            <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2 rounded-[40px]">
+                                <div className="aspect-[4/3] relative overflow-hidden rounded-[32px] m-3">
                                     <img
                                         src={stay.images[0]}
                                         alt={stay.name}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
-                                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-widest text-gray-900 uppercase">
+                                    <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[10px] font-black tracking-widest text-gray-900 uppercase shadow-sm">
                                         Premium
                                     </div>
                                 </div>
-                                <div className="p-5 flex flex-col flex-1">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h3 className="font-black text-xl text-gray-900 leading-tight">
-                                            {stay.name} <span className="text-gray-400 font-medium">Farm stay</span>
-                                        </h3>
-                                        {/* <div className="flex items-center gap-1">
-                                            <Star size={14} className="fill-primary text-primary" />
-                                            <span className="text-sm font-bold">4.9</span>
-                                        </div> */}
+                                <div className="p-8 pt-4 flex flex-col flex-1">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <span className="h-px w-8 bg-primary/30"></span>
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80">Farm Stay</span>
                                     </div>
-                                    <p className="text-gray-400 text-xs font-medium mb-6">
-                                        Up to {stay.capacity} guests · Instant Booking
-                                    </p>
-                                    <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
-                                        <div>
-                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Starts from</span>
+
+                                    <h3 className="text-3xl font-black tracking-tighter text-primary leading-none mb-4 group-hover:text-primary/80 transition-colors duration-500">
+                                        {stay.name}
+                                    </h3>
+
+                                    <div className="flex items-center gap-5 mb-8">
+                                        <div className="flex items-center gap-1.5">
+                                            <BedDouble size={14} className="text-gray-400" />
+                                            <span className="text-xs font-bold text-gray-500">{stay.bedrooms} BHK</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <Users size={14} className="text-gray-400" />
+                                            <span className="text-xs font-bold text-gray-500">Up to {stay.capacity} Guests</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-auto space-y-2.5">
+                                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekdays</span>
                                             <span className="text-lg font-black text-gray-900">{formatCurrency(stay.price)}</span>
                                         </div>
-                                        <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                                            <ArrowRight size={20} />
+                                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekends</span>
+                                            <span className="text-lg font-black text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
                                         </div>
                                     </div>
                                 </div>
