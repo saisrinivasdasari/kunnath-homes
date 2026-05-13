@@ -266,7 +266,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container } from '@/Components/ui/Container';
 import { Button } from '@/Components/ui/Button';
 import { Card } from '@/Components/ui/Card';
@@ -460,31 +460,97 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   const currentMonthLabel = `${monthNames[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
   const nextMonthLabel = `${monthNames[nextMonthDate.getMonth()]} ${nextMonthDate.getFullYear()}`;
 
+  const nights = checkIn && checkOut ? calculateNightsLocal(checkIn, checkOut) : 0;
+  const dateRangeStr = checkIn && checkOut
+    ? `${localDateFromString(checkIn).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} - ${localDateFromString(checkOut).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`
+    : 'Select dates';
+
   return (
     <div className={cn(
-      "bg-white rounded-2xl border border-gray-200 shadow-sm",
-      isPopover ? "p-3" : "p-5"
+      "bg-white rounded-3xl",
+      isPopover ? "p-0" : "p-5 border border-gray-200 shadow-sm"
     )}>
-      <div className={cn("flex items-center justify-between", isPopover ? "mb-4" : "mb-6")}>
-        <h3 className={cn("font-semibold", isPopover ? "text-sm" : "text-lg")}>Select dates</h3>
-        <div className="flex gap-1">
-          <button onClick={goPrevMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-            <ChevronLeft size={isPopover ? 16 : 20} />
-          </button>
-          <button onClick={goNextMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-            <ChevronRight size={isPopover ? 16 : 20} />
-          </button>
+      {isPopover && (
+        <div className="p-6 pb-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 className="text-3xl font-black text-gray-900 tracking-tighter leading-none">
+              {nights > 0 ? `${nights} nights` : 'Select dates'}
+            </h2>
+            <p className="text-sm font-bold text-gray-400 mt-2">
+              {nights > 0 ? dateRangeStr : 'Add your travel dates for exact pricing'}
+            </p>
+          </div>
+
+          <div className="flex border border-gray-900 rounded-2xl overflow-hidden shadow-sm">
+            <div className="px-4 py-2 border-r border-gray-900 bg-white min-w-[140px]">
+              <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Check-in</div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-gray-900">
+                  {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Add date'}
+                </span>
+                {checkIn && (
+                  <button onClick={(e) => { e.stopPropagation(); onDateSelect(''); }} className="ml-2 text-gray-400 hover:text-gray-900">
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="px-4 py-2 bg-white min-w-[140px]">
+              <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Checkout</div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-gray-900">
+                  {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Add date'}
+                </span>
+                {checkOut && (
+                  <button onClick={(e) => { e.stopPropagation(); onDateSelect(checkIn); }} className="ml-2 text-gray-400 hover:text-gray-900">
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isPopover && (
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold">Select dates</h3>
+          <div className="flex gap-1">
+            <button onClick={goPrevMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+              <ChevronLeft size={20} />
+            </button>
+            <button onClick={goNextMonth} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className={cn("relative", isPopover ? "p-6 pt-2" : "")}>
+        {isPopover && (
+          <>
+            <button onClick={goPrevMonth} className="absolute left-6 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-100 transition-colors z-10">
+              <ChevronLeft size={24} className="text-gray-400" />
+            </button>
+            <button onClick={goNextMonth} className="absolute right-6 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-100 transition-colors z-10">
+              <ChevronRight size={24} className="text-gray-400" />
+            </button>
+          </>
+        )}
+
+        <div className={cn("flex flex-col sm:flex-row gap-8 justify-between")}>
+          {renderMonth(currentMonth, currentMonthDays, currentMonthLabel)}
+          {renderMonth(nextMonthDate, nextMonthDays, nextMonthLabel)}
         </div>
       </div>
-      <div className={cn("flex flex-col sm:flex-row gap-8 justify-between")}>
-        {renderMonth(currentMonth, currentMonthDays, currentMonthLabel)}
-        {!isPopover && renderMonth(nextMonthDate, nextMonthDays, nextMonthLabel)}
-      </div>
-      <div className={cn("flex justify-between mt-4 text-[10px] text-gray-400 border-t pt-3", isPopover ? "hidden sm:flex" : "flex")}>
-        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-gray-100 rounded"></span> Range</div>
-        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-gray-900 rounded-full"></span> Select</div>
-        <div className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 bg-white border border-gray-200 rounded overflow-hidden relative"><span className="absolute inset-0 flex items-center justify-center text-gray-200 text-[8px] leading-none">/</span></span> Booked</div>
-      </div>
+
+      {/* <div className={cn("flex justify-between mt-4 text-[10px] text-gray-400 border-t pt-3 pb-2", isPopover ? "px-8 border-none" : "flex")}>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5"><span className="inline-block w-2.5 h-2.5 bg-gray-100 rounded"></span> Range</div>
+          <div className="flex items-center gap-1.5"><span className="inline-block w-2.5 h-2.5 bg-gray-900 rounded-full"></span> Select</div>
+          <div className="flex items-center gap-1.5"><span className="inline-block w-2.5 h-2.5 bg-white border border-gray-200 rounded overflow-hidden relative"><span className="absolute inset-0 flex items-center justify-center text-gray-200 text-[8px] leading-none">/</span></span> Booked</div>
+        </div>
+      </div> */}
     </div>
   );
 };
@@ -514,6 +580,27 @@ export default function StayDetailsPage() {
   const [dynamicImages, setDynamicImages] = useState<string[]>([]);
   const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+  const guestPickerRef = useRef<HTMLDivElement>(null);
+
+  // Close popovers when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
+        setIsDatePickerOpen(false);
+      }
+      if (guestPickerRef.current && !guestPickerRef.current.contains(event.target as Node)) {
+        setIsGuestPickerOpen(false);
+      }
+    };
+
+    if (isDatePickerOpen || isGuestPickerOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDatePickerOpen, isGuestPickerOpen]);
 
   useEffect(() => {
     if (stayData?.slug) {
@@ -692,7 +779,7 @@ export default function StayDetailsPage() {
   };
 
   return (
-    <div className="py-6 pb-20 bg-white min-h-screen">
+    <div className="px-12 pt-8 pb-20 bg-white min-h-screen">
       <Container>
         {/* Title & action row */}
         <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
@@ -720,7 +807,7 @@ export default function StayDetailsPage() {
         </div>
 
         {/* Photo Gallery */}
-        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[260px] md:h-[350px]">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[260px] md:h-[324px] ">
           <div className="md:col-span-2 md:row-span-2 relative cursor-pointer" onClick={() => openGallery(0)}>
             <img src={galleryImages[0]} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
@@ -833,7 +920,7 @@ export default function StayDetailsPage() {
                 bookedDates={bookedDates}
                 checkIn={checkIn}
                 checkOut={checkOut}
-                onDateSelect={() => {}} // Disconnected as requested
+                onDateSelect={() => { }} // Disconnected as requested
               />
             </div>
 
@@ -926,35 +1013,50 @@ export default function StayDetailsPage() {
                     <div className="relative border border-gray-300 rounded-xl mb-4">
                       <div className="flex border-b border-gray-300 relative">
                         <div
-                          className="flex-1 p-3 border-r border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors"
-                          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+                          className="flex-1 p-3 border-r border-gray-300 cursor-pointer hover:bg-gray-50/50 transition-colors"
+                          onClick={() => {
+                            setIsDatePickerOpen(!isDatePickerOpen);
+                            if (!isDatePickerOpen) setIsGuestPickerOpen(false);
+                          }}
                         >
-                          <div className="text-[11px] font-black uppercase text-gray-400 tracking-widest mb-1">Check-in</div>
-                          <div className="text-lg font-black text-gray-900">
-                            {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Add date'}
-                          </div>
-                          <div className="mt-2 flex items-center gap-1.5">
+                          <div className="flex items-center gap-1 mb-1">
                             <Clock size={10} className="text-primary" />
-                            <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">In: 12:00 PM</span>
+                            <span className="text-[9px] font-black text-primary uppercase tracking-tight">In: 12:00 PM</span>
+                          </div>
+                          <div className="text-[12px] font-black uppercase text-gray-900 tracking-wider">Check-in</div>
+                          <div className={cn(
+                            "text-[11px] mt-0.5 transition-colors",
+                            checkIn ? "font-bold text-gray-900" : "font-normal text-gray-400"
+                          )}>
+                            {checkIn ? new Date(checkIn).toLocaleDateString('en-GB') : 'Add date'}
                           </div>
                         </div>
                         <div
-                          className="flex-1 p-3 cursor-pointer hover:bg-gray-50 transition-colors"
-                          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+                          className="flex-1 p-3 cursor-pointer hover:bg-gray-50/50 transition-colors"
+                          onClick={() => {
+                            setIsDatePickerOpen(!isDatePickerOpen);
+                            if (!isDatePickerOpen) setIsGuestPickerOpen(false);
+                          }}
                         >
-                          <div className="text-[11px] font-black uppercase text-gray-400 tracking-widest mb-1">Check-out</div>
-                          <div className="text-lg font-black text-gray-900">
-                            {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Add date'}
-                          </div>
-                          <div className="mt-2 flex items-center gap-1.5">
+                          <div className="flex items-center gap-1 mb-1">
                             <Clock size={10} className="text-primary" />
-                            <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">Out: 10:00 AM</span>
+                            <span className="text-[9px] font-black text-primary uppercase tracking-tight">Out: 10:00 AM</span>
+                          </div>
+                          <div className="text-[12px] font-black uppercase text-gray-900 tracking-wider">Check-out</div>
+                          <div className={cn(
+                            "text-[11px] mt-0.5 transition-colors",
+                            checkOut ? "font-bold text-gray-900" : "font-normal text-gray-400"
+                          )}>
+                            {checkOut ? new Date(checkOut).toLocaleDateString('en-GB') : 'Add date'}
                           </div>
                         </div>
 
                         {/* Date Picker Popover */}
                         {isDatePickerOpen && (
-                          <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 p-1 z-50 animate-in fade-in zoom-in-95 duration-200">
+                          <div
+                            ref={datePickerRef}
+                            className="absolute top-0 right-0 md:-right-4 lg:-right-8 mt-0 bg-white rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.25)] border border-gray-100 p-0 z-50 animate-in fade-in zoom-in-95 duration-200 w-full md:w-[680px]"
+                          >
                             <AvailabilityCalendar
                               isPopover
                               bookedDates={bookedDates}
@@ -965,12 +1067,13 @@ export default function StayDetailsPage() {
                                 if (checkIn && !checkOut) setIsDatePickerOpen(false);
                               }}
                             />
-                            <div className="flex justify-end p-2">
-                              <button 
+                            <div className="flex justify-end px-8 pb-8">
+                              <button
                                 onClick={() => setIsDatePickerOpen(false)}
-                                className="text-xs font-bold text-gray-900 hover:underline px-3 py-1"
+                                className="bg-gray-900 text-white text-xs font-black uppercase tracking-[0.2em] px-8 py-3 rounded-xl hover:bg-gray-800 transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)] active:scale-95 flex items-center gap-2"
                               >
-                                Close
+                                <span>Close</span>
+                                <X size={14} />
                               </button>
                             </div>
                           </div>
@@ -980,7 +1083,10 @@ export default function StayDetailsPage() {
                       {/* Guest Picker Trigger */}
                       <div
                         className="p-3 w-full flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors rounded-b-xl"
-                        onClick={() => setIsGuestPickerOpen(!isGuestPickerOpen)}
+                        onClick={() => {
+                          setIsGuestPickerOpen(!isGuestPickerOpen);
+                          if (!isGuestPickerOpen) setIsDatePickerOpen(false);
+                        }}
                       >
                         <div className="w-full">
                           <div className="text-[12px] font-black uppercase text-gray-900 tracking-wider">Guests</div>
@@ -993,7 +1099,10 @@ export default function StayDetailsPage() {
 
                       {/* Guest Picker Popover */}
                       {isGuestPickerOpen && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-gray-50 rounded-2xl shadow-2xl border border-gray-100 p-6 z-50 space-y-6 animate-in fade-in zoom-in-95 duration-200">
+                        <div
+                          ref={guestPickerRef}
+                          className="absolute top-full left-0 right-0 mt-2 bg-gray-50 rounded-2xl shadow-2xl border border-gray-100 p-6 z-50 space-y-6 animate-in fade-in zoom-in-95 duration-200"
+                        >
                           {/* Adults */}
                           <div className="flex items-center justify-between">
                             <div>
@@ -1007,8 +1116,8 @@ export default function StayDetailsPage() {
                               >
                                 <Minus size={14} />
                               </button>
-                              <input 
-                                type="number" 
+                              <input
+                                type="number"
                                 value={adults}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
@@ -1018,7 +1127,8 @@ export default function StayDetailsPage() {
                               />
                               <button
                                 onClick={() => setAdults(adults + 1)}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                                disabled={guests >= maxGuests}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Plus size={14} />
                               </button>
@@ -1038,8 +1148,8 @@ export default function StayDetailsPage() {
                               >
                                 <Minus size={14} />
                               </button>
-                              <input 
-                                type="number" 
+                              <input
+                                type="number"
                                 value={children}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
@@ -1049,7 +1159,8 @@ export default function StayDetailsPage() {
                               />
                               <button
                                 onClick={() => setChildren(children + 1)}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors"
+                                disabled={guests >= maxGuests}
+                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Plus size={14} />
                               </button>
@@ -1071,8 +1182,8 @@ export default function StayDetailsPage() {
                               >
                                 <Minus size={14} />
                               </button>
-                              <input 
-                                type="number" 
+                              <input
+                                type="number"
                                 value={pets}
                                 onChange={(e) => {
                                   const val = parseInt(e.target.value);
@@ -1090,10 +1201,12 @@ export default function StayDetailsPage() {
                             </div>
                           </div>
 
-                          <div className="pt-4 border-t border-gray-100 flex justify-end items-center">
-                            {/* <span className="text-[10px] text-gray-400 font-medium max-w-[140px]">
-                              This place has a maximum of {maxGuests} guests, not including infants.
-                            </span> */}
+                          <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
+                            {guests >= maxGuests ? (
+                              <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">Maximum capacity reached</span>
+                            ) : (
+                              <span className="text-[10px] text-gray-400 font-medium">Maximum {maxGuests} guests allowed</span>
+                            )}
                             <button
                               onClick={() => setIsGuestPickerOpen(false)}
                               className="text-sm font-bold text-gray-900 hover:underline"

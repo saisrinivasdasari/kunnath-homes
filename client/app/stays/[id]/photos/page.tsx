@@ -142,7 +142,14 @@ export default function PhotoTourPage() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') router.back(); };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    
+    // Disable body scroll when gallery is open to prevent double scrollbars
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = 'unset';
+    };
   }, [router]);
 
   if (isLoading) {

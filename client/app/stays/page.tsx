@@ -22,53 +22,51 @@ export default function FarmStaysPage() {
                     Stays
                 </SectionHeading> */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {isLoading ? (
                         Array(3).fill(0).map((_, idx) => (
                             <div key={idx} className="bg-white rounded-2xl h-[400px] animate-pulse border border-gray-100" />
                         ))
-                    ) : stays?.map((stay) => (
+                    ) : (stays ? [...stays].sort((a, b) => {
+                        const order = { 'Orange': 1, 'Lemon': 2, 'Mint': 3 };
+                        return (order[a.name] || 99) - (order[b.name] || 99);
+                    }) : []).map((stay) => (
                         <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
-                            <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2 rounded-[40px]">
-                                <div className="aspect-[4/3] relative overflow-hidden rounded-[32px] m-3">
+                            <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 rounded-[32px]">
+                                <div className="aspect-[16/10] relative overflow-hidden rounded-[24px] m-2.5">
                                     <img
                                         src={stay.images[0]}
                                         alt={stay.name}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
-                                    <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[10px] font-black tracking-widest text-gray-900 uppercase shadow-sm">
+                                    <div className="absolute top-3 left-3 bg-white/80 backdrop-blur-md border border-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-widest text-gray-900 uppercase shadow-sm">
                                         Premium
                                     </div>
                                 </div>
-                                <div className="p-8 pt-4 flex flex-col flex-1">
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <span className="h-px w-8 bg-primary/30"></span>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80">Farm Stay</span>
-                                    </div>
-
-                                    <h3 className="text-3xl font-black tracking-tighter text-primary leading-none mb-4 group-hover:text-primary/80 transition-colors duration-500">
-                                        {stay.name}
+                                <div className="p-6 pt-2 flex flex-col flex-1">
+                                    <h3 className="text-xl font-black tracking-tighter text-primary leading-none mb-3 group-hover:text-primary/80 transition-colors duration-500">
+                                        {stay.name} Farmstay
                                     </h3>
 
-                                    <div className="flex items-center gap-5 mb-8">
+                                    <div className="flex items-center gap-4 mb-4">
                                         <div className="flex items-center gap-1.5">
-                                            <BedDouble size={14} className="text-gray-400" />
-                                            <span className="text-xs font-bold text-gray-500">{stay.bedrooms} BHK</span>
+                                            <BedDouble size={13} className="text-gray-400" />
+                                            <span className="text-[11px] font-bold text-gray-500">{stay.bedrooms} BHK</span>
                                         </div>
                                         <div className="flex items-center gap-1.5">
-                                            <Users size={14} className="text-gray-400" />
-                                            <span className="text-xs font-bold text-gray-500">Up to {stay.capacity} Guests</span>
+                                            <Users size={13} className="text-gray-400" />
+                                            <span className="text-[11px] font-bold text-gray-500">Up to {stay.capacity} Guests</span>
                                         </div>
                                     </div>
 
-                                    <div className="mt-auto space-y-2.5">
-                                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
-                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekdays</span>
-                                            <span className="text-lg font-black text-gray-900">{formatCurrency(stay.price)}</span>
+                                    <div className="mt-auto space-y-2">
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Weekdays</span>
+                                            <span className="text-base font-black text-gray-900">{formatCurrency(stay.price)}</span>
                                         </div>
-                                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
-                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Weekends</span>
-                                            <span className="text-lg font-black text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50/50 border border-gray-100 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Weekends</span>
+                                            <span className="text-base font-black text-gray-900">{formatCurrency(stay.weekendPrice || 0)}</span>
                                         </div>
                                     </div>
                                 </div>
