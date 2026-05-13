@@ -678,7 +678,13 @@ export default function StayDetailsPage() {
     safetyItems = ["Smoke alarm", "First aid kit"],
     cancellationPolicy = "Free cancellation for 48 hours.",
     unavailableDates = []
-  } = stayData;
+  } = stayData || {};
+
+  // Strict capacity enforcement based on stay type
+  const limitMaxGuests = stayData?.name?.includes('Orange') ? 15 
+                       : stayData?.name?.includes('Lemon') ? 20 
+                       : stayData?.name?.includes('Mint') ? 15 
+                       : maxGuests;
 
   // const bookedDates = unavailableDates.length > 0 ? unavailableDates : generateMockBookedDates();
   const bookedDates = unavailableDates || [];
@@ -1127,7 +1133,7 @@ export default function StayDetailsPage() {
                               />
                               <button
                                 onClick={() => setAdults(adults + 1)}
-                                disabled={guests >= maxGuests}
+                                disabled={guests >= limitMaxGuests}
                                 className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Plus size={14} />
@@ -1159,7 +1165,7 @@ export default function StayDetailsPage() {
                               />
                               <button
                                 onClick={() => setChildren(children + 1)}
-                                disabled={guests >= maxGuests}
+                                disabled={guests >= limitMaxGuests}
                                 className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               >
                                 <Plus size={14} />
@@ -1202,10 +1208,10 @@ export default function StayDetailsPage() {
                           </div>
 
                           <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-                            {guests >= maxGuests ? (
+                            {guests >= limitMaxGuests ? (
                               <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">Maximum capacity reached</span>
                             ) : (
-                              <span className="text-[10px] text-gray-400 font-medium">Maximum {maxGuests} guests allowed</span>
+                              <span className="text-[10px] text-gray-400 font-medium">Maximum {limitMaxGuests} guests allowed</span>
                             )}
                             <button
                               onClick={() => setIsGuestPickerOpen(false)}
