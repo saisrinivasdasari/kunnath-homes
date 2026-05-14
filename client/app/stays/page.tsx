@@ -8,6 +8,7 @@ import { formatCurrency } from '@/lib/utils';
 import Link from 'next/link';
 import { useStays } from '@/hooks/useStays';
 import { SectionHeading } from '@/Components/ui/SectionHeading';
+import StayCardSlider from '@/Components/stays/StayCardSlider';
 
 export default function FarmStaysPage() {
     const { data: stays, isLoading } = useStays();
@@ -34,18 +35,11 @@ export default function FarmStaysPage() {
                         <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
                             <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 rounded-[32px]">
                                 <div className="aspect-[16/10] relative overflow-hidden rounded-[24px] m-2.5">
-                                    <img
-                                        src={stay.images[0]}
-                                        alt={stay.name}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                    />
-                                    <div className="absolute top-3 left-3 bg-white/80 backdrop-blur-md border border-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-widest text-gray-900 uppercase shadow-sm">
-                                        Premium
-                                    </div>
+                                    <StayCardSlider images={stay.images} stayName={stay.name} />
                                 </div>
                                 <div className="p-6 pt-2 flex flex-col flex-1">
                                     <h3 className="text-xl font-black tracking-tighter text-primary leading-none mb-3 group-hover:text-primary/80 transition-colors duration-500">
-                                        {stay.name} Farmstay
+                                        {stay.name} Farm Stay
                                     </h3>
 
                                     <div className="flex items-center gap-4 mb-4">

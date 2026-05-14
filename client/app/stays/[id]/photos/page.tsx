@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { X, Heart, Upload } from 'lucide-react';
 import { useStayDetails } from '@/hooks/useStays';
+import ShareModal from '@/Components/stays/ShareModal';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Category {
@@ -17,7 +18,6 @@ const CATEGORIES: Category[] = [
   { id: 'living', label: 'Living room' },
   { id: 'bedroom', label: 'Bedroom' },
   { id: 'bathroom', label: 'Bathroom' },
-  { id: 'kitchen', label: 'Kitchen' },
   { id: 'amenities', label: 'Amenities' },
 ];
 
@@ -49,16 +49,16 @@ function ThumbButton({ cat, thumb, onClick }: { cat: Category; thumb: string; on
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center gap-2.5 group text-center focus:outline-none w-full"
+      className="flex flex-col items-center gap-2.5 group text-center focus:outline-none w-full cursor-pointer"
     >
-      <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-sm ring-1 ring-black/[0.04] transition-all duration-300 group-hover:shadow-lg group-hover:ring-black/10 group-active:scale-95">
+      <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-sm ring-1 ring-black/[0.04] transition-all duration-300 group-hover:shadow-lg group-hover:ring-gray-900 group-active:scale-95">
         <img
           src={thumb}
           alt={cat.label}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
-      <span className="text-[12px] sm:text-[13px] font-medium text-gray-500 group-hover:text-gray-900 transition-colors tracking-tight">
+      <span className="text-[12px] sm:text-[13px] font-bold text-gray-500 group-hover:text-gray-900 transition-all tracking-tight group-hover:translate-y-[-1px]">
         {cat.label}
       </span>
     </button>
@@ -87,6 +87,7 @@ export default function PhotoTourPage() {
   const { data: stayData, isLoading } = useStayDetails(stayId);
   const [catImages, setCatImages] = useState<Record<string, string[]>>({});
   const [flatImages, setFlatImages] = useState<string[]>([]);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
@@ -133,8 +134,7 @@ export default function PhotoTourPage() {
   const scrollTo = useCallback((catId: string) => {
     const el = sectionRefs.current[catId];
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({ top, behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, []);
 
@@ -189,7 +189,10 @@ export default function PhotoTourPage() {
 
           {/* Actions */}
           <div className="flex items-center gap-1">
-            <button className="flex items-center gap-2 text-[14px] font-semibold text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-lg transition-all active:scale-95">
+            <button 
+              onClick={() => setIsShareModalOpen(true)}
+              className="flex items-center gap-2 text-[14px] font-semibold text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-lg transition-all active:scale-95"
+            >
               <Upload size={16} strokeWidth={2.5} />
               <span className="hidden sm:inline">Share</span>
             </button>
@@ -262,6 +265,16 @@ export default function PhotoTourPage() {
           })}
         </div>
       </div>
+
+      <ShareModal 
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={stayData?.name || 'Farm Stay'}
+        url={typeof window !== 'undefined' ? window.location.href.split('/photos')[0] : ''}
+        image={stayData?.images?.[0]}
+        bedrooms={stayData?.bedrooms}
+        capacity={stayData?.capacity}
+      />
     </div>
   );
 }

@@ -471,18 +471,18 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
       isPopover ? "p-0" : "p-5 border border-gray-200 shadow-sm"
     )}>
       {isPopover && (
-        <div className="p-6 pb-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h2 className="text-3xl font-black text-gray-900 tracking-tighter leading-none">
+        <div className="p-4 sm:p-6 pb-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="w-full sm:w-auto">
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tighter leading-none">
               {nights > 0 ? `${nights} nights` : 'Select dates'}
             </h2>
-            <p className="text-sm font-bold text-gray-400 mt-2">
+            <p className="text-[11px] sm:text-sm font-bold text-gray-400 mt-2">
               {nights > 0 ? dateRangeStr : 'Add your travel dates for exact pricing'}
             </p>
           </div>
 
-          <div className="flex border border-gray-900 rounded-2xl overflow-hidden shadow-sm">
-            <div className="px-4 py-2 border-r border-gray-900 bg-white min-w-[140px]">
+          <div className="flex flex-col sm:flex-row border border-gray-900 rounded-2xl overflow-hidden shadow-sm w-full sm:w-auto">
+            <div className="px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-900 bg-white flex-1 sm:min-w-[140px]">
               <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Check-in</div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-gray-900">
@@ -495,7 +495,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
                 )}
               </div>
             </div>
-            <div className="px-4 py-2 bg-white min-w-[140px]">
+            <div className="px-4 py-2 bg-white flex-1 sm:min-w-[140px]">
               <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Checkout</div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-gray-900">
@@ -526,7 +526,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
         </div>
       )}
 
-      <div className={cn("relative", isPopover ? "p-6 pt-2" : "")}>
+      <div className={cn("relative", isPopover ? "px-4 sm:px-6 pt-2" : "")}>
         {isPopover && (
           <>
             <button onClick={goPrevMonth} className="absolute left-6 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-100 transition-colors z-10">
@@ -933,14 +933,15 @@ export default function StayDetailsPage() {
             <div className="border-t border-gray-100 pt-8">
               <h2 className="text-xl font-bold text-gray-900 mb-2">Where you'll be</h2>
               <p className="text-sm text-gray-500 mb-6">{location.address}</p>
-              <div className="relative aspect-[21/9] bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 group">
-                <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/78.4866,17.5875,12,0/800x400?access_token=pk.eyJ1Ijoic2Fpc3JhIiwiYSI6ImNsdHljNmh0bzBiazMya21oZnpndW5nYnoifQ.x-x')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-700"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-white p-4 rounded-full shadow-2xl animate-bounce">
-                    <MapPin size={32} className="text-primary" />
-                  </div>
-                </div>
-                <div className="absolute bottom-6 left-6">
+              <div className="relative aspect-[16/9] sm:aspect-[21/9] bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 group shadow-sm">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1899.982270385572!2d78.46668796405145!3d17.746309875123387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcc775bf397e4d1%3A0x830514304966871a!2sKunnath%20House%20Farm%20House!5e0!3m2!1sen!2sin!4v1778741897871!5m2!1sen!2sin"
+                  className="w-full h-full border-0"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <div className="absolute bottom-6 left-6 hidden sm:block">
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`}
                     target="_blank"
@@ -1061,7 +1062,7 @@ export default function StayDetailsPage() {
                         {isDatePickerOpen && (
                           <div
                             ref={datePickerRef}
-                            className="absolute top-0 right-0 md:-right-4 lg:-right-8 mt-0 bg-white rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.25)] border border-gray-100 p-0 z-50 animate-in fade-in zoom-in-95 duration-200 w-full md:w-[680px]"
+                            className="fixed inset-0 sm:absolute sm:inset-auto sm:top-0 sm:right-0 md:-right-4 lg:-right-8 mt-0 bg-white sm:rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.25)] border-t sm:border border-gray-100 p-0 z-[100] sm:z-50 animate-in fade-in zoom-in-95 duration-200 w-full md:w-[680px] overflow-y-auto sm:overflow-visible"
                           >
                             <AvailabilityCalendar
                               isPopover
@@ -1230,7 +1231,9 @@ export default function StayDetailsPage() {
                       <div className="mb-4">
                         <div className="text-xs font-bold uppercase text-gray-800 mb-2">Optional Add-ons</div>
                         <div className="space-y-2">
-                          {addOns.map((addon) => (
+                          {addOns
+                            .filter(addon => addon.name !== 'Kitchen') // Filter out Kitchen as requested
+                            .map((addon) => (
                             <label key={addon.name} className="flex items-center justify-between p-2 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
                               <div className="flex items-center gap-2">
                                 <input

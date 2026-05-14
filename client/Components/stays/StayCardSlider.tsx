@@ -1,0 +1,124 @@
+'use client';
+
+import React, { useState, useRef, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+interface StayCardSliderProps {
+  images: string[];
+  stayName: string;
+}
+
+export default function StayCardSlider({ images, stayName }: StayCardSliderProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      } else {
+        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  return (
+    <div 
+      className="relative w-full h-full group/slider"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Images Container */}
+      <div className="relative w-full h-full overflow-hidden rounded-[24px]">
+        <div 
+          className="flex w-full h-full transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((src, idx) => (
+            <div key={idx} className="w-full h-full flex-shrink-0">
+              <img
+                src={src}
+                alt={`${stayName} - ${idx + 1}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation Arrows (Desktop Only) */}
+      <div className={cn(
+        "absolute inset-0 flex items-center justify-between px-3 pointer-events-none transition-opacity duration-300",
+        isHovered ? "opacity-100" : "opacity-0"
+      )}>
+        <button
+          onClick={handlePrev}
+          className="w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center text-gray-800 hover:bg-white hover:scale-105 active:scale-95 transition-all pointer-events-auto"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <button
+          onClick={handleNext}
+          className="w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center text-gray-800 hover:bg-white hover:scale-105 active:scale-95 transition-all pointer-events-auto"
+        >
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      {/* Pagination Dots (Limited to 5) */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
+        {images.slice(0, 5).map((_, idx) => {
+          // If total images > 5, we show 5 dots that represent a window
+          // For simplicity and matching "show only 5 dots", we'll just show 5
+          // and highlight the one corresponding to (currentIndex % 5) or similar
+          // But usually, users just want a cleaner look.
+          const isSelected = images.length <= 5 
+            ? currentIndex === idx 
+            : Math.floor(currentIndex / (images.length / 5)) === idx;
+
+          return (
+            <div
+              key={idx}
+              className={cn(
+                "w-1.5 h-1.5 rounded-full transition-all duration-300 shadow-sm",
+                isSelected
+                  ? "bg-white scale-125 w-2" 
+                  : "bg-white/60"
+              )}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}

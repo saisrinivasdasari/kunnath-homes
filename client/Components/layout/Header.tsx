@@ -127,23 +127,6 @@
 //             <a
 //               href="tel:+911234567890"
 //               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-primary"
-//             >
-//               Call Us: +91 12345 67890
-//             </a>
-//             <div className="pt-4 border-t border-gray-200">
-//               {user ? (
-//                 <>
-//                   <div className="px-3 pb-2">
-//                     <p className="text-base font-medium text-gray-800">{user.name}</p>
-//                     <p className="text-sm font-medium text-gray-500">{user.email}</p>
-//                   </div>
-//                   <Link
-//                     href="/dashboard"
-//                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50"
-//                     onClick={() => setIsMobileMenuOpen(false)}
-//                   >
-//                     My Bookings
-//                   </Link>
 //                   <button
 //                     onClick={() => {
 //                       logout();
@@ -178,7 +161,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
-import { Menu, X, User, Phone, LogOut, Instagram } from 'lucide-react';
+import { Menu, X, User, Phone, LogOut, Instagram, Home } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -213,11 +196,17 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex flex-col items-start leading-none group">
-              <span className="text-2xl font-black font-display text-primary tracking-tighter group-hover:text-primary transition-colors duration-300">
-                Kunnath<span className="text-primary"></span>House
-              </span>
-              <span className="text-[8.5px] uppercase tracking-[0.35em] font-bold text-gray-400 mt-1.5 opacity-80">Escape • Indulge • Reconnect</span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-11 h-11 rounded-[14px] bg-[radial-gradient(circle_at_top_right,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)] flex items-center justify-center shadow-lg transition-all duration-500 group-hover:shadow-[0_8px_20px_-5px_rgba(220,39,67,0.4)] group-hover:scale-110 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
+                <Home size={22} className="text-white relative z-10 drop-shadow-sm" strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-xl font-black font-display text-gray-900 tracking-tighter group-hover:text-primary transition-colors duration-300">
+                  Kunnath<span className="text-gray-900"> House</span>
+                </span>
+                <span className="text-[8px] uppercase tracking-[0.3em] font-bold text-gray-400 mt-1 opacity-80">Crafted for Recreation</span>
+              </div>
             </Link>
           </div>
 
@@ -257,9 +246,16 @@ export function Header() {
                 href="https://www.instagram.com/kunnath_farmhouse?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-primary transition-all duration-300 hover:scale-125"
+                className="w-8 h-8 flex items-center justify-center transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_10px_rgba(225,48,108,0.5)] active:scale-90 group/insta relative"
               >
-                <Instagram size={17} />
+                {/* Subtle pulse ring around the icon */}
+                <div className="absolute inset-0 rounded-full bg-pink-500/10 animate-ping duration-3000 opacity-0 group-hover/insta:opacity-100"></div>
+                
+                <img 
+                  src="/Logo/insta/instagram.png" 
+                  alt="Instagram" 
+                  className="w-full h-full object-contain drop-shadow-sm transition-all duration-500"
+                />
               </a>
             </div>
 
