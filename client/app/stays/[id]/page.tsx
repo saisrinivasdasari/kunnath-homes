@@ -283,6 +283,7 @@ import { useCreateBooking } from '@/hooks/useBookings';
 import { useAuthStore } from '@/store/authStore';
 
 import { formatCurrency, cn } from '@/lib/utils';
+import ShareModal from '@/Components/stays/ShareModal';
 
 // ---------- TIMEZONE-SAFE DATE HELPERS ----------
 function getTodayLocal(): string {
@@ -580,6 +581,7 @@ export default function StayDetailsPage() {
   const [dynamicImages, setDynamicImages] = useState<string[]>([]);
   const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
   const guestPickerRef = useRef<HTMLDivElement>(null);
 
@@ -802,14 +804,14 @@ export default function StayDetailsPage() {
               <span className="underline font-medium hover:text-gray-900 transition-colors cursor-pointer">{location.address.split(',')[0]}</span>
             </div> */}
           </div>
-          {/* <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-900 transition-colors">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsShareModalOpen(true)}
+              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-900 transition-colors"
+            >
               <Share size={14} /> Share
             </button>
-            <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-900 transition-colors">
-              <Heart size={14} /> Save
-            </button>
-          </div> */}
+          </div>
         </div>
 
         {/* Photo Gallery */}
@@ -1401,6 +1403,16 @@ export default function StayDetailsPage() {
       </Container>
 
 
+      {/* Modals */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={stayData.name}
+        url={typeof window !== 'undefined' ? window.location.href : ''}
+        image={galleryImages[0]}
+        bedrooms={stayData.bedrooms}
+        capacity={stayData.capacity}
+      />
     </div>
   );
 }

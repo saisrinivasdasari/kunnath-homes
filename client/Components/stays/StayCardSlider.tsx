@@ -2,16 +2,29 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { IoShareSocialOutline } from 'react-icons/io5';
 import { cn } from '@/lib/utils';
+import ShareModal from './ShareModal';
 
 interface StayCardSliderProps {
   images: string[];
   stayName: string;
+  stayId: string;
+  description?: string;
+  bedrooms?: number;
+  capacity?: number;
 }
 
-export default function StayCardSlider({ images, stayName }: StayCardSliderProps) {
+export default function StayCardSlider({ images, stayName, stayId, description, bedrooms, capacity }: StayCardSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  const handleShare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsShareModalOpen(true);
+  };
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
@@ -58,6 +71,32 @@ export default function StayCardSlider({ images, stayName }: StayCardSliderProps
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Share Button (Top Right) */}
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={handleShare}
+          className={cn(
+            "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-md",
+            "bg-white/90 hover:bg-white hover:scale-110 active:scale-90",
+            "text-gray-800"
+          )}
+          title="Share stay"
+          aria-label="Share this stay"
+        >
+          <IoShareSocialOutline size={18} className="group-hover/slider:rotate-12 transition-transform" />
+        </button>
+      </div>
+
+      <ShareModal 
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={stayName}
+        url={`${typeof window !== 'undefined' ? window.location.origin : ''}/stays/${stayId}`}
+        image={images[0]}
+        bedrooms={bedrooms}
+        capacity={capacity}
+      />
+
       {/* Images Container */}
       <div className="relative w-full h-full overflow-hidden rounded-[24px]">
         <div 
@@ -65,11 +104,11 @@ export default function StayCardSlider({ images, stayName }: StayCardSliderProps
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((src, idx) => (
-            <div key={idx} className="w-full h-full flex-shrink-0">
+            <div key={idx} className="w-full h-full flex-none overflow-hidden">
               <img
                 src={src}
                 alt={`${stayName} - ${idx + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
               />
             </div>
           ))}

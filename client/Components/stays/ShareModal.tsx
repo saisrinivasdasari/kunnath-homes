@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Copy, Facebook, Twitter, Mail, Instagram, Check, Link as LinkIcon, BedDouble, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -16,8 +17,31 @@ interface ShareModalProps {
 
 export default function ShareModal({ isOpen, onClose, title, url, image, bedrooms, capacity }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  // Handle ESC key and Body Scroll Lock
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !mounted) return null;
 
   const handleCopy = async () => {
     try {
@@ -33,7 +57,10 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
     {
       name: 'Copy Link',
       icon: copied ? <Check className="text-green-600" size={24} /> : <Copy size={24} />,
-      onClick: handleCopy,
+      onClick: (e: React.MouseEvent) => {
+        e.stopPropagation();
+        handleCopy();
+      },
       color: 'bg-gray-100',
     },
     {
@@ -69,6 +96,15 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
       color: 'bg-sky-50 text-sky-500',
     },
     {
+      name: 'Instagram',
+      icon: <Instagram size={24} />,
+      onClick: async () => {
+        await handleCopy();
+        window.open('https://www.instagram.com/', '_blank');
+      },
+      color: 'bg-pink-50 text-pink-600',
+    },
+    {
       name: 'Email',
       icon: <Mail size={24} />,
       onClick: () => window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent('Check this out: ' + url)}`, '_blank'),
@@ -76,16 +112,19 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
     },
   ];
 
-  return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-hidden">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
         onClick={onClose}
       />
       
       {/* Modal Content */}
-      <div className="relative bg-white rounded-3xl w-full max-w-[568px] overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 ease-out">
+      <div 
+        className="relative bg-white rounded-[32px] w-full max-w-[500px] overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 ease-out"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
         <div className="px-6 py-5 flex items-center border-b border-gray-100">
@@ -121,18 +160,18 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8">
+        <div className="p-6 sm:p-8 max-h-[80vh] overflow-y-auto">
           
           {/* Property Info Preview */}
           <div className="flex items-center gap-4 mb-8">
             {image && (
-              <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+              <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-sm border border-gray-100">
                 <img src={image} alt={title} className="w-full h-full object-cover" />
               </div>
             )}
-            <h3 className="text-[16px] font-medium text-gray-900 leading-tight">
-              Share this farm stay with friends and family.
-            </h3>
+            <p className="text-[14px] font-medium text-gray-600 leading-snug">
+              Share this premium farm stay experience with your network.
+            </p>
           </div>
 
           {/* Share Grid */}
@@ -140,8 +179,12 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
             {shareOptions.map((option) => (
               <button
                 key={option.name}
-                onClick={option.onClick}
-                className="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] group"
+                onClick={(e) => {
+                  option.onClick(e as any);
+                  // Optional: close on certain actions
+                  if (option.name !== 'Copy Link') onClose();
+                }}
+                className="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:bg-gray-50 hover:border-primary/10 hover:border-primary/20 transition-all active:scale-[0.97] group text-left"
               >
                 <div className={cn(
                   "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110",
@@ -149,26 +192,29 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
                 )}>
                   {option.icon}
                 </div>
-                <span className="text-[14px] font-semibold text-gray-700">
+                <span className="text-[14px] font-bold text-gray-800">
                   {option.name}
                 </span>
               </button>
             ))}
           </div>
 
-          {/* Copy Link Footer (Mobile Friendly Alternative) */}
+          {/* Copy Link Footer */}
           <div className="mt-8 pt-6 border-t border-gray-100">
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+            <div className="flex items-center gap-3 p-3.5 bg-gray-50 rounded-2xl border border-gray-100 group-focus-within:border-primary/30 transition-colors">
               <LinkIcon size={18} className="text-gray-400" />
               <input 
                 type="text" 
                 readOnly 
                 value={url} 
-                className="bg-transparent text-sm text-gray-500 outline-none flex-1 truncate font-medium"
+                className="bg-transparent text-sm text-gray-500 outline-none flex-1 truncate font-semibold"
               />
               <button 
-                onClick={handleCopy}
-                className="text-[13px] font-bold text-primary hover:underline px-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy();
+                }}
+                className="text-[13px] font-black text-primary hover:text-primary-hover px-2 active:scale-95 transition-all"
               >
                 {copied ? 'Copied!' : 'Copy'}
               </button>
@@ -176,6 +222,7 @@ export default function ShareModal({ isOpen, onClose, title, url, image, bedroom
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

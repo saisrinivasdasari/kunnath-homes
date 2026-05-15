@@ -35,7 +35,14 @@ export default function FarmStaysPage() {
                         <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
                             <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 rounded-[32px]">
                                 <div className="aspect-[16/10] relative overflow-hidden rounded-[24px] m-2.5">
-                                    <StayCardSlider images={stay.images} stayName={stay.name} />
+                                    <StayCardSlider 
+                                        images={stay.images} 
+                                        stayName={stay.name} 
+                                        stayId={stay._id}
+                                        description={stay.description}
+                                        bedrooms={stay.bedrooms}
+                                        capacity={stay.capacity}
+                                    />
                                 </div>
                                 <div className="p-6 pt-2 flex flex-col flex-1">
                                     <h3 className="text-xl font-black tracking-tighter text-primary leading-none mb-3 group-hover:text-primary/80 transition-colors duration-500">
