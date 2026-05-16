@@ -121,7 +121,23 @@ export const Footer = () => {
                   href="/terms"
                   className="text-[#666666] hover:text-primary transition-colors"
                 >
-                  Terms of Service
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/refund-policy"
+                  className="text-[#666666] hover:text-primary transition-colors"
+                >
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/house-rules"
+                  className="text-[#666666] hover:text-primary transition-colors"
+                >
+                  House Rules
                 </Link>
               </li>
             </ul>
@@ -169,7 +185,7 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-[#E0E0E0] mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-[#666666]">
-          <p>&copy; {currentYear} Kunnath House. All rights reserved.</p>
+          <p>&copy; {currentYear} Kunnath House Arya private Limited. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 md:mt-0">
             <Link href="/privacy" className="hover:text-primary transition-colors">
               Privacy

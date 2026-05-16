@@ -284,6 +284,7 @@ import { useAuthStore } from '@/store/authStore';
 
 import { formatCurrency, cn } from '@/lib/utils';
 import ShareModal from '@/Components/stays/ShareModal';
+import Link from 'next/link';
 
 // ---------- TIMEZONE-SAFE DATE HELPERS ----------
 function getTodayLocal(): string {
@@ -959,19 +960,32 @@ export default function StayDetailsPage() {
             <div className="border-t border-gray-100 pt-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Home size={16} /> House rules</h3>
-                <ul className="text-xs text-gray-500 space-y-2">
-                  {houseRules.map((rule, i) => <li key={i} className="flex items-start gap-2"><span>•</span> {rule}</li>)}
+                <ul className="text-xs text-gray-500 space-y-2 mb-3">
+                  <li className="flex items-start gap-2"><span>•</span> Check-in and check-out timings must be strictly followed.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Guests must carry valid government-issued ID proof.</li>
+                  <li className="flex items-start gap-2"><span>•</span> No loud music during late-night hours.</li>
                 </ul>
+                <Link href="/house-rules" className="text-xs font-bold text-gray-900 underline hover:text-gray-600 transition-colors">
+                  Read all house rules
+                </Link>
               </div>
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Shield size={16} /> Health & safety</h3>
                 <ul className="text-xs text-gray-500 space-y-2">
                   {safetyItems.map((item, i) => <li key={i} className="flex items-start gap-2"><span>•</span> {item}</li>)}
+                  <li className="flex items-start gap-2"><span>•</span> Pool usage is at guests’ own risk.</li>
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Clock size={16} /> Policy</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{cancellationPolicy}</p>
+                <h3 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2"><Clock size={16} /> Cancellation Policy</h3>
+                <ul className="text-xs text-gray-500 space-y-2 mb-3">
+                  <li className="flex items-start gap-2"><span>•</span> 100% refund if cancelled 7 days prior.</li>
+                  <li className="flex items-start gap-2"><span>•</span> 50% refund if cancelled within 2 days.</li>
+                  <li className="flex items-start gap-2"><span>•</span> No refund within 48 hours.</li>
+                </ul>
+                <Link href="/refund-policy" className="text-xs font-bold text-gray-900 underline hover:text-gray-600 transition-colors">
+                  Read full policy
+                </Link>
               </div>
             </div>
 
@@ -988,12 +1002,15 @@ export default function StayDetailsPage() {
                   </ul>
                 </div>
                 <div className="p-4 border border-gray-100 rounded-xl">
-                  <h4 className="font-semibold mb-2">Payment & Security</h4>
+                  <h4 className="font-semibold mb-2">Reservations & Payment</h4>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li>Security Deposit: {formatCurrency(securityDeposit)} (Refundable)</li>
-                    <li>Booking Advance: {formatCurrency(bookingAdvance)}</li>
-                    <li>Remaining payment at check-in</li>
+                    <li>Confirmed upon 50% advance payment</li>
+                    <li>Remaining balance due before check-in</li>
+                    <li>Refundable Security Deposit: {formatCurrency(securityDeposit)}</li>
                   </ul>
+                  <Link href="/terms" className="inline-block mt-3 text-xs font-bold text-gray-900 underline hover:text-gray-600 transition-colors">
+                    Read terms & conditions
+                  </Link>
                 </div>
               </div>
             </div>
