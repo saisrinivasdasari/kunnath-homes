@@ -279,7 +279,7 @@ import {
 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useStayDetails } from '@/hooks/useStays';
-import { useCreateBooking } from '@/hooks/useBookings';
+import { useCreateBooking, useCreatePaymentOrder, useVerifyPayment } from '@/hooks/useBookings';
 import { useAuthStore } from '@/store/authStore';
 
 import { formatCurrency, cn } from '@/lib/utils';
@@ -567,7 +567,12 @@ export default function StayDetailsPage() {
   const { user } = useAuthStore();
 
   const { data: stayData, isLoading, refetch } = useStayDetails(stayId);
-  const { mutate: createBooking, isPending } = useCreateBooking();
+  const { mutate: createBooking, isPending: isBookingPending } = useCreateBooking();
+  const { mutate: createPaymentOrder, isPending: isOrderPending } = useCreatePaymentOrder();
+  const { mutate: verifyPayment, isPending: isVerifyPending } = useVerifyPayment();
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState<any>(null); // To store success details for step 4
+  const isPending = isBookingPending || isOrderPending || isVerifyPending || isProcessingPayment;
 
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
@@ -749,7 +754,7 @@ export default function StayDetailsPage() {
   const subtotal = basePrice - discountAmount + extraGuestTotal + addOnsTotal;
   const totalPrice = subtotal + cleaningFee + serviceFee;
 
-  const handleReserve = () => {
+  const handleReserve = async () => {
     if (!checkIn || !checkOut) {
       alert('Please select check-in and check-out dates.');
       return;
@@ -758,13 +763,71 @@ export default function StayDetailsPage() {
       alert('Please fill out all guest details.');
       return;
     }
-    createBooking({ stayId, checkIn, checkOut, guests, guestName, guestEmail: guestEmail || 'no-email@kunnath.com', guestPhone, totalPrice, selectedAddOns }, {
-      onSuccess: () => {
-        refetch(); // Automatically update calendar with new booking
-        setStep(4); // Success step
+    
+    setIsProcessingPayment(true);
+    
+    // Step 1: Create Order securely on backend
+    createPaymentOrder({ stayId, checkIn, checkOut, guests, guestName, guestEmail: guestEmail || 'no-email@kunnath.com', guestPhone, totalPrice, selectedAddOns }, {
+      onSuccess: (data) => {
+        // Step 2: Open Razorpay Popup
+        const options = {
+          key: "rzp_test_Sq1fM8H5iOEwy0", // Razorpay test key
+          amount: data.order.amount,
+          currency: data.order.currency,
+          name: "Kunnath House",
+          description: `Booking for ${name}`,
+          image: "/logo.png",
+          order_id: data.order.id,
+          handler: function (response: any) {
+            // Step 3: Verify Payment securely on backend
+            verifyPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              bookingId: data.bookingId
+            }, {
+              onSuccess: (verifyData) => {
+                setPaymentDetails({
+                  paymentId: response.razorpay_payment_id,
+                  bookingId: data.bookingId,
+                  amount: totalPrice,
+                  stayName: name
+                });
+                refetch();
+                setStep(4);
+                setIsProcessingPayment(false);
+              },
+              onError: () => {
+                alert('Payment verification failed.');
+                setIsProcessingPayment(false);
+              }
+            });
+          },
+          prefill: {
+            name: guestName,
+            email: guestEmail || 'no-email@kunnath.com',
+            contact: guestPhone
+          },
+          theme: {
+            color: "#1a1a1a" // Match premium dark theme
+          },
+          modal: {
+            ondismiss: function() {
+              setIsProcessingPayment(false);
+            }
+          }
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.on('payment.failed', function (response: any) {
+          alert(`Payment Failed: ${response.error.description}`);
+          setIsProcessingPayment(false);
+        });
+        rzp.open();
       },
       onError: (error: any) => {
-        alert(error.response?.data?.message || 'Error creating booking. Are you logged in?');
+        alert(error.response?.data?.message || 'Error creating payment order. Are you logged in?');
+        setIsProcessingPayment(false);
       }
     });
   };
@@ -1402,15 +1465,51 @@ export default function StayDetailsPage() {
                 )}
 
                 {step === 4 && (
-                  <div className="text-center py-8 animate-in zoom-in-95">
-                    <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle size={32} />
+                  <div className="text-center py-10 animate-in zoom-in-95 fade-in duration-500">
+                    <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(34,197,94,0.2)]">
+                      <CheckCircle size={40} className="animate-bounce" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">Booking Confirmed!</h3>
-                    <p className="text-gray-600 mb-6">Your reservation at {name} has been successfully secured.</p>
-                    <Button variant="outline" onClick={() => router.push('/')} fullWidth>
-                      Return to Home
-                    </Button>
+                    <h3 className="text-2xl font-black mb-2 text-gray-900 tracking-tight">Payment Successful!</h3>
+                    <p className="text-gray-500 mb-8 text-sm">Your reservation at <span className="font-bold text-gray-900">{name}</span> is confirmed.</p>
+                    
+                    {paymentDetails && (
+                      <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-100 text-left">
+                        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+                          <span className="text-xs text-gray-500 uppercase tracking-wider font-bold">Amount Paid</span>
+                          <span className="text-lg font-black text-gray-900">{formatCurrency(paymentDetails.amount)}</span>
+                        </div>
+                        <div className="space-y-3 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Booking ID</span>
+                            <span className="font-mono text-gray-900 font-medium">{paymentDetails.bookingId.slice(-8).toUpperCase()}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Transaction ID</span>
+                            <span className="font-mono text-gray-900 font-medium">{paymentDetails.paymentId}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col gap-3">
+                      <Button 
+                        onClick={() => router.push('/profile')} 
+                        fullWidth 
+                        size="lg"
+                        className="bg-gray-900 hover:bg-gray-800 text-white shadow-lg shadow-gray-900/20 text-base font-bold py-6 transition-transform hover:scale-[1.02]"
+                      >
+                        View Booking Details
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => router.push('/')} 
+                        fullWidth 
+                        size="lg"
+                        className="border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 text-gray-700 hover:text-gray-900 text-base font-bold py-6 transition-all"
+                      >
+                        Return to Home
+                      </Button>
+                    </div>
                   </div>
                 )}
               </Card>

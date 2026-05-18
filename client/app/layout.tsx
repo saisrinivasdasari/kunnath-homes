@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: 'Luxury farm stay booking platform.',
 }
 
+import Script from 'next/script'
+
 export default function RootLayout({
   children,
 }: {
@@ -23,6 +25,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
         <Providers>
           <Header />
           <main className="min-h-screen">

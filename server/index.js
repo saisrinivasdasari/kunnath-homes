@@ -250,6 +250,8 @@ const eventRoutes = require('./routes/eventRoutes');
 app.use('/api/events', eventRoutes);
 const contactRoutes = require('./routes/contactRoutes');
 app.use('/api/contact', contactRoutes);
+const paymentRoutes = require('./routes/paymentRoutes');
+app.use('/api/payments', paymentRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

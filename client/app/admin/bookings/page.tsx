@@ -110,6 +110,23 @@ export default function AdminBookingsPage() {
                     <span className="text-sm text-gray-600">Total Price</span>
                     <span className="text-lg font-bold text-primary">₹{booking.totalPrice?.toLocaleString()}</span>
                   </div>
+
+                  {booking.razorpayPaymentId && (
+                    <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Transaction ID</span>
+                        <span className="text-xs font-mono text-gray-900 font-medium">{booking.razorpayPaymentId}</span>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Payment</span>
+                        {booking.paymentStatus === 'completed' ? (
+                          <span className="px-2 py-0.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-wider rounded border border-green-100">Paid</span>
+                        ) : (
+                          <span className="px-2 py-0.5 bg-yellow-50 text-yellow-600 text-[10px] font-black uppercase tracking-wider rounded border border-yellow-100">Pending</span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 pt-4 mt-4 border-t border-gray-100">

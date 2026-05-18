@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { IoShareSocialOutline } from 'react-icons/io5';
+import { IoShareOutline } from 'react-icons/io5';
 import { cn } from '@/lib/utils';
 import ShareModal from './ShareModal';
 
@@ -83,7 +83,7 @@ export default function StayCardSlider({ images, stayName, stayId, description, 
           title="Share stay"
           aria-label="Share this stay"
         >
-          <IoShareSocialOutline size={18} className="group-hover/slider:rotate-12 transition-transform" />
+          <IoShareOutline size={18} className="group-hover/slider:rotate-12 transition-transform" />
         </button>
       </div>
 

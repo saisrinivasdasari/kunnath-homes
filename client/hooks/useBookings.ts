@@ -21,6 +21,30 @@ export const useCreateBooking = () => {
   });
 };
 
+export const useCreatePaymentOrder = () => {
+  return useMutation({
+    mutationFn: async (orderData: CreateBookingParams & { selectedAddOns?: string[] }) => {
+      const { data } = await api.post('/payments/create-order', orderData);
+      return data;
+    },
+  });
+};
+
+export const useVerifyPayment = () => {
+  return useMutation({
+    mutationFn: async (paymentData: { 
+      razorpay_order_id: string; 
+      razorpay_payment_id: string; 
+      razorpay_signature: string; 
+      bookingId: string;
+    }) => {
+      const { data } = await api.post('/payments/verify-payment', paymentData);
+      return data;
+    },
+  });
+};
+
+
 export const useMyBookings = () => {
   return useQuery({
     queryKey: ['myBookings'],
@@ -46,6 +70,8 @@ export interface AdminStayBooking {
   guestEmail: string;
   guestPhone: string;
   createdAt: string;
+  razorpayPaymentId?: string;
+  paymentStatus?: 'pending' | 'completed' | 'failed';
 }
 
 export const useAdminBookings = () => {
