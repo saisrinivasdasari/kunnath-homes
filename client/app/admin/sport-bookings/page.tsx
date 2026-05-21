@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/axios';
 import { Card } from '@/Components/ui/Card';
 import { Button } from '@/Components/ui/Button';
-import { Trash2, CheckCircle, XCircle } from 'lucide-react';
+import { Trash2, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { SportBooking, useMarkSportBookingsRead } from '@/hooks/useSportBookings';
 
 export default function AdminSportBookingsPage() {
@@ -43,6 +43,29 @@ export default function AdminSportBookingsPage() {
     }
   });
 
+  // Helper to display time range from booking
+  const getTimeDisplay = (booking: SportBooking) => {
+    // New multi-slot format
+    if (booking.timeSlots && booking.timeSlots.length > 0) {
+      const startTime = booking.timeSlots[0];
+      const lastSlotHour = parseInt(booking.timeSlots[booking.timeSlots.length - 1].split(':')[0]);
+      const endTime = `${(lastSlotHour + 1).toString().padStart(2, '0')}:00`;
+      return `${startTime} – ${endTime}`;
+    }
+    // Backward compatibility: old single slot
+    if (booking.timeSlot) {
+      const hr = parseInt(booking.timeSlot.split(':')[0]);
+      return `${booking.timeSlot} – ${(hr + 1).toString().padStart(2, '0')}:00`;
+    }
+    return 'N/A';
+  };
+
+  const getDurationDisplay = (booking: SportBooking) => {
+    if (booking.duration) return `${booking.duration}hr`;
+    if (booking.timeSlots && booking.timeSlots.length > 0) return `${booking.timeSlots.length}hr`;
+    return '1hr';
+  };
+
   if (isLoading) return <div className="py-12 text-center text-gray-500">Loading bookings...</div>;
 
   return (
@@ -60,6 +83,8 @@ export default function AdminSportBookingsPage() {
                 <th className="p-4 font-semibold">User Details</th>
                 <th className="p-4 font-semibold">Sport</th>
                 <th className="p-4 font-semibold">Date & Time</th>
+                <th className="p-4 font-semibold">Duration</th>
+                <th className="p-4 font-semibold">Price</th>
                 <th className="p-4 font-semibold">Status</th>
                 <th className="p-4 font-semibold">Actions</th>
               </tr>
@@ -74,9 +99,16 @@ export default function AdminSportBookingsPage() {
                   </td>
                   <td className="p-4 font-medium">{booking.sport?.name || 'Deleted Sport'}</td>
                   <td className="p-4">
-                    <div>{booking.date}</div>
-                    <div className="text-xs text-gray-500">{booking.timeSlot}</div>
+                    <div className="font-medium">{booking.date}</div>
+                    <div className="text-xs text-gray-500">{getTimeDisplay(booking)}</div>
                   </td>
+                  <td className="p-4">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-bold">
+                      <Clock size={12} />
+                      {getDurationDisplay(booking)}
+                    </span>
+                  </td>
+                  <td className="p-4 font-bold text-gray-900">₹{booking.totalPrice?.toLocaleString()}</td>
                   <td className="p-4">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
                       booking.status === 'confirmed' ? 'bg-green-100 text-green-700' :
@@ -123,7 +155,7 @@ export default function AdminSportBookingsPage() {
               ))}
               {bookings?.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-gray-500">
+                  <td colSpan={7} className="p-8 text-center text-gray-500">
                     No bookings found.
                   </td>
                 </tr>

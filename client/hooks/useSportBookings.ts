@@ -7,7 +7,9 @@ export interface SportBooking {
   user: any;
   sport: Sport;
   date: string;
-  timeSlot: string;
+  timeSlots: string[];
+  timeSlot?: string; // backward compatibility
+  duration: number;
   status: 'pending' | 'confirmed' | 'cancelled';
   totalPrice: number;
   userDetails: {
@@ -27,6 +29,16 @@ export function useSportAvailability(sportId: string, date: string) {
       return data;
     },
     enabled: !!sportId && !!date,
+  });
+}
+
+export function useCheckStayBooking() {
+  return useQuery({
+    queryKey: ['checkStayBooking'],
+    queryFn: async () => {
+      const { data } = await api.get<{ hasStayBooking: boolean }>('/sport-bookings/check-stay');
+      return data;
+    },
   });
 }
 

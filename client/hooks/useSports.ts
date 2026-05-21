@@ -16,8 +16,25 @@ export function useSports() {
     queryKey: ['sports'],
     queryFn: async () => {
       const { data } = await api.get<Sport[]>('/sports');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('kunnath_cached_sports', JSON.stringify(data));
+      }
       return data;
     },
+    initialData: () => {
+      if (typeof window !== 'undefined') {
+        const cached = localStorage.getItem('kunnath_cached_sports');
+        if (cached) {
+          try {
+            return JSON.parse(cached) as Sport[];
+          } catch (e) {
+            console.error('Error parsing cached sports', e);
+          }
+        }
+      }
+      return undefined;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 

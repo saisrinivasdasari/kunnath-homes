@@ -332,6 +332,8 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const todayLocal = getTodayLocal();
+  const isCheckInActive = !checkIn || !!(checkIn && checkOut);
+  const isCheckOutActive = !!(checkIn && !checkOut);
 
   const goPrevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
@@ -484,7 +486,10 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
           </div>
 
           <div className="flex flex-col sm:flex-row border border-gray-900 rounded-2xl overflow-hidden shadow-sm w-full sm:w-auto">
-            <div className="px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-900 bg-white flex-1 sm:min-w-[140px]">
+            <div className={cn(
+              "px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-900 flex-1 sm:min-w-[140px] transition-all duration-300",
+              isCheckInActive ? "bg-gray-100" : "bg-white"
+            )}>
               <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Check-in</div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-gray-900">
@@ -497,7 +502,10 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
                 )}
               </div>
             </div>
-            <div className="px-4 py-2 bg-white flex-1 sm:min-w-[140px]">
+            <div className={cn(
+              "px-4 py-2 flex-1 sm:min-w-[140px] transition-all duration-300",
+              isCheckOutActive ? "bg-gray-100" : "bg-white"
+            )}>
               <div className="text-[9px] font-black uppercase text-gray-900 tracking-widest mb-0.5">Checkout</div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-gray-900">

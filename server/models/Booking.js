@@ -61,6 +61,9 @@ const bookingSchema = new mongoose.Schema({
     enum: ['pending', 'completed', 'failed'],
     default: 'pending'
   },
+  expiresAt: {
+    type: Date
+  },
   isRead: {
     type: Boolean,
     default: false

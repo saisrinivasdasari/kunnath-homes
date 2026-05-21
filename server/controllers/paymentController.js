@@ -35,10 +35,13 @@ const createOrder = async (req, res) => {
     // Check for overlapping bookings
     const overlappingBookings = await Booking.find({
       stayId,
-      status: { $ne: 'cancelled' },
       $and: [
         { checkIn: { $lt: checkOutDate } },
         { checkOut: { $gt: checkInDate } }
+      ],
+      $or: [
+        { status: 'confirmed' }, // Confirmed bookings block the slot
+        { status: 'pending', expiresAt: { $gt: new Date() } } // Active pending bookings block the slot
       ]
     });
 
@@ -123,7 +126,8 @@ const createOrder = async (req, res) => {
       selectedAddOns: selectedAddOns || [],
       status: 'pending',
       paymentStatus: 'pending',
-      razorpayOrderId: order.id
+      razorpayOrderId: order.id,
+      expiresAt: new Date(Date.now() + 3 * 60 * 1000) // 3 minutes hold
     });
 
     await booking.save();
@@ -171,6 +175,7 @@ const verifyPayment = async (req, res) => {
       booking.status = 'confirmed';
       booking.razorpayPaymentId = razorpay_payment_id;
       booking.razorpaySignature = razorpay_signature;
+      booking.expiresAt = undefined; // Clear the expiration since it's confirmed
       
       await booking.save();
 

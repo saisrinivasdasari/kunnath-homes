@@ -12,6 +12,8 @@ import { useStays } from '@/hooks/useStays';
 import { useSports } from '@/hooks/useSports';
 import { useHashScroll } from '@/hooks/useHashScroll';
 import StayCardSlider from '../stays/StayCardSlider';
+import { SkeletonStayCard } from '../ui/SkeletonStayCard';
+import { SkeletonSportCard } from '../ui/SkeletonSportCard';
 
 export default function Home() {
     const { data: stays, isLoading: isLoadingStays } = useStays();
@@ -80,12 +82,16 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {isLoadingStays ? (
-                            <div className="col-span-4 text-center py-10">Loading luxury stays...</div>
+                            <>
+                                <SkeletonStayCard />
+                                <SkeletonStayCard />
+                                <SkeletonStayCard />
+                            </>
                         ) : (stays ? [...stays].sort((a, b) => {
                             const order = { 'Orange': 1, 'Lemon': 2, 'Mint': 3 };
                             return (order[a.name] || 99) - (order[b.name] || 99);
                         }) : []).map((stay) => (
-                            <Link href={`/stays/${stay._id}`} key={stay._id} className="block group">
+                            <Link href={`/stays/${stay._id}`} key={stay._id} className="block group animate-in fade-in duration-500">
                                 <Card className="overflow-hidden border border-gray-100 bg-white group flex flex-col h-full transition-all duration-500 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 rounded-[32px]">
                                     <div className="aspect-[16/10] relative overflow-hidden rounded-[24px] m-2.5">
                                         <StayCardSlider 
@@ -145,17 +151,18 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {isLoadingSports ? (
-                            <div className="col-span-4 text-center py-20 bg-gray-50 rounded-3xl text-gray-400">
-                                <div className="animate-pulse flex flex-col items-center">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full mb-4"></div>
-                                    <div className="h-4 w-32 bg-gray-200 rounded"></div>
-                                </div>
-                            </div>
+                            <>
+                                <SkeletonSportCard />
+                                <SkeletonSportCard />
+                                <SkeletonSportCard />
+                                <SkeletonSportCard />
+                            </>
                         ) : sports?.slice(0, 4).map((activity, idx) => (
-                            <Link href="/sports" key={idx} className="block group relative h-[420px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                            <Link href="/sports" key={idx} className="block group relative h-[420px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-in fade-in duration-500">
                                 <img
                                     src={activity.image}
                                     alt={activity.name}
+                                    loading="lazy"
                                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
@@ -192,6 +199,7 @@ export default function Home() {
                             <img
                                 src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1600&auto=format&fit=crop"
                                 alt="Events"
+                                loading="lazy"
                                 className="w-full h-full object-cover"
                             />
                         </div>

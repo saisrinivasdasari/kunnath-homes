@@ -15,9 +15,26 @@ const sportBookingSchema = new mongoose.Schema({
     type: String, // format: YYYY-MM-DD
     required: true,
   },
-  timeSlot: {
-    type: String, // e.g. "14:00"
+  // Support for multi-hour booking (1-3 consecutive slots)
+  timeSlots: {
+    type: [String], // e.g. ["14:00", "15:00", "16:00"]
     required: true,
+    validate: {
+      validator: function(v) {
+        return v.length >= 1 && v.length <= 3;
+      },
+      message: 'You can book between 1 and 3 consecutive hour slots'
+    }
+  },
+  duration: {
+    type: Number, // 1, 2, or 3 hours
+    required: true,
+    min: 1,
+    max: 3,
+  },
+  // Backward compatibility: keep old timeSlot for legacy records
+  timeSlot: {
+    type: String,
   },
   status: {
     type: String,
@@ -39,17 +56,6 @@ const sportBookingSchema = new mongoose.Schema({
     default: false,
   }
 }, { timestamps: true });
-
-// Prevent double booking for the same sport, date, and timeSlot
-// Use a partial index so that multiple cancelled bookings can exist for the same slot,
-// but only one active (pending/confirmed) booking can exist.
-sportBookingSchema.index(
-  { sport: 1, date: 1, timeSlot: 1 }, 
-  { 
-    unique: true, 
-    partialFilterExpression: { status: { $in: ['pending', 'confirmed'] } } 
-  }
-);
 
 const SportBooking = mongoose.model('SportBooking', sportBookingSchema);
 module.exports = SportBooking;
