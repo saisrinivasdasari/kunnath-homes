@@ -106,24 +106,56 @@ export default function AdminBookingsPage() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center px-1">
-                    <span className="text-sm text-gray-600">Total Price</span>
-                    <span className="text-lg font-bold text-primary">₹{booking.totalPrice?.toLocaleString()}</span>
+                  <div className="border-t border-gray-150 pt-3 space-y-1.5">
+                    <div className="flex justify-between items-center px-1">
+                      <span className="text-xs text-gray-600">Total Stay Price</span>
+                      <span className="text-sm font-bold text-gray-900">₹{booking.totalPrice?.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center px-1">
+                      <span className="text-xs text-gray-600">Paid Upfront (50%)</span>
+                      <span className="text-sm font-black text-green-600">
+                        ₹{(booking.upfrontAmountPaid ?? Math.round((booking.totalPrice || 0) * 0.5))?.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center px-1">
+                      <span className="text-xs text-gray-600">Due at Check-in (50%)</span>
+                      <span className="text-sm font-black text-amber-600">
+                        ₹{(booking.amountDueAtCheckIn ?? Math.round((booking.totalPrice || 0) * 0.5))?.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center px-1">
+                      <span className="text-xs text-gray-600">Security Deposit</span>
+                      <span className="text-xs font-bold text-gray-600">
+                        ₹{(booking.securityDeposit ?? 5000)?.toLocaleString()} <span className="text-[10px] text-gray-400 font-normal">(Refundable)</span>
+                      </span>
+                    </div>
                   </div>
 
                   {booking.razorpayPaymentId && (
                     <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
                       <div className="flex flex-col">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Transaction ID</span>
-                        <span className="text-xs font-mono text-gray-900 font-medium">{booking.razorpayPaymentId}</span>
+                        <span className="text-xs font-mono text-gray-905 font-medium">{booking.razorpayPaymentId}</span>
                       </div>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Payment</span>
-                        {booking.paymentStatus === 'completed' ? (
-                          <span className="px-2 py-0.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-wider rounded border border-green-100">Paid</span>
-                        ) : (
-                          <span className="px-2 py-0.5 bg-yellow-50 text-yellow-600 text-[10px] font-black uppercase tracking-wider rounded border border-yellow-100">Pending</span>
-                        )}
+                      <div className="flex items-center gap-3">
+                        <div className="flex flex-col items-end">
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Payment</span>
+                          {booking.paymentStatus === 'completed' ? (
+                            <span className="px-2 py-0.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-wider rounded border border-green-100">Paid</span>
+                          ) : (
+                            <span className="px-2 py-0.5 bg-yellow-50 text-yellow-600 text-[10px] font-black uppercase tracking-wider rounded border border-yellow-100">Pending</span>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-end">
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Deposit</span>
+                          {booking.securityDepositStatus === 'refunded' ? (
+                            <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-wider rounded border border-blue-100">Refunded</span>
+                          ) : booking.securityDepositStatus === 'retained' ? (
+                            <span className="px-2 py-0.5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-wider rounded border border-red-100">Retained</span>
+                          ) : (
+                            <span className="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-wider rounded border border-amber-100">Pending</span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}

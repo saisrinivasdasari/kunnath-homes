@@ -2,6 +2,8 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const Booking = require('../models/Booking');
 const FarmStay = require('../models/FarmStay');
+const Sport = require('../models/Sport');
+const SportBooking = require('../models/SportBooking');
 
 // Ensure razorpay instance is only created when keys are available
 const getRazorpayInstance = () => {
@@ -18,10 +20,14 @@ const getRazorpayInstance = () => {
 // @route   POST /api/payments/create-order
 // @access  Private
 const createOrder = async (req, res) => {
-  const { stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, selectedAddOns } = req.body;
+  const { stayId, checkIn, checkOut, guests, guestName, guestEmail, guestPhone, selectedAddOns, termsAccepted } = req.body;
 
   if (!stayId || !checkIn || !checkOut || !guests || !guestName || !guestPhone) {
     return res.status(400).json({ message: 'Please provide all required fields' });
+  }
+
+  if (termsAccepted !== true) {
+    return res.status(400).json({ message: 'You must accept the booking and payment terms to proceed' });
   }
 
   try {
@@ -95,8 +101,14 @@ const createOrder = async (req, res) => {
       finalPrice -= (basePrice * discountPercent) / 100;
     }
 
+    // 50% Upfront stay booking policy
+    const upfrontAmountPaid = Math.round(finalPrice * 0.5);
+    const amountDueAtCheckIn = finalPrice - upfrontAmountPaid;
+    const securityDeposit = 5000;
+
     // Razorpay expects amount in paise (smallest currency unit, so multiply by 100)
-    const amountInPaise = Math.round(finalPrice * 100);
+    // Only pay 50% upfront
+    const amountInPaise = Math.round(upfrontAmountPaid * 100);
 
     const razorpay = getRazorpayInstance();
 
@@ -120,6 +132,11 @@ const createOrder = async (req, res) => {
       checkOut: checkOutDate,
       guests,
       totalPrice: finalPrice,
+      upfrontAmountPaid,
+      amountDueAtCheckIn,
+      securityDeposit,
+      termsAccepted: true,
+      securityDepositStatus: 'pending',
       guestName,
       guestEmail: guestEmail || 'no-email@kunnath.com',
       guestPhone,
@@ -136,7 +153,10 @@ const createOrder = async (req, res) => {
       success: true,
       order,
       bookingId: booking._id,
-      finalPrice
+      finalPrice,
+      upfrontAmountPaid,
+      amountDueAtCheckIn,
+      securityDeposit
     });
 
   } catch (error) {
@@ -201,7 +221,191 @@ const verifyPayment = async (req, res) => {
   }
 };
 
+// @desc    Create a Razorpay order for sport booking
+// @route   POST /api/payments/create-sport-order
+// @access  Private
+const createSportOrder = async (req, res) => {
+  const { sportId, date, timeSlots, duration, userDetails } = req.body;
+
+  if (!sportId || !date || !timeSlots || !duration || !userDetails || !userDetails.name || !userDetails.email || !userDetails.phone) {
+    return res.status(400).json({ message: 'Please provide all required fields' });
+  }
+
+  try {
+    // Validate duration
+    if (duration < 1 || duration > 3) {
+      return res.status(400).json({ message: 'Duration must be 1, 2, or 3 hours' });
+    }
+
+    // Validate timeSlots array
+    if (!Array.isArray(timeSlots) || timeSlots.length !== duration) {
+      return res.status(400).json({ message: 'Time slots must match the selected duration' });
+    }
+
+    // Validate slots are consecutive
+    for (let i = 1; i < timeSlots.length; i++) {
+      const prevHour = parseInt(timeSlots[i - 1].split(':')[0]);
+      const currHour = parseInt(timeSlots[i].split(':')[0]);
+      if (currHour !== prevHour + 1) {
+        return res.status(400).json({ message: 'Time slots must be consecutive hours' });
+      }
+    }
+
+    // Verify user has an active stay booking
+    const stayBooking = await Booking.findOne({
+      userId: req.user._id,
+      status: 'confirmed',
+      paymentStatus: 'completed'
+    });
+
+    if (!stayBooking) {
+      return res.status(403).json({ 
+        message: 'To book sports slots, please book a stay first or contact us for assistance.',
+        requiresStay: true
+      });
+    }
+
+    // Check for overlapping bookings
+    const existingBookings = await SportBooking.find({
+      sport: sportId,
+      date,
+      $or: [
+        { status: 'confirmed' },
+        { status: 'pending', expiresAt: { $gt: new Date() } }
+      ]
+    });
+
+    // Flatten all currently booked slots
+    const alreadyBooked = [];
+    existingBookings.forEach(b => {
+      if (b.timeSlots && b.timeSlots.length > 0) {
+        alreadyBooked.push(...b.timeSlots);
+      } else if (b.timeSlot) {
+        alreadyBooked.push(b.timeSlot);
+      }
+    });
+
+    // Check if any requested slot is already booked
+    const conflicting = timeSlots.filter(slot => alreadyBooked.includes(slot));
+    if (conflicting.length > 0) {
+      return res.status(400).json({ 
+        message: `The following slots are already booked: ${conflicting.join(', ')}` 
+      });
+    }
+
+    // Get the sport to calculate server-side pricing
+    const sportDoc = await Sport.findById(sportId);
+    if (!sportDoc) {
+      return res.status(404).json({ message: 'Sport not found' });
+    }
+
+    const totalPrice = sportDoc.price * duration;
+    const amountInPaise = Math.round(totalPrice * 100);
+
+    const razorpay = getRazorpayInstance();
+
+    const options = {
+      amount: amountInPaise,
+      currency: "INR",
+      receipt: `rcp_sport_${Date.now()}`
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    if (!order) {
+      return res.status(500).json({ message: 'Failed to create Razorpay order' });
+    }
+
+    // Create a pending booking in our database
+    const booking = new SportBooking({
+      user: req.user._id,
+      sport: sportId,
+      date,
+      timeSlots,
+      duration,
+      timeSlot: timeSlots[0], // Backward compatibility
+      totalPrice,
+      userDetails,
+      status: 'pending',
+      paymentStatus: 'pending',
+      razorpayOrderId: order.id,
+      expiresAt: new Date(Date.now() + 3 * 60 * 1000) // 3 minutes hold
+    });
+
+    await booking.save();
+
+    res.status(201).json({
+      success: true,
+      order,
+      bookingId: booking._id,
+      totalPrice
+    });
+
+  } catch (error) {
+    console.error('Error in createSportOrder:', error);
+    res.status(500).json({ message: error.message || 'Server error while creating order' });
+  }
+};
+
+// @desc    Verify Razorpay payment signature for sport booking
+// @route   POST /api/payments/verify-sport-payment
+// @access  Private
+const verifySportPayment = async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
+
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !bookingId) {
+    return res.status(400).json({ message: 'Missing required payment verification details' });
+  }
+
+  try {
+    const booking = await SportBooking.findById(bookingId);
+    
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    // Verify signature using the secret
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+    const generated_signature = crypto
+      .createHmac('sha256', secret)
+      .update(razorpay_order_id + "|" + razorpay_payment_id)
+      .digest('hex');
+
+    if (generated_signature === razorpay_signature) {
+      // Payment is successful and verified
+      booking.paymentStatus = 'completed';
+      booking.status = 'confirmed';
+      booking.razorpayPaymentId = razorpay_payment_id;
+      booking.razorpaySignature = razorpay_signature;
+      booking.expiresAt = undefined; // Clear the expiration since it's confirmed
+      
+      await booking.save();
+
+      return res.status(200).json({ 
+        success: true, 
+        message: 'Payment verified successfully',
+        booking 
+      });
+    } else {
+      // Signature mismatch
+      booking.paymentStatus = 'failed';
+      await booking.save();
+      
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid payment signature' 
+      });
+    }
+
+  } catch (error) {
+    console.error('Error in verifySportPayment:', error);
+    res.status(500).json({ message: 'Server error during payment verification' });
+  }
+};
+
 module.exports = {
   createOrder,
-  verifyPayment
+  verifyPayment,
+  createSportOrder,
+  verifySportPayment
 };

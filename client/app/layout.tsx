@@ -8,7 +8,7 @@ import './globals.css'
 import Providers from './providers'
 
 export const metadata: Metadata = {
-  title: 'Kunnath House - Escape. Indulge. Reconnect.',
+  title: 'Kunnath House - Crafted for Recreation.',
   description: 'Luxury farm stay booking platform.',
 }
 

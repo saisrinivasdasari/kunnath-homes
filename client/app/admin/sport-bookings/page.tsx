@@ -85,7 +85,8 @@ export default function AdminSportBookingsPage() {
                 <th className="p-4 font-semibold">Date & Time</th>
                 <th className="p-4 font-semibold">Duration</th>
                 <th className="p-4 font-semibold">Price</th>
-                <th className="p-4 font-semibold">Status</th>
+                <th className="p-4 font-semibold">Payment Status</th>
+                <th className="p-4 font-semibold">Booking Status</th>
                 <th className="p-4 font-semibold">Actions</th>
               </tr>
             </thead>
@@ -109,6 +110,21 @@ export default function AdminSportBookingsPage() {
                     </span>
                   </td>
                   <td className="p-4 font-bold text-gray-900">₹{booking.totalPrice?.toLocaleString()}</td>
+                  <td className="p-4">
+                    {booking.razorpayPaymentId ? (
+                      <div className="flex flex-col gap-1">
+                        <span className="px-2.5 py-0.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-wider rounded border border-green-100 w-max">Paid</span>
+                        <span className="text-[10px] font-mono text-gray-500">ID: {booking.razorpayPaymentId}</span>
+                      </div>
+                    ) : (
+                      <span className={`px-2.5 py-0.5 rounded border text-[10px] font-black uppercase tracking-wider ${
+                        booking.paymentStatus === 'completed' ? 'bg-green-50 text-green-600 border-green-100' :
+                        booking.paymentStatus === 'failed' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-yellow-50 text-yellow-600 border-yellow-100'
+                      }`}>
+                        {booking.paymentStatus || 'Pending'}
+                      </span>
+                    )}
+                  </td>
                   <td className="p-4">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
                       booking.status === 'confirmed' ? 'bg-green-100 text-green-700' :
@@ -155,7 +171,7 @@ export default function AdminSportBookingsPage() {
               ))}
               {bookings?.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="p-8 text-center text-gray-500">
+                  <td colSpan={8} className="p-8 text-center text-gray-500">
                     No bookings found.
                   </td>
                 </tr>

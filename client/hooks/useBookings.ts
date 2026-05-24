@@ -10,6 +10,7 @@ interface CreateBookingParams {
   guestName: string;
   guestEmail: string;
   guestPhone: string;
+  termsAccepted?: boolean;
 }
 
 export const useCreateBooking = () => {
@@ -72,6 +73,10 @@ export interface AdminStayBooking {
   createdAt: string;
   razorpayPaymentId?: string;
   paymentStatus?: 'pending' | 'completed' | 'failed';
+  upfrontAmountPaid?: number;
+  amountDueAtCheckIn?: number;
+  securityDeposit?: number;
+  securityDepositStatus?: 'pending' | 'refunded' | 'retained';
 }
 
 export const useAdminBookings = () => {

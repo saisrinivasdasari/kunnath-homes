@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { X, Calendar, Clock, User, Phone, Mail, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Sport } from '@/hooks/useSports';
-import { useSportAvailability, useCreateSportBooking } from '@/hooks/useSportBookings';
+import { useSportAvailability, useCreateSportBooking, useCreateSportPaymentOrder, useVerifySportPayment } from '@/hooks/useSportBookings';
 import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/Components/ui/Button';
 import { formatCurrency } from '@/lib/utils';
@@ -33,7 +33,13 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
     selectedDate
   );
 
-  const { mutate: createBooking, isPending: isBooking } = useCreateSportBooking();
+  const { mutate: createBooking, isPending: isBookingPending } = useCreateSportBooking();
+  const { mutate: createSportPaymentOrder, isPending: isOrderPending } = useCreateSportPaymentOrder();
+  const { mutate: verifySportPayment, isPending: isVerifyPending } = useVerifySportPayment();
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState<any>(null);
+
+  const isBooking = isBookingPending || isOrderPending || isVerifyPending || isProcessingPayment;
 
   useEffect(() => {
     if (isOpen) {
@@ -163,7 +169,9 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
 
   const handleBooking = () => {
     if (!user) return;
-    createBooking(
+    setIsProcessingPayment(true);
+
+    createSportPaymentOrder(
       {
         sport: sport._id,
         date: selectedDate,
@@ -172,9 +180,64 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
         userDetails: formData
       },
       {
-        onSuccess: () => setStep(4),
+        onSuccess: (data) => {
+          // Open Razorpay Popup
+          const options = {
+            key: "rzp_test_Sq1fM8H5iOEwy0", // Razorpay test key
+            amount: data.order.amount,
+            currency: data.order.currency,
+            name: "Kunnath House",
+            description: `Sports booking for ${sport.name}`,
+            image: "/logo.png",
+            order_id: data.order.id,
+            handler: function (response: any) {
+              // Verify Payment securely on backend
+              verifySportPayment(
+                {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  bookingId: data.bookingId
+                },
+                {
+                  onSuccess: (verifyData) => {
+                    setPaymentDetails({
+                      paymentId: response.razorpay_payment_id,
+                      bookingId: data.bookingId,
+                      amount: data.order.amount / 100
+                    });
+                    setStep(4);
+                  },
+                  onError: (error: any) => {
+                    alert(error.response?.data?.message || 'Payment verification failed');
+                  },
+                  onSettled: () => {
+                    setIsProcessingPayment(false);
+                  }
+                }
+              );
+            },
+            prefill: {
+              name: formData.name,
+              email: formData.email,
+              contact: formData.phone
+            },
+            theme: {
+              color: "#111827"
+            },
+            modal: {
+              ondismiss: function () {
+                setIsProcessingPayment(false);
+              }
+            }
+          };
+
+          const rzp = new (window as any).Razorpay(options);
+          rzp.open();
+        },
         onError: (error: any) => {
-          alert(error.response?.data?.message || 'Failed to complete booking. Please try again.');
+          alert(error.response?.data?.message || 'Failed to create payment order');
+          setIsProcessingPayment(false);
         }
       }
     );
@@ -526,9 +589,27 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
                 <CheckCircle2 size={36} className="text-green-500 animate-bounce" />
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-2">Booking Confirmed!</h3>
-              <p className="text-gray-500 mb-8 text-sm">
+              <p className="text-gray-500 mb-6 text-sm">
                 Your {duration}-hour slot for <span className="font-bold text-gray-900">{sport.name}</span> on {selectedDate} from {selectedSlots[0]} to {getEndTime()} has been successfully reserved.
               </p>
+              
+              {paymentDetails && (
+                <div className="bg-gray-50 rounded-2xl p-4 text-left max-w-md mx-auto mb-8 border border-gray-100 space-y-2">
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Booking ID:</span>
+                    <span className="font-mono font-medium text-gray-900">{paymentDetails.bookingId}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Payment ID:</span>
+                    <span className="font-mono font-medium text-gray-900">{paymentDetails.paymentId}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Amount Paid:</span>
+                    <span className="font-bold text-primary">{formatCurrency(paymentDetails.amount)}</span>
+                  </div>
+                </div>
+              )}
+
               <Button onClick={onClose} className="w-full sm:w-auto px-8" size="lg">
                 Return to Sports
               </Button>

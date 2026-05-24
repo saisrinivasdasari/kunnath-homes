@@ -67,6 +67,27 @@ const bookingSchema = new mongoose.Schema({
   isRead: {
     type: Boolean,
     default: false
+  },
+  upfrontAmountPaid: {
+    type: Number,
+    default: 0
+  },
+  amountDueAtCheckIn: {
+    type: Number,
+    default: 0
+  },
+  securityDeposit: {
+    type: Number,
+    default: 5000
+  },
+  termsAccepted: {
+    type: Boolean,
+    default: false
+  },
+  securityDepositStatus: {
+    type: String,
+    enum: ['pending', 'refunded', 'retained'],
+    default: 'pending'
   }
 }, { timestamps: true });
 

@@ -18,6 +18,14 @@ export interface SportBooking {
     phone: string;
     note?: string;
   };
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  razorpaySignature?: string;
+  paymentStatus?: 'pending' | 'completed' | 'failed';
+  expiresAt?: string;
+  isRead?: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export function useSportAvailability(sportId: string, date: string) {
@@ -53,6 +61,55 @@ export function useCreateSportBooking() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['sportAvailability', variables.sport, variables.date] });
       queryClient.invalidateQueries({ queryKey: ['mySportBookings'] });
+    },
+  });
+}
+
+export function useCreateSportPaymentOrder() {
+  return useMutation({
+    mutationFn: async (orderData: {
+      sport: string;
+      date: string;
+      timeSlots: string[];
+      duration: number;
+      userDetails: {
+        name: string;
+        email: string;
+        phone: string;
+        note?: string;
+      };
+    }) => {
+      const { data } = await api.post('/payments/create-sport-order', {
+        sportId: orderData.sport,
+        date: orderData.date,
+        timeSlots: orderData.timeSlots,
+        duration: orderData.duration,
+        userDetails: orderData.userDetails
+      });
+      return data;
+    },
+  });
+}
+
+export function useVerifySportPayment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (paymentData: { 
+      razorpay_order_id: string; 
+      razorpay_payment_id: string; 
+      razorpay_signature: string; 
+      bookingId: string;
+    }) => {
+      const { data } = await api.post('/payments/verify-sport-payment', paymentData);
+      return data;
+    },
+    onSuccess: (data) => {
+      if (data?.booking) {
+        queryClient.invalidateQueries({ queryKey: ['sportAvailability', data.booking.sport, data.booking.date] });
+      }
+      queryClient.invalidateQueries({ queryKey: ['mySportBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['adminSportBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['unreadSportBookingCount'] });
     },
   });
 }

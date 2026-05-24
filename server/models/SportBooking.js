@@ -45,6 +45,23 @@ const sportBookingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  razorpayOrderId: {
+    type: String
+  },
+  razorpayPaymentId: {
+    type: String
+  },
+  razorpaySignature: {
+    type: String
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'completed', 'failed'],
+    default: 'pending'
+  },
+  expiresAt: {
+    type: Date
+  },
   userDetails: {
     name: { type: String, required: true },
     email: { type: String, required: true },

@@ -284,7 +284,10 @@ import { useAuthStore } from '@/store/authStore';
 
 import { formatCurrency, cn } from '@/lib/utils';
 import ShareModal from '@/Components/stays/ShareModal';
+import TermsModal from '@/Components/stays/TermsModal';
 import Link from 'next/link';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 // ---------- TIMEZONE-SAFE DATE HELPERS ----------
 function getTodayLocal(): string {
@@ -596,6 +599,8 @@ export default function StayDetailsPage() {
   const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
   const guestPickerRef = useRef<HTMLDivElement>(null);
 
@@ -638,16 +643,28 @@ export default function StayDetailsPage() {
 
   // Progressive booking flow state
   const [step, setStep] = useState(1);
-  const [guestName, setGuestName] = useState('');
-  const [guestEmail, setGuestEmail] = useState('');
-  const [guestPhone, setGuestPhone] = useState('');
 
-  useEffect(() => {
-    if (user) {
-      setGuestName(user.name || '');
-      setGuestEmail(user.email || '');
-    }
-  }, [user]);
+  // Formik configuration for Guest Details form validation
+  const formik = useFormik({
+    initialValues: {
+      guestName: user?.name || '',
+      guestEmail: user?.email || '',
+      guestPhone: user?.phone || '',
+    },
+    enableReinitialize: true,
+    validationSchema: Yup.object({
+      guestName: Yup.string()
+        .min(2, 'Name must be at least 2 characters')
+        .max(50, 'Name must not exceed 50 characters')
+        .required('Full Name is required'),
+      guestPhone: Yup.string()
+        .matches(/^[0-9\-\+\s()]{10,15}$/, 'Please enter a valid phone number')
+        .required('Phone Number is required'),
+    }),
+    onSubmit: () => {
+      setStep(3);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -767,7 +784,7 @@ export default function StayDetailsPage() {
       alert('Please select check-in and check-out dates.');
       return;
     }
-    if (!guestName || !guestPhone) {
+    if (!formik.values.guestName || !formik.values.guestPhone) {
       alert('Please fill out all guest details.');
       return;
     }
@@ -775,7 +792,7 @@ export default function StayDetailsPage() {
     setIsProcessingPayment(true);
     
     // Step 1: Create Order securely on backend
-    createPaymentOrder({ stayId, checkIn, checkOut, guests, guestName, guestEmail: guestEmail || 'no-email@kunnath.com', guestPhone, totalPrice, selectedAddOns }, {
+    createPaymentOrder({ stayId, checkIn, checkOut, guests, guestName: formik.values.guestName, guestEmail: formik.values.guestEmail || 'no-email@kunnath.com', guestPhone: formik.values.guestPhone, totalPrice, selectedAddOns, termsAccepted: true }, {
       onSuccess: (data) => {
         // Step 2: Open Razorpay Popup
         const options = {
@@ -1363,45 +1380,58 @@ export default function StayDetailsPage() {
                 )}
 
                 {step === 2 && (
-                  <div className="animate-in fade-in slide-in-from-right-4">
-                    <button onClick={() => setStep(1)} className="text-sm font-medium underline mb-4 flex items-center gap-1 hover:text-gray-600">
+                  <form onSubmit={formik.handleSubmit} className="animate-in fade-in slide-in-from-right-4 text-left">
+                    <button type="button" onClick={() => setStep(1)} className="text-sm font-medium underline mb-4 flex items-center gap-1 hover:text-gray-600">
                       <ChevronLeft size={16} /> Back
                     </button>
-                    <h3 className="text-xl font-bold mb-4">Guest Details</h3>
+                    <h3 className="text-xl font-bold mb-4 text-gray-900">Guest Details</h3>
                     <div className="space-y-4 mb-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                         <input
                           type="text"
-                          value={guestName}
-                          onChange={(e) => setGuestName(e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none"
+                          name="guestName"
+                          value={formik.values.guestName}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          className={cn(
+                            "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition-all",
+                            formik.touched.guestName && formik.errors.guestName ? "border-red-500 focus:ring-red-200" : "border-gray-300"
+                          )}
                           placeholder="John Doe"
                         />
+                        {formik.touched.guestName && formik.errors.guestName && (
+                          <p className="mt-1 text-xs text-red-500 font-medium">{formik.errors.guestName}</p>
+                        )}
                       </div>
                       {/* Email field removed per user request */}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                         <input
                           type="tel"
-                          value={guestPhone}
-                          onChange={(e) => setGuestPhone(e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none"
+                          name="guestPhone"
+                          value={formik.values.guestPhone}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          className={cn(
+                            "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition-all",
+                            formik.touched.guestPhone && formik.errors.guestPhone ? "border-red-500 focus:ring-red-200" : "border-gray-300"
+                          )}
                           placeholder="+91 9876543210"
                         />
+                        {formik.touched.guestPhone && formik.errors.guestPhone && (
+                          <p className="mt-1 text-xs text-red-500 font-medium">{formik.errors.guestPhone}</p>
+                        )}
                       </div>
                     </div>
                     <Button
+                      type="submit"
                       size="lg"
                       fullWidth
-                      onClick={() => {
-                        if (!guestName || !guestEmail || !guestPhone) alert('Please fill in all details.');
-                        else setStep(3);
-                      }}
                     >
                       Continue
                     </Button>
-                  </div>
+                  </form>
                 )}
 
                 {step === 3 && (
@@ -1414,60 +1444,118 @@ export default function StayDetailsPage() {
                     <div className="bg-gray-50 p-4 rounded-xl mb-4 text-sm text-gray-800 border border-gray-200">
                       <div className="mb-2"><span className="font-semibold">Dates:</span> {checkIn} to {checkOut}</div>
                       <div className="mb-2"><span className="font-semibold">Guests:</span> {guests}</div>
-                      <div><span className="font-semibold">Guest:</span> {guestName}</div>
+                      <div><span className="font-semibold">Guest:</span> {formik.values.guestName}</div>
                     </div>
 
-                    <div className="space-y-3 pb-4 border-b border-gray-200 text-sm">
-                      {weekdayNights > 0 && (
-                        <div className="flex justify-between text-gray-600">
-                          <span>{formatCurrency(price)} × {weekdayNights} weekday {weekdayNights === 1 ? 'night' : 'nights'}</span>
-                          <span>{formatCurrency(price * weekdayNights)}</span>
+                            <div className="mt-4 mb-6 text-left animate-in fade-in duration-300">
+                      <h4 className="text-sm font-bold text-gray-900 mb-2">Payment Summary</h4>
+                      <div className="bg-gray-50 rounded-3xl p-6 border border-gray-200 shadow-sm space-y-4">
+                        {/* Top: Stay Pricing Breakdown */}
+                        <div className="space-y-2.5 pb-4 border-b border-gray-200/80 text-xs">
+                          {weekdayNights > 0 && (
+                            <div className="flex justify-between text-gray-600 font-medium">
+                              <span>{formatCurrency(price)} × {weekdayNights} weekday {weekdayNights === 1 ? 'night' : 'nights'}</span>
+                              <span>{formatCurrency(price * weekdayNights)}</span>
+                            </div>
+                          )}
+                          {weekendNights > 0 && (
+                            <div className="flex justify-between text-gray-600 font-medium">
+                              <span>{formatCurrency(weekendPrice)} × {weekendNights} weekend {weekendNights === 1 ? 'night' : 'nights'}</span>
+                              <span>{formatCurrency(weekendPrice * weekendNights)}</span>
+                            </div>
+                          )}
+                          {extraGuestTotal > 0 && (
+                            <div className="flex justify-between text-gray-600 font-medium">
+                              <span>Extra guest charge ({extraGuests} guests)</span>
+                              <span>{formatCurrency(extraGuestTotal)}</span>
+                            </div>
+                          )}
+                          {selectedAddOns.length > 0 && addOns.filter(a => selectedAddOns.includes(a.name)).map(addon => (
+                            <div key={addon.name} className="flex justify-between text-gray-600 font-medium">
+                              <span>{addon.name}</span>
+                              <span>{formatCurrency(addon.price)}</span>
+                            </div>
+                          ))}
+                          {user?.isMember && discountAmount > 0 && (
+                            <div className="flex justify-between text-green-600 font-semibold">
+                              <span>{user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1)} discount ({discountPercent}%)</span>
+                              <span>-{formatCurrency(discountAmount)}</span>
+                            </div>
+                          )}
+                          {cleaningFee > 0 && (
+                            <div className="flex justify-between text-gray-650 font-medium">
+                              <span>Cleaning fee</span>
+                              <span>{formatCurrency(cleaningFee)}</span>
+                            </div>
+                          )}
+                          {serviceFee > 0 && (
+                            <div className="flex justify-between text-gray-650 font-medium">
+                              <span>Service fee</span>
+                              <span>{formatCurrency(serviceFee)}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {weekendNights > 0 && (
-                        <div className="flex justify-between text-gray-600">
-                          <span>{formatCurrency(weekendPrice)} × {weekendNights} weekend {weekendNights === 1 ? 'night' : 'nights'}</span>
-                          <span>{formatCurrency(weekendPrice * weekendNights)}</span>
+
+                        {/* Middle: Total & Split Details */}
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-gray-500 font-medium">Total Booking Amount</span>
+                          <span className="font-bold text-gray-900 text-sm">{formatCurrency(totalPrice)}</span>
                         </div>
-                      )}
-                      {extraGuestTotal > 0 && (
-                        <div className="flex justify-between text-gray-600">
-                          <span>Extra guest charge ({extraGuests} guests)</span>
-                          <span>{formatCurrency(extraGuestTotal)}</span>
+                        
+                        <div className="flex justify-between items-center text-xs pt-3.5 border-t border-gray-200">
+                          <span className="text-gray-900 font-bold flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-green-500" />
+                            Amount Paying Now (50%)
+                          </span>
+                          <span className="text-sm font-black text-green-600">{formatCurrency(totalPrice * 0.5)}</span>
                         </div>
-                      )}
-                      {selectedAddOns.length > 0 && addOns.filter(a => selectedAddOns.includes(a.name)).map(addon => (
-                        <div key={addon.name} className="flex justify-between text-gray-600">
-                          <span>{addon.name}</span>
-                          <span>{formatCurrency(addon.price)}</span>
+
+                        <div className="flex justify-between items-center text-xs pt-3.5 border-t border-gray-200">
+                          <span className="text-gray-900 font-bold flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-amber-500" />
+                            Amount to Pay at Check-in
+                          </span>
+                          <span className="text-sm font-black text-amber-600">{formatCurrency((totalPrice - Math.round(totalPrice * 0.5)) + 5000)}</span>
                         </div>
-                      ))}
-                      {user?.isMember && discountAmount > 0 && (
-                        <div className="flex justify-between text-green-700 font-medium">
-                          <span>{user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1)} discount ({discountPercent}%)</span>
-                          <span>-{formatCurrency(discountAmount)}</span>
+
+                        {/* Bottom: Nested Check-in Breakdown */}
+                        <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 text-[10px] text-gray-500 leading-relaxed space-y-2 mt-2">
+                          <div className="flex justify-between items-center">
+                            <span>Remaining Balance (50%)</span>
+                            <span className="font-semibold text-gray-700">{formatCurrency(totalPrice - Math.round(totalPrice * 0.5))}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span>Security Deposit (Refundable)</span>
+                            <span className="font-semibold text-gray-700">{formatCurrency(5000)}</span>
+                          </div>
                         </div>
-                      )}
-                      {cleaningFee > 0 && (
-                        <div className="flex justify-between text-gray-600">
-                          <span>Cleaning fee</span>
-                          <span>{formatCurrency(cleaningFee)}</span>
-                        </div>
-                      )}
-                      {serviceFee > 0 && (
-                        <div className="flex justify-between text-gray-600">
-                          <span>Service fee</span>
-                          <span>{formatCurrency(serviceFee)}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex justify-between pt-4 pb-6 font-bold text-gray-900 text-lg">
-                      <span>Total (INR)</span>
-                      <span>{formatCurrency(totalPrice)}</span>
+                      </div>
                     </div>
 
-                    <Button size="lg" fullWidth onClick={handleReserve} disabled={isPending}>
-                      {isPending ? 'Processing...' : 'Confirm & Pay'}
+                    {/* Checkbox and Terms agreement */}
+                    <div className="mt-6 mb-6 flex items-start gap-2.5 text-xs text-gray-600 text-left bg-gray-50/50 p-3.5 rounded-2xl border border-gray-100 animate-in fade-in duration-300">
+                      <input
+                        id="termsCheckbox"
+                        type="checkbox"
+                        checked={isTermsAccepted}
+                        onChange={(e) => setIsTermsAccepted(e.target.checked)}
+                        className="mt-0.5 w-4 h-4 rounded text-gray-900 focus:ring-gray-900 border-gray-300 cursor-pointer transition-all accent-gray-900"
+                      />
+                      <label htmlFor="termsCheckbox" className="leading-relaxed cursor-pointer select-none">
+                        I agree to the{' '}
+                        <button
+                          type="button"
+                          onClick={() => setIsTermsModalOpen(true)}
+                          className="font-black underline text-gray-900 hover:text-gray-750 transition"
+                        >
+                          booking and payment terms
+                        </button>
+                        .
+                      </label>
+                    </div>
+
+                    <Button size="lg" fullWidth onClick={handleReserve} disabled={isPending || !isTermsAccepted}>
+                      {isPending ? 'Processing...' : 'Proceed to Payment'}
                     </Button>
                   </div>
                 )}
@@ -1481,19 +1569,34 @@ export default function StayDetailsPage() {
                     <p className="text-gray-500 mb-8 text-sm">Your reservation at <span className="font-bold text-gray-900">{name}</span> is confirmed.</p>
                     
                     {paymentDetails && (
-                      <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-100 text-left">
-                        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
-                          <span className="text-xs text-gray-500 uppercase tracking-wider font-bold">Amount Paid</span>
-                          <span className="text-lg font-black text-gray-900">{formatCurrency(paymentDetails.amount)}</span>
+                      <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-100 text-left space-y-4">
+                        <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                          <span className="text-xs text-gray-500 uppercase tracking-wider font-bold">Advance Paid Upfront</span>
+                          <span className="text-lg font-black text-green-600">{formatCurrency(paymentDetails.amount * 0.5)}</span>
                         </div>
-                        <div className="space-y-3 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Booking ID</span>
-                            <span className="font-mono text-gray-900 font-medium">{paymentDetails.bookingId.slice(-8).toUpperCase()}</span>
+                        <div className="space-y-2 text-xs">
+                          <div className="flex justify-between text-gray-600">
+                            <span>Booking ID:</span>
+                            <span className="font-mono text-gray-900 font-bold">{paymentDetails.bookingId.slice(-8).toUpperCase()}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Transaction ID</span>
+                          <div className="flex justify-between text-gray-600">
+                            <span>Transaction ID:</span>
                             <span className="font-mono text-gray-900 font-medium">{paymentDetails.paymentId}</span>
+                          </div>
+                          <div className="flex justify-between text-gray-600 pt-2 border-t border-dashed border-gray-200">
+                            <span>Total Booking Amount:</span>
+                            <span className="text-gray-900 font-semibold">{formatCurrency(paymentDetails.amount)}</span>
+                          </div>
+                          <div className="flex justify-between text-gray-600">
+                            <span>Due at Check-in (50% + Deposit):</span>
+                            <span className="text-amber-600 font-bold">{formatCurrency(paymentDetails.amount * 0.5 + 5000)}</span>
+                          </div>
+                        </div>
+                        <div className="text-[10px] text-gray-500 bg-white/70 border border-gray-150 p-3 rounded-xl leading-relaxed space-y-0.5">
+                          <div>• Check-in Balance (50%): <span className="font-semibold text-gray-800">{formatCurrency(paymentDetails.amount * 0.5)}</span></div>
+                          <div>• Security Deposit (Refundable): <span className="font-semibold text-gray-800">{formatCurrency(5000)}</span></div>
+                          <div className="text-[9px] pt-1.5 border-t border-gray-100 text-gray-400">
+                            💡 The security deposit will be refunded after check-out, subject to property inspection.
                           </div>
                         </div>
                       </div>
@@ -1536,6 +1639,13 @@ export default function StayDetailsPage() {
         image={galleryImages[0]}
         bedrooms={stayData.bedrooms}
         capacity={stayData.capacity}
+      />
+
+      <TermsModal
+        isOpen={isTermsModalOpen}
+        onClose={() => setIsTermsModalOpen(false)}
+        totalPrice={totalPrice}
+        formatCurrency={formatCurrency}
       />
     </div>
   );

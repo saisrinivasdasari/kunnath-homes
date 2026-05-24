@@ -13,7 +13,10 @@ const getAvailability = async (req, res) => {
     const bookings = await SportBooking.find({
       sport: sportId,
       date: date,
-      status: { $ne: 'cancelled' }
+      $or: [
+        { status: 'confirmed' },
+        { status: 'pending', expiresAt: { $gt: new Date() } }
+      ]
     });
 
     // Flatten all booked time slots (handle both old timeSlot and new timeSlots)
