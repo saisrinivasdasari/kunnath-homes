@@ -18,6 +18,11 @@ const syncImages = async () => {
       if (!stay.slug) continue;
       
       console.log(`Processing ${stay.name} with slug: ${stay.slug}`);
+      const hasExternalImages = stay.images && stay.images.length > 0 && stay.images[0].startsWith('http');
+      if (hasExternalImages) {
+        console.log(`Skipping image sync for ${stay.name} as it is configured with external Cloudinary URLs.`);
+        continue;
+      }
       const galleryPath = path.join(__dirname, '../client/public/stays', stay.slug);
       
       if (fs.existsSync(galleryPath)) {

@@ -64,6 +64,14 @@ const farmStaySchema = new mongoose.Schema({
   images: [{
     type: String // Cloudinary or Local URLs
   }],
+  gallery: {
+    exterior: [{ type: String }],
+    living: [{ type: String }],
+    bedroom: [{ type: String }],
+    bathroom: [{ type: String }],
+    kitchen: [{ type: String }],
+    amenities: [{ type: String }]
+  },
   amenities: [{
     type: String
   }],

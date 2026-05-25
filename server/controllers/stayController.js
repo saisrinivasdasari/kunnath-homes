@@ -68,16 +68,19 @@ const getStays = async (req, res) => {
     const staysWithImages = stays.map(stay => {
       const stayObj = stay.toObject();
       if (stayObj.slug && process.env.NODE_ENV !== 'production') {
-        try {
-          const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
-          const folderImages = deduplicateImages(collectImages(galleryPath, stayObj.slug));
-            
-          if (folderImages.length > 0) {
-            // Merge folder images with existing images, prioritizing folder images
-            stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+        const hasExternalImages = stayObj.images && stayObj.images.length > 0 && stayObj.images[0].startsWith('http');
+        if (!hasExternalImages) {
+          try {
+            const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+            const folderImages = deduplicateImages(collectImages(galleryPath, stayObj.slug));
+              
+            if (folderImages.length > 0) {
+              // Merge folder images with existing images, prioritizing folder images
+              stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+            }
+          } catch (fsError) {
+            console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
           }
-        } catch (fsError) {
-          console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
         }
       }
       return stayObj;
@@ -124,15 +127,18 @@ const getStayById = async (req, res) => {
       ])).sort();
 
       if (stayObj.slug && process.env.NODE_ENV !== 'production') {
-        try {
-          const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
-          const folderImages = deduplicateImages(collectImages(galleryPath, stayObj.slug));
+        const hasExternalImages = stayObj.images && stayObj.images.length > 0 && stayObj.images[0].startsWith('http');
+        if (!hasExternalImages) {
+          try {
+            const galleryPath = path.join(__dirname, '../../client/public/stays', stayObj.slug);
+            const folderImages = deduplicateImages(collectImages(galleryPath, stayObj.slug));
 
-          if (folderImages.length > 0) {
-            stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+            if (folderImages.length > 0) {
+              stayObj.images = Array.from(new Set([...folderImages, ...stayObj.images]));
+            }
+          } catch (fsError) {
+            console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
           }
-        } catch (fsError) {
-          console.warn(`Filesystem scan skipped for ${stayObj.slug}: ${fsError.message}`);
         }
       }
       res.json(stayObj);

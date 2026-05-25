@@ -23,13 +23,43 @@ const dummyStays = [
     securityDeposit: 5000,
     bookingAdvance: 5000,
     images: [
-      '/stays/orange/Mainview.JPG',
-      '/stays/orange/Pool.jpeg',
-      '/stays/orange/Living Room.jpeg',
-      '/stays/orange/1- Bedrrom.jpeg',
-      '/stays/orange/2-Bedroom.jpeg',
-      '/stays/orange/Others.jpeg'
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685469/Mainview_yviktw.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685471/Pool_uigk8q.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685471/Others4_gslwsx.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685470/Others3_ihbdbs.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685470/Others2_di6zyi.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685469/Others1_ryfahu.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685469/Others_6_vceo0e.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685469/Others_pcy3rq.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685468/Others_5_juv6zy.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685467/Living_Room_ncnzev.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685461/2-Bedroom_pnhyqb.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685460/1-_Bedrrom_cnk71d.jpg'
     ],
+    gallery: {
+      exterior: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685466/Others4_ovcvhl.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685465/Others3_klkhbz.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685465/Others1_g6navm.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685464/Mainview_vyb716.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685464/Others_6_ff5ntz.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685463/Others_5_sznm7x.jpg'
+      ],
+      living: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685464/Others_ruhjcr.jpg'
+      ],
+      bedroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685462/2-Bedroom_ldgqfu.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685462/1-_Bedrrom_douj2m.jpg'
+      ],
+      bathroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685465/Others2_mkb05p.jpg'
+      ],
+      kitchen: [],
+      amenities: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685471/Pool_uigk8q.jpg'
+      ]
+    },
     amenities: ['Private Swimming Pool', 'Lawn', 'Bonfires', 'Outdoor Projector', '55inch Smart TV', 'Party speaker', 'RO Water', 'Refrigerator', 'Barbeque', 'Microwave', 'Kitchen', 'WIFI', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }],
@@ -50,13 +80,48 @@ const dummyStays = [
     securityDeposit: 5000,
     bookingAdvance: 5000,
     images: [
-      '/stays/lemon/Mainview.JPG',
-      '/stays/lemon/Kitchen.JPG',
-      '/stays/lemon/Bedrrom 1.jpg',
-      '/stays/lemon/Living room.jpg',
-      '/stays/lemon/Bedroom4.JPG',
-      '/stays/lemon/Bedrrom3.JPG'
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685484/Mainview_dv9s6f.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685492/Bedrrom3_kqd2cl.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685487/Others2_zzl8xr.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685486/Others3_uxesn7.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685485/others1_ygso5i.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685485/Kitchen_tvya1f.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685485/Living_room1_dmqjfi.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685484/Others_twm8kk.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685483/Living_room_g7vump.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685478/Bedrrom2_rj8ixp.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685478/Bedroom4_tq0whr.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685477/Bedrrom_1_rlqd4j.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685472/1-Living_room_2_ms2z0w.jpg'
     ],
+    gallery: {
+      exterior: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685481/Others2_dfpzhj.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685479/Others3_y2biz0.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685478/others1_urwa9t.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685478/Mainview_tzbbwy.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685477/Others_blgmxl.jpg'
+      ],
+      living: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685483/Living_room_s5mxpk.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685482/Living_room1_xcnw6f.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685481/1-Living_room_2_anmwmr.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685486/Kitchen_ao0ve6.jpg'
+      ],
+      bedroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685488/Bedrrom3_uin0wv.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685474/Bedroom4_ibqnxe.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685473/Bedrrom2_aazt6q.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685473/Bedrrom_1_bwobz1.jpg'
+      ],
+      bathroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685487/Others2_zzl8xr.jpg'
+      ],
+      kitchen: [],
+      amenities: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685484/Mainview_dv9s6f.jpg'
+      ]
+    },
     amenities: ['Swimming Pool', 'Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }],
@@ -77,13 +142,39 @@ const dummyStays = [
     securityDeposit: 5000,
     bookingAdvance: 5000,
     images: [
-      '/stays/mint/1-Living room.jpg',
-      '/stays/mint/main View.jpg',
-      '/stays/mint/Pool.jpg',
-      '/stays/mint/Bedroom 2.jpg',
-      '/stays/mint/Mint bedroom 3.jpeg',
-      '/stays/mint/others3.JPG'
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/1-Living_room_pnip5v.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/others3_zrphvp.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/Others2_d5ny6s.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685454/Others1_zrlcfk.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685453/main_View_k548gg.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Bedroom_2_yevzeo.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Mint_bedroom_3_v33xjn.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685454/Others_fjrtel.jpg',
+      'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Pool_wbefpi.jpg'
     ],
+    gallery: {
+      exterior: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/others3_zrphvp.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/Others2_d5ny6s.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685454/Others1_zrlcfk.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685453/main_View_k548gg.jpg'
+      ],
+      living: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685456/1-Living_room_pnip5v.jpg'
+      ],
+      bedroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Bedroom_2_yevzeo.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Mint_bedroom_3_v33xjn.jpg'
+      ],
+      bathroom: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685454/Others_fjrtel.jpg'
+      ],
+      kitchen: [],
+      amenities: [
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685452/Pool_wbefpi.jpg',
+        'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779685454/Others_fjrtel.jpg'
+      ]
+    },
     amenities: ['Huge Swimming Pool', 'Party Lawn', 'Projector', '65” Smart TV', 'Powerful Music System', 'WIFI', 'Refrigerator', 'Microwave', 'BBQ Setup', '55inch Smart TV', 'Party speaker', 'RO Water', 'Kitchen', 'Extra Mattresses', 'Geyser', 'AC', 'Campfire', 'Restaurant'],
     foodOptions: ['Swiggy & Zomato Available', 'Chef Available on request', 'In-House kitchen available'],
     addOns: [{ name: 'Campfire', price: 750 }],
@@ -96,7 +187,7 @@ const dummySports = [
     name: 'Box Cricket',
     price: 999,
     duration: '1 hr',
-    image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=800&auto=format&fit=crop',
+    image: 'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779688300/box_cricket_rhkt0l.webp',
     description: 'Fully enclosed, turf-surfaced arena perfect for day or night matches with friends and family.',
     icon: '🏏'
   },
@@ -104,7 +195,7 @@ const dummySports = [
     name: 'Volleyball',
     price: 399,
     duration: '1 hr',
-    image: 'https://images.unsplash.com/photo-1592656094267-764a45160876?q=80&w=800&auto=format&fit=crop',
+    image: 'https://res.cloudinary.com/dekz7rtoa/image/upload/v1779688297/volleyball_kvhufm.avif',
     description: 'Professional grade court for an exciting volleyball experience.',
     icon: '🏐'
   },

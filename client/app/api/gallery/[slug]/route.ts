@@ -11,9 +11,27 @@ export async function GET(
 ) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
-  const galleryPath = path.join(process.cwd(), 'public', 'stays', slug);
 
   try {
+    // Try to fetch from backend database first to support Cloudinary links
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/stays`);
+      if (res.ok) {
+        const stays = await res.json();
+        const stay = stays.find((s: any) => s.slug === slug);
+        if (stay && stay.images && stay.images.length > 0 && stay.images[0].startsWith('http')) {
+          return NextResponse.json({
+            flat: stay.images,
+            categorized: stay.gallery || {}
+          });
+        }
+      }
+    } catch (apiError) {
+      console.warn('Failed to fetch gallery from backend API, falling back to local files:', apiError);
+    }
+
+    const galleryPath = path.join(process.cwd(), 'public', 'stays', slug);
     if (!fs.existsSync(galleryPath)) {
       return NextResponse.json({ flat: [], categorized: {} });
     }
