@@ -51,13 +51,37 @@ export const useStays = () => {
 };
 
 export const useStayDetails = (id: string) => {
+  const queryClient = useQueryClient();
   return useQuery({
     queryKey: ['stay', id],
     queryFn: async () => {
       const { data } = await api.get<FarmStay>(`/stays/${id}`);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`kunnath_cached_stay_${id}`, JSON.stringify(data));
+      }
       return data;
     },
     enabled: !!id,
+    initialData: () => {
+      // 1. Try to get from active stays list in query cache
+      const stays = queryClient.getQueryData<FarmStay[]>(['stays']);
+      const stayFromList = stays?.find(s => s._id === id);
+      if (stayFromList) return stayFromList;
+
+      // 2. Fallback to localStorage for stay details
+      if (typeof window !== 'undefined') {
+        const cached = localStorage.getItem(`kunnath_cached_stay_${id}`);
+        if (cached) {
+          try {
+            return JSON.parse(cached) as FarmStay;
+          } catch (e) {
+            console.error('Error parsing cached stay detail', e);
+          }
+        }
+      }
+      return undefined;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
 

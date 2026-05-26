@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { X, Heart, Upload } from 'lucide-react';
 import { useStayDetails } from '@/hooks/useStays';
 import ShareModal from '@/Components/stays/ShareModal';
+import { getOptimizedImageUrl } from '@/lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Category {
@@ -32,7 +33,7 @@ function PhotoGrid({ images }: { images: string[] }) {
           className="w-full overflow-hidden rounded-2xl bg-gray-50 group cursor-default"
         >
           <img
-            src={src}
+            src={getOptimizedImageUrl(src, 1200)}
             alt=""
             className="w-full h-auto object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.01]"
             style={{ maxHeight: '900px' }}
@@ -53,7 +54,7 @@ function ThumbButton({ cat, thumb, onClick }: { cat: Category; thumb: string; on
     >
       <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-sm ring-1 ring-black/[0.04] transition-all duration-300 group-hover:shadow-lg group-hover:ring-gray-900 group-active:scale-95">
         <img
-          src={thumb}
+          src={getOptimizedImageUrl(thumb, 300)}
           alt={cat.label}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />

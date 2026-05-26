@@ -282,7 +282,7 @@ import { useStayDetails } from '@/hooks/useStays';
 import { useCreateBooking, useCreatePaymentOrder, useVerifyPayment } from '@/hooks/useBookings';
 import { useAuthStore } from '@/store/authStore';
 
-import { formatCurrency, cn } from '@/lib/utils';
+import { formatCurrency, cn, getOptimizedImageUrl } from '@/lib/utils';
 import ShareModal from '@/Components/stays/ShareModal';
 import TermsModal from '@/Components/stays/TermsModal';
 import Link from 'next/link';
@@ -790,65 +790,90 @@ export default function StayDetailsPage() {
     }
     
     setIsProcessingPayment(true);
+
+    // Dynamically ensure Razorpay script is loaded
+    const isLoaded = await new Promise((resolve) => {
+      if ((window as any).Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+
+    if (!isLoaded) {
+      alert('Failed to load Razorpay SDK. Please check your internet connection.');
+      setIsProcessingPayment(false);
+      return;
+    }
     
     // Step 1: Create Order securely on backend
     createPaymentOrder({ stayId, checkIn, checkOut, guests, guestName: formik.values.guestName, guestEmail: formik.values.guestEmail || 'no-email@kunnath.com', guestPhone: formik.values.guestPhone, totalPrice, selectedAddOns, termsAccepted: true }, {
       onSuccess: (data) => {
-        // Step 2: Open Razorpay Popup
-        const options = {
-          key: "rzp_test_Sq1fM8H5iOEwy0", // Razorpay test key
-          amount: data.order.amount,
-          currency: data.order.currency,
-          name: "Kunnath House",
-          description: `Booking for ${name}`,
-          image: "/logo.png",
-          order_id: data.order.id,
-          handler: function (response: any) {
-            // Step 3: Verify Payment securely on backend
-            verifyPayment({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              bookingId: data.bookingId
-            }, {
-              onSuccess: (verifyData) => {
-                setPaymentDetails({
-                  paymentId: response.razorpay_payment_id,
-                  bookingId: data.bookingId,
-                  amount: totalPrice,
-                  stayName: name
-                });
-                refetch();
-                setStep(4);
-                setIsProcessingPayment(false);
-              },
-              onError: () => {
-                alert('Payment verification failed.');
+        try {
+          // Step 2: Open Razorpay Popup
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_Sq1fM8H5iOEwy0", // Razorpay key from env or fallback
+            amount: data.order.amount,
+            currency: data.order.currency,
+            name: "Kunnath House",
+            description: `Booking for ${name}`,
+            image: "/logo.png",
+            order_id: data.order.id,
+            handler: function (response: any) {
+              // Step 3: Verify Payment securely on backend
+              verifyPayment({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                bookingId: data.bookingId
+              }, {
+                onSuccess: (verifyData) => {
+                  setPaymentDetails({
+                    paymentId: response.razorpay_payment_id,
+                    bookingId: data.bookingId,
+                    amount: totalPrice,
+                    stayName: name
+                  });
+                  refetch();
+                  setStep(4);
+                  setIsProcessingPayment(false);
+                },
+                onError: () => {
+                  alert('Payment verification failed.');
+                  setIsProcessingPayment(false);
+                }
+              });
+            },
+            prefill: {
+              name: formik.values.guestName,
+              email: formik.values.guestEmail || 'no-email@kunnath.com',
+              contact: formik.values.guestPhone
+            },
+            theme: {
+              color: "#1a1a1a" // Match premium dark theme
+            },
+            modal: {
+              ondismiss: function() {
                 setIsProcessingPayment(false);
               }
-            });
-          },
-          prefill: {
-            name: guestName,
-            email: guestEmail || 'no-email@kunnath.com',
-            contact: guestPhone
-          },
-          theme: {
-            color: "#1a1a1a" // Match premium dark theme
-          },
-          modal: {
-            ondismiss: function() {
-              setIsProcessingPayment(false);
             }
-          }
-        };
+          };
 
-        const rzp = new (window as any).Razorpay(options);
-        rzp.on('payment.failed', function (response: any) {
-          alert(`Payment Failed: ${response.error.description}`);
+          const rzp = new (window as any).Razorpay(options);
+          rzp.on('payment.failed', function (response: any) {
+            alert(`Payment Failed: ${response.error.description}`);
+            setIsProcessingPayment(false);
+          });
+          rzp.open();
+        } catch (err: any) {
+          console.error('Razorpay initialization error:', err);
+          alert('Could not open Razorpay checkout: ' + (err.message || err));
           setIsProcessingPayment(false);
-        });
-        rzp.open();
+        }
       },
       onError: (error: any) => {
         alert(error.response?.data?.message || 'Error creating payment order. Are you logged in?');
@@ -906,19 +931,19 @@ export default function StayDetailsPage() {
         {/* Photo Gallery */}
         <div className="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-1.5 mb-8 rounded-xl overflow-hidden h-[260px] md:h-[324px] ">
           <div className="md:col-span-2 md:row-span-2 relative cursor-pointer" onClick={() => openGallery(0)}>
-            <img src={galleryImages[0]} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
+            <img src={getOptimizedImageUrl(galleryImages[0], 800)} alt="Main" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
           <div className="hidden md:block relative cursor-pointer" onClick={() => openGallery(1)}>
-            <img src={galleryImages[1]} alt="Gallery 1" className="w-full h-full object-cover hover:opacity-95 transition" />
+            <img src={getOptimizedImageUrl(galleryImages[1], 400)} alt="Gallery 1" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
           <div className="hidden md:block relative cursor-pointer" onClick={() => openGallery(2)}>
-            <img src={galleryImages[2]} alt="Gallery 2" className="w-full h-full object-cover hover:opacity-95 transition" />
+            <img src={getOptimizedImageUrl(galleryImages[2], 400)} alt="Gallery 2" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
           <div className="hidden md:block relative cursor-pointer" onClick={() => openGallery(3)}>
-            <img src={galleryImages[3]} alt="Gallery 3" className="w-full h-full object-cover hover:opacity-95 transition" />
+            <img src={getOptimizedImageUrl(galleryImages[3], 400)} alt="Gallery 3" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
           <div className="hidden md:block relative cursor-pointer" onClick={() => openGallery(4)}>
-            <img src={galleryImages[4]} alt="Gallery 4" className="w-full h-full object-cover hover:opacity-95 transition" />
+            <img src={getOptimizedImageUrl(galleryImages[4], 400)} alt="Gallery 4" className="w-full h-full object-cover hover:opacity-95 transition" />
           </div>
           <button
             onClick={() => openGallery(0)}

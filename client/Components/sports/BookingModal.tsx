@@ -167,9 +167,28 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
     return `${(lastHour + 1).toString().padStart(2, '0')}:00`;
   };
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!user) return;
     setIsProcessingPayment(true);
+
+    // Dynamically ensure Razorpay script is loaded
+    const isLoaded = await new Promise((resolve) => {
+      if ((window as any).Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+
+    if (!isLoaded) {
+      alert('Failed to load Razorpay SDK. Please check your internet connection.');
+      setIsProcessingPayment(false);
+      return;
+    }
 
     createSportPaymentOrder(
       {
@@ -181,59 +200,65 @@ export default function BookingModal({ sport, isOpen, onClose, hasStayBooking }:
       },
       {
         onSuccess: (data) => {
-          // Open Razorpay Popup
-          const options = {
-            key: "rzp_test_Sq1fM8H5iOEwy0", // Razorpay test key
-            amount: data.order.amount,
-            currency: data.order.currency,
-            name: "Kunnath House",
-            description: `Sports booking for ${sport.name}`,
-            image: "/logo.png",
-            order_id: data.order.id,
-            handler: function (response: any) {
-              // Verify Payment securely on backend
-              verifySportPayment(
-                {
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                  bookingId: data.bookingId
-                },
-                {
-                  onSuccess: (verifyData) => {
-                    setPaymentDetails({
-                      paymentId: response.razorpay_payment_id,
-                      bookingId: data.bookingId,
-                      amount: data.order.amount / 100
-                    });
-                    setStep(4);
+          try {
+            // Open Razorpay Popup
+            const options = {
+              key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_Sq1fM8H5iOEwy0", // Razorpay key from env or fallback
+              amount: data.order.amount,
+              currency: data.order.currency,
+              name: "Kunnath House",
+              description: `Sports booking for ${sport.name}`,
+              image: "/logo.png",
+              order_id: data.order.id,
+              handler: function (response: any) {
+                // Verify Payment securely on backend
+                verifySportPayment(
+                  {
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                    bookingId: data.bookingId
                   },
-                  onError: (error: any) => {
-                    alert(error.response?.data?.message || 'Payment verification failed');
-                  },
-                  onSettled: () => {
-                    setIsProcessingPayment(false);
+                  {
+                    onSuccess: (verifyData) => {
+                      setPaymentDetails({
+                        paymentId: response.razorpay_payment_id,
+                        bookingId: data.bookingId,
+                        amount: data.order.amount / 100
+                      });
+                      setStep(4);
+                    },
+                    onError: (error: any) => {
+                      alert(error.response?.data?.message || 'Payment verification failed');
+                    },
+                    onSettled: () => {
+                      setIsProcessingPayment(false);
+                    }
                   }
+                );
+              },
+              prefill: {
+                name: formData.name,
+                email: formData.email,
+                contact: formData.phone
+              },
+              theme: {
+                color: "#111827"
+              },
+              modal: {
+                ondismiss: function () {
+                  setIsProcessingPayment(false);
                 }
-              );
-            },
-            prefill: {
-              name: formData.name,
-              email: formData.email,
-              contact: formData.phone
-            },
-            theme: {
-              color: "#111827"
-            },
-            modal: {
-              ondismiss: function () {
-                setIsProcessingPayment(false);
               }
-            }
-          };
+            };
 
-          const rzp = new (window as any).Razorpay(options);
-          rzp.open();
+            const rzp = new (window as any).Razorpay(options);
+            rzp.open();
+          } catch (err: any) {
+            console.error('Razorpay initialization error:', err);
+            alert('Could not open Razorpay checkout: ' + (err.message || err));
+            setIsProcessingPayment(false);
+          }
         },
         onError: (error: any) => {
           alert(error.response?.data?.message || 'Failed to create payment order');

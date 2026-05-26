@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { IoShareOutline } from 'react-icons/io5';
-import { cn } from '@/lib/utils';
+import { cn, getOptimizedImageUrl } from '@/lib/utils';
 import ShareModal from './ShareModal';
 
 interface StayCardSliderProps {
@@ -106,7 +106,7 @@ export default function StayCardSlider({ images, stayName, stayId, description, 
           {images.map((src, idx) => (
             <div key={idx} className="w-full h-full flex-none overflow-hidden">
               <img
-                src={src}
+                src={getOptimizedImageUrl(src, 600)}
                 alt={`${stayName} - ${idx + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
               />

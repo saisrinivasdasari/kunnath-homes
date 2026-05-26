@@ -1,11 +1,8 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import { Header } from '../Components/layout/Header'
-import { Footer } from '../Components/layout/Footer'
-import FloatingButtons from '../Components/layout/FloatingButtons';
 import './globals.css'
-
 import Providers from './providers'
+import LayoutWrapper from '../Components/layout/LayoutWrapper'
 
 export const metadata: Metadata = {
   title: 'Kunnath House - Crafted for Recreation.',
@@ -25,14 +22,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
         <Providers>
-          <Header />
-          <main className="min-h-screen">
+          <LayoutWrapper>
             {children}
-          </main>
-          <Footer />
-          <FloatingButtons />
+          </LayoutWrapper>
         </Providers>
       </body>
     </html>

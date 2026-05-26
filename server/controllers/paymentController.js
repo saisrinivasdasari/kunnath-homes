@@ -182,6 +182,15 @@ const verifyPayment = async (req, res) => {
       return res.status(404).json({ message: 'Booking not found' });
     }
 
+    // Idempotency: If already completed (e.g. processed by webhook first)
+    if (booking.paymentStatus === 'completed') {
+      return res.status(200).json({ 
+        success: true, 
+        message: 'Payment already verified successfully',
+        booking 
+      });
+    }
+
     // Verify signature using the secret
     const secret = process.env.RAZORPAY_KEY_SECRET;
     const generated_signature = crypto
@@ -364,6 +373,15 @@ const verifySportPayment = async (req, res) => {
       return res.status(404).json({ message: 'Booking not found' });
     }
 
+    // Idempotency: If already completed (e.g. processed by webhook first)
+    if (booking.paymentStatus === 'completed') {
+      return res.status(200).json({ 
+        success: true, 
+        message: 'Payment already verified successfully',
+        booking 
+      });
+    }
+
     // Verify signature using the secret
     const secret = process.env.RAZORPAY_KEY_SECRET;
     const generated_signature = crypto
@@ -403,9 +421,138 @@ const verifySportPayment = async (req, res) => {
   }
 };
 
+// @desc    Handle Razorpay webhook notifications
+// @route   POST /api/payments/webhook
+// @access  Public
+const handleWebhook = async (req, res) => {
+  const signature = req.headers['x-razorpay-signature'];
+  if (!signature) {
+    console.error('Webhook Error: Missing x-razorpay-signature header');
+    return res.status(400).json({ message: 'Missing signature header' });
+  }
+
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+  if (!secret) {
+    console.warn('Webhook Warning: RAZORPAY_WEBHOOK_SECRET is not set in environment variables. Skipping signature verification in development.');
+  } else {
+    // Cryptographic validation using raw body buffer
+    const shasum = crypto.createHmac('sha256', secret);
+    shasum.update(req.rawBody || '');
+    const digest = shasum.digest('hex');
+
+    if (digest !== signature) {
+      console.error('Webhook Security Alert: Invalid webhook signature detected!');
+      return res.status(400).json({ message: 'Invalid signature' });
+    }
+  }
+
+  const { event, payload } = req.body;
+  console.log(`Webhook Received: ${event}`);
+
+  try {
+    if (event === 'order.paid' || event === 'payment.captured') {
+      const paymentEntity = payload.payment.entity;
+      const orderId = paymentEntity.order_id;
+      const paymentId = paymentEntity.id;
+      const capturedAmount = paymentEntity.amount; // in paise
+
+      let booking = await Booking.findOne({ razorpayOrderId: orderId });
+      let isSport = false;
+
+      if (!booking) {
+        booking = await SportBooking.findOne({ razorpayOrderId: orderId });
+        isSport = true;
+      }
+
+      if (!booking) {
+        console.warn(`Webhook Warning: Booking not found for Razorpay Order ID: ${orderId}`);
+        return res.status(200).json({ status: 'ignored', message: 'Booking not found' });
+      }
+
+      // Idempotency: skip if already processed
+      if (booking.paymentStatus === 'completed') {
+        console.log(`Webhook Log: Booking ${booking._id} already confirmed.`);
+        return res.status(200).json({ status: 'ok', message: 'Already processed' });
+      }
+
+      // Amount Tampering Check
+      const expectedAmount = isSport 
+        ? Math.round(booking.totalPrice * 100) 
+        : Math.round(booking.upfrontAmountPaid * 100);
+
+      if (Math.abs(capturedAmount - expectedAmount) > 1) {
+        console.error(`Webhook Security Alert: Amount mismatch! Expected ${expectedAmount} paise, received ${capturedAmount} paise. Booking ID: ${booking._id}`);
+        booking.paymentStatus = 'failed';
+        await booking.save();
+        return res.status(400).json({ message: 'Amount mismatch' });
+      }
+
+      // Confirm booking
+      booking.paymentStatus = 'completed';
+      booking.status = 'confirmed';
+      booking.razorpayPaymentId = paymentId;
+      booking.expiresAt = undefined;
+      await booking.save();
+
+      console.log(`Webhook Success: Booking ${booking._id} (${isSport ? 'Sport' : 'Stay'}) confirmed successfully.`);
+      return res.status(200).json({ status: 'ok', message: 'Booking confirmed' });
+    }
+
+    if (event === 'payment.failed') {
+      const paymentEntity = payload.payment.entity;
+      const orderId = paymentEntity.order_id;
+
+      let booking = await Booking.findOne({ razorpayOrderId: orderId });
+      if (!booking) {
+        booking = await SportBooking.findOne({ razorpayOrderId: orderId });
+      }
+
+      if (!booking) {
+        return res.status(200).json({ status: 'ignored', message: 'Booking not found' });
+      }
+
+      if (booking.paymentStatus === 'completed') {
+        return res.status(200).json({ status: 'ok', message: 'Keep existing success' });
+      }
+
+      booking.paymentStatus = 'failed';
+      await booking.save();
+
+      console.log(`Webhook Fail: Booking ${booking._id} payment failed.`);
+      return res.status(200).json({ status: 'ok', message: 'Payment marked as failed' });
+    }
+
+    if (event === 'refund.processed') {
+      const paymentEntity = payload.payment.entity;
+      const orderId = paymentEntity.order_id;
+
+      let booking = await Booking.findOne({ razorpayOrderId: orderId });
+      if (!booking) {
+        booking = await SportBooking.findOne({ razorpayOrderId: orderId });
+      }
+
+      if (booking) {
+        booking.paymentStatus = 'refunded';
+        booking.status = 'cancelled';
+        await booking.save();
+        console.log(`Webhook Refund: Booking ${booking._id} set to refunded/cancelled.`);
+      }
+      return res.status(200).json({ status: 'ok', message: 'Refund synchronized' });
+    }
+
+    // Default response for unhandled events
+    return res.status(200).json({ status: 'ok', message: 'Event unhandled' });
+
+  } catch (error) {
+    console.error('Webhook Error inside handleWebhook:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   createOrder,
   verifyPayment,
   createSportOrder,
-  verifySportPayment
+  verifySportPayment,
+  handleWebhook
 };

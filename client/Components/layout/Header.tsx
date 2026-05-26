@@ -275,8 +275,16 @@ export function Header() {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
                     <div className="px-4 py-2 border-b border-gray-100">
                       <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      {user.email && <p className="text-xs text-gray-500 truncate">{user.email}</p>}
+                      {user.phoneNumber && <p className="text-xs text-gray-500 mt-0.5">{user.phoneNumber}</p>}
                     </div>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-100/60 font-semibold text-primary"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      Edit Profile
+                    </Link>
                     <Link
                       href="/dashboard"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
@@ -353,8 +361,16 @@ export function Header() {
                 <>
                   <div className="px-3 pb-2">
                     <p className="text-base font-medium text-gray-800">{user.name}</p>
-                    <p className="text-sm font-medium text-gray-500">{user.email}</p>
+                    {user.email && <p className="text-sm font-medium text-gray-500">{user.email}</p>}
+                    {user.phoneNumber && <p className="text-sm font-medium text-gray-500 mt-0.5">{user.phoneNumber}</p>}
                   </div>
+                  <Link
+                    href="/profile"
+                    className="block px-3 py-2 rounded-md text-base font-semibold text-primary hover:bg-gray-50"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Edit Profile
+                  </Link>
                   <Link
                     href="/dashboard"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50"

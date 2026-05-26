@@ -6,7 +6,7 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Search, ArrowRight, BedDouble, Users } from 'lucide-react';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, getOptimizedImageUrl } from '@/lib/utils';
 import Link from 'next/link';
 import { useStays } from '@/hooks/useStays';
 import { useSports } from '@/hooks/useSports';
@@ -160,7 +160,7 @@ export default function Home() {
                         ) : sports?.slice(0, 4).map((activity, idx) => (
                             <Link href="/sports" key={idx} className="block group relative h-[420px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-in fade-in duration-500">
                                 <img
-                                    src={activity.image}
+                                    src={getOptimizedImageUrl(activity.image, 500)}
                                     alt={activity.name}
                                     loading="lazy"
                                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
